@@ -1,0 +1,516 @@
+import { todo, type SiteContent } from "./types";
+
+/**
+ * Contenido en inglés. Debe mantener exactamente las mismas claves que es.ts:
+ * el `satisfies SiteContent` hace fallar el type-check si falta alguna.
+ */
+export const en = {
+  locale: "en",
+
+  disponibilidad: "Open to opportunities · on-site or hybrid in the Barcelona area",
+
+  seo: {
+    title: "Víctor Prim Romero — Fullstack developer · Applied AI",
+    description:
+      "Fullstack developer focused on backend, applied AI and DevOps. I build software end to end, from the architecture to a deployed, working product. Barcelona.",
+  },
+
+  ui: {
+    saltarAlContenido: "Skip to content",
+    abrirMenu: "Open menu",
+    cerrarMenu: "Close menu",
+    cambiarTema: "Switch theme",
+    temaClaro: "Light theme",
+    temaOscuro: "Dark theme",
+    cambiarIdioma: "Switch language",
+    actualidad: "Present",
+    pendiente: "To be confirmed",
+  },
+
+  nav: {
+    monograma: "VP",
+    items: [
+      { href: "#sobre-mi", label: "About" },
+      { href: "#proyectos", label: "Projects" },
+      { href: "#stack", label: "Stack" },
+      { href: "#trayectoria", label: "Experience" },
+      { href: "#servicios", label: "Services" },
+    ],
+    contactar: "Get in touch",
+  },
+
+  hero: {
+    etiqueta: "Barcelona · Available",
+    nombre: "Víctor Prim Romero",
+    titular: "Fullstack developer · Applied AI",
+    propuesta:
+      "I build software end to end: from designing the architecture to a product deployed and running.",
+    verProyectos: "See projects",
+    descargarCv: "Download CV",
+    cvHref: todo("subir public/cv.pdf actualizado y sustituir este valor por /cv.pdf"),
+    github: { href: "https://github.com/PRIMCODIN", label: "GitHub" },
+    linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },
+  },
+
+  asistente: {
+    etiqueta: "Assistant",
+    titulo: "Ask my assistant",
+    descripcion:
+      "The same RAG assistant I build for businesses, this time with my own profile as its knowledge base. Ask it about my experience or how something was built.",
+    cta: "Open the assistant",
+  },
+
+  sobreMi: {
+    etiqueta: "About",
+    titulo: "I understand the problem before I code it",
+    parrafos: [
+      "Before I wrote code I spent years on the other side of the phone and the counter: technical support, casino tables, retail. That teaches you something no course does: how to listen to a badly explained problem, how to stay calm when the person in front of you is not, and how to give an answer that lands the first time.",
+      "Today I study Multiplatform Application Development, work as a backend and AI integration developer, and build my own projects all the way to production. What interests me is the part that holds the product up: data architecture, service orchestration and deployment. And I am still interested in the conversation with whoever is going to use it.",
+    ],
+    datos: [
+      { id: "ubicacion", clave: "Location", valor: "Barcelona" },
+      { id: "enfoque", clave: "Focus", valor: "Backend · Applied AI · DevOps" },
+      {
+        id: "idiomas",
+        clave: "Languages",
+        valor: "Native Spanish and Catalan · professional English",
+      },
+      { id: "formacion", clave: "Education", valor: "Higher degree in software development, year 2" },
+    ],
+  },
+
+  proyectos: {
+    etiqueta: "Projects",
+    titulo: "Things I built and had to keep running",
+    intro:
+      "Personal and team projects, all taken past the demo stage: data architecture, deployment and the decisions I had to justify along the way.",
+    verCaso: "Read the case study",
+    verRepo: "Code",
+    verDemo: "Demo",
+    items: [
+      {
+        id: "avalon-agent",
+        visible: true,
+        destacado: true,
+        titulo: "Avalon Agent",
+        resumen:
+          "Multi-tenant RAG assistant in Spanish for small businesses: it answers from each company's own knowledge base, captures leads and hands off to a human when needed. I diagnosed that the embedding model was degrading Spanish retrieval, and switching it took the retrieval eval from 11/20 to 17/20.",
+        rol: "Design, backend, RAG and widget",
+        estado: "In development",
+        stack: ["Python", "FastAPI", "Supabase", "pgvector", "HNSW", "bge-m3", "SSE", "Shadow DOM"],
+        casoDeEstudio: "avalon-agent",
+      },
+      {
+        id: "gymapp",
+        visible: true,
+        destacado: true,
+        titulo: "Fitness and nutrition app",
+        resumen:
+          "Mobile app for tracking calories and workouts with a layered architecture: Clean Architecture and Riverpod in Flutter, a Supabase backend with Row Level Security, and AI orchestration planned in n8n to estimate calories from a photo of a meal.",
+        rol: "Personal project · architecture and backend",
+        estado: "In development",
+        stack: ["Flutter", "Dart", "Riverpod", "Clean Architecture", "Supabase", "RLS", "n8n"],
+        repo: "https://github.com/PRIMCODIN/gymApp",
+      },
+      {
+        id: "appbancaria",
+        visible: true,
+        destacado: false,
+        titulo: "Banking system",
+        resumen:
+          "Two native Android apps over a single database, modelling the privilege isolation of a real bank: an admin panel and a client app, with transfers between users, history, and a financial chatbot that answers questions about your own data in plain language.",
+        rol: "Personal project · two apps and orchestration",
+        estado: "Personal project",
+        stack: ["Kotlin", "Jetpack Compose", "Supabase", "RLS", "Ktor", "n8n", "Docker"],
+        repo: "https://github.com/PRIMCODIN/appBancaria",
+      },
+      {
+        id: "flagquiz",
+        visible: true,
+        destacado: false,
+        titulo: "Flag Challenge",
+        resumen:
+          "Web game of guessing flags with three game modes and a real-time global leaderboard, built end to end: frontend, database, access policies and deployment. Deployed and playable.",
+        rol: "Personal project · end to end",
+        estado: "In production",
+        stack: ["React", "Vite", "Supabase", "Auth", "RLS", "Realtime", "Vercel"],
+        repo: "https://github.com/PRIMCODIN/flagQuiz",
+        demo: "https://flag-quiz-primcodin16.vercel.app/",
+      },
+      {
+        id: "agendadorbot",
+        visible: true,
+        destacado: false,
+        titulo: "Voice scheduling bot",
+        resumen:
+          "A full audio-to-appointment pipeline: a Telegram bot receives the voice note, a flow transcribes it and structures the data, and the event shows up in Google Calendar with a confirmation back to the user.",
+        rol: "Personal project · automation",
+        estado: "Personal project",
+        stack: ["Telegram Bot API", "Make.com", "Dify", "Google Calendar API", "OAuth"],
+        repo: "https://github.com/PRIMCODIN/agendadorBot",
+      },
+      {
+        id: "soccerngo",
+        visible: false,
+        destacado: false,
+        titulo: "SOCCER N GO",
+        resumen:
+          "Pokémon GO style geolocation app built around football club stadiums, developed in a team of three.",
+        rol: "Team of 3",
+        estado: "In development",
+        stack: ["Flutter", "Geolocation"],
+      },
+    ],
+  },
+
+  stack: {
+    etiqueta: "Stack",
+    titulo: "What I work with",
+    intro:
+      "Tools I have used on real projects, not in a tutorial. No percentage bars: either it solved something, or it is not on this list.",
+    grupos: [
+      {
+        id: "lenguajes",
+        titulo: "Languages",
+        items: ["Python", "Dart", "Kotlin", "TypeScript", "JavaScript", "C#", "SQL", "HTML/CSS"],
+      },
+      {
+        id: "backend",
+        titulo: "Backend and infrastructure",
+        items: [
+          "FastAPI",
+          "Pydantic",
+          "Ktor",
+          "Supabase",
+          "PostgreSQL",
+          "pgvector",
+          "MongoDB",
+          "Docker",
+          "OAuth",
+          "Row Level Security",
+        ],
+      },
+      {
+        id: "ia",
+        titulo: "AI and automation",
+        items: [
+          "RAG",
+          "Embeddings and vector search",
+          "System prompts",
+          "LLM agent orchestration",
+          "n8n",
+          "Dify",
+          "Make.com",
+          "Groq",
+          "Ollama",
+        ],
+      },
+      {
+        id: "movil",
+        titulo: "Mobile",
+        items: ["Flutter", "Riverpod", "Clean Architecture", "Kotlin", "Jetpack Compose"],
+      },
+      {
+        id: "frontend",
+        titulo: "Frontend",
+        items: ["React", "Vite", "React Router"],
+      },
+      {
+        id: "herramientas",
+        titulo: "Tools",
+        items: ["Git and GitHub", "Claude Code", "Vercel", "Google Cloud Console"],
+      },
+    ],
+  },
+
+  trayectoria: {
+    etiqueta: "Experience",
+    titulo: "Experience and education",
+    tituloTecnica: "Technical experience",
+    tituloPrevia: "Earlier career: working with customers",
+    introPrevia:
+      "Years of dealing with people before dealing with machines. It is the reason I understand the business problem and can explain a solution without jargon.",
+    tituloFormacion: "Education",
+    tecnica: [
+      {
+        id: "ymro",
+        puesto: "Backend and AI integration developer (internship)",
+        empresa: "YMRO Technologies",
+        modalidad: "Part-time · Hybrid",
+        inicio: "March 2026",
+        fin: null,
+        ubicacion: "Barcelona",
+        logros: [
+          "Designed and built the n8n and Dify flows connecting the Flutter app to the AI services, defining the data contract end to end.",
+          "Built a scoped agent using system prompts and RAG, cutting down out-of-domain answers.",
+          "Integrated Google Calendar via OAuth to read and create events in real testing.",
+          "Set up a centralised local server so all six team members could test the same flow, unifying the test environment.",
+          "Designed the data architecture and error handling of the flows to make them scalable.",
+        ],
+        stack: ["Flutter", "n8n", "Dify", "Groq", "Google Calendar OAuth", "Docker"],
+      },
+    ],
+    previa: [
+      {
+        id: "securitas",
+        puesto: "Phone support assistant",
+        empresa: "Securitas Direct",
+        modalidad: "Fixed-term contract",
+        inicio: "June 2024",
+        fin: "September 2025",
+        ubicacion: "Cornellà de Llobregat",
+        logros: [
+          "Phone support and resolution of technical incidents.",
+          "Remote maintenance and remote fault diagnosis.",
+          "Handling of alerts and authorisations in internal systems.",
+        ],
+      },
+      {
+        id: "casino",
+        puesto: "Croupier",
+        empresa: "Grup Peralada · Casino de Barcelona",
+        modalidad: "Full-time",
+        inicio: "March 2022",
+        fin: "March 2023",
+        ubicacion: "Barcelona",
+        logros: [
+          "Running tables and keeping precise control of the game.",
+          "Exact handling of chips, payouts and collections.",
+          "Customer service in demanding, high-pressure settings.",
+        ],
+      },
+      {
+        id: "lindt",
+        puesto: "Shop assistant",
+        empresa: "Lindt & Sprüngli",
+        modalidad: "Part-time",
+        inicio: "September 2019",
+        fin: "March 2020",
+        ubicacion: "Viladecans",
+        logros: [
+          "Customer service and advice.",
+          "Till, restocking and stock control.",
+          "Support on sales campaigns.",
+        ],
+      },
+    ],
+    formacion: [
+      {
+        id: "dam",
+        titulo: "Higher Degree in Multiplatform Application Development",
+        centro: "Davante MEDAC, Viladecans",
+        inicio: "September 2025",
+        fin: null,
+        nota: "Year 2",
+      },
+      {
+        id: "bachillerato",
+        titulo: "Technological Baccalaureate",
+        centro: "IES de Sales",
+        inicio: "2016",
+        fin: "2020",
+      },
+    ],
+  },
+
+  servicios: {
+    etiqueta: "Services",
+    titulo: "How I can help a business",
+    intro:
+      "Automation and applied AI for small businesses: the same work I do at Avalon Intelligence, also available directly from me.",
+    items: [
+      {
+        id: "automatizacion",
+        titulo: "AI process automation",
+        descripcion:
+          "The tasks your team repeats every day — moving data around, answering the same thing, chasing follow-ups — turned into flows that run on their own, with a person supervising where it actually matters.",
+      },
+      {
+        id: "asistentes",
+        titulo: "RAG assistants and chatbots",
+        descripcion:
+          "An assistant that answers from your business's validated information, not from what it imagines. It resolves the usual questions, captures the contact details of interested visitors and hands off to a person when the conversation calls for it.",
+      },
+      {
+        id: "integraciones",
+        titulo: "Integrations and APIs",
+        descripcion:
+          "CRM, calendar, invoicing, WhatsApp and AI services wired together so data stops going through a keyboard and stops getting lost on the way.",
+      },
+      {
+        id: "apps",
+        titulo: "Custom mobile and web apps",
+        descripcion:
+          "From architecture to deployment: an application built to be maintained and to grow, not just to be shown in a meeting.",
+      },
+    ],
+  },
+
+  ahora: {
+    etiqueta: "Now",
+    titulo: "What I am on and where I am going",
+    parrafos: [
+      "I am looking for my first role as a developer in backend, applied AI or product, on a team where I can see the whole business problem and not just the ticket.",
+      "I want to keep building AI systems that solve real problems and can be measured with data, not with demos. In the medium term, to offer those services under my own brand.",
+    ],
+  },
+
+  contacto: {
+    etiqueta: "Contact",
+    titulo: "Let's talk",
+    intro:
+      "If you have a role, a project or just a technical question, write to me. I answer everything.",
+    emailEtiqueta: "Email",
+    emailPartes: ["vprimromero", "gmail.com"],
+    linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },
+    github: { href: "https://github.com/PRIMCODIN", label: "GitHub" },
+  },
+
+  footer: {
+    hechoCon: "Built with React",
+    derechos: "Víctor Prim Romero",
+  },
+
+  casosDeEstudio: {
+    "avalon-agent": {
+      id: "avalon-agent",
+      slug: "avalon-agent",
+      seo: {
+        title: "Avalon Agent — Case study · Víctor Prim Romero",
+        description:
+          "Multi-tenant RAG assistant in Spanish for small businesses: architecture, technical decisions and the embedding diagnosis that took the retrieval eval from 11/20 to 17/20.",
+      },
+      titulo: "Avalon Agent",
+      subtitulo: "A RAG assistant that answers with the business's data, not its own",
+      contexto:
+        "Built for Avalon Intelligence, the AI automation agency I co-founded.",
+      estado: "In development",
+      stack: [
+        "Python",
+        "FastAPI",
+        "Supabase",
+        "PostgreSQL",
+        "pgvector",
+        "HNSW",
+        "bge-m3",
+        "Ollama",
+        "SSE",
+        "Shadow DOM",
+      ],
+      problema: {
+        titulo: "The problem",
+        parrafos: [
+          "A small business gets the same ten questions every day: opening hours, prices, terms, whether you cover my area. Someone on the team answers them by hand, almost always late, and the person asking has already gone elsewhere.",
+          "The obvious answer is a chatbot, and that is where the real problem starts: a generic model states things that are not true with complete confidence, and a business cannot afford an assistant that invents a price or a coverage area.",
+          "Avalon Agent is a single service running for several businesses at once. Each one has its own isolated knowledge base, the assistant answers only from it, captures the contact details of interested visitors and hands off to a person when the conversation goes beyond what it knows.",
+        ],
+      },
+      arquitectura: {
+        titulo: "The architecture",
+        intro:
+          "Two separate paths: ingestion, which happens when the business documentation changes, and querying, which happens on every visitor message.",
+        nodos: [
+          { id: "fuentes", titulo: "Documentation", detalle: "Markdown per business" },
+          {
+            id: "ingesta",
+            titulo: "Ingestion",
+            detalle: "Chunked by headings, idempotent by hash",
+          },
+          { id: "embeddings", titulo: "Embeddings", detalle: "bge-m3, 1024 dimensions, via Ollama" },
+          {
+            id: "almacen",
+            titulo: "Supabase + pgvector",
+            detalle: "HNSW index, isolated per tenant",
+          },
+          { id: "widget", titulo: "Widget", detalle: "Dependency-free JavaScript, Shadow DOM" },
+          { id: "api", titulo: "FastAPI", detalle: "Tenant authenticated with X-Tenant-Key" },
+          {
+            id: "busqueda",
+            titulo: "Vector search",
+            detalle: "match_chunks: the tenant's top 4 chunks",
+          },
+          { id: "llm", titulo: "LLM with tools", detalle: "capture_lead and handoff_human" },
+          { id: "respuesta", titulo: "SSE streaming", detalle: "fetch + ReadableStream" },
+          { id: "datos", titulo: "Persistence", detalle: "Normalised conversations and leads" },
+        ],
+        nota: "The file with the internal escalation rules is indexed so it can be evaluated, but it never enters the chat context.",
+      },
+      decisiones: {
+        titulo: "Technical decisions",
+        items: [
+          {
+            id: "eval",
+            titulo: "A retrieval eval as the gate for every change",
+            decision:
+              "20 real customer questions against the knowledge base; the correct chunk has to appear in the top four results.",
+            porque:
+              "Without a measure, “it seems to answer better now” is not a criterion, it is a feeling. With the eval, every change to the chunking, the model or the prompt is accepted or rejected with a number attached.",
+          },
+          {
+            id: "embeddings",
+            titulo: "From nomic-embed-text to bge-m3",
+            decision:
+              "I switched the embedding model to bge-m3, 1024 dimensions, served through Ollama.",
+            porque:
+              "The eval exposed that nomic-embed-text produced a degenerate similarity space in Spanish: the score range was compressed and out-of-domain questions were scoring above genuine matches, so the ranking was close to noise. With bge-m3 the eval went from 11/20 to 17/20 with nothing else changed.",
+          },
+          {
+            id: "streaming",
+            titulo: "Streaming with fetch and ReadableStream, not EventSource",
+            decision:
+              "The answer arrives over SSE, but consumed with fetch and ReadableStream instead of the browser's EventSource API.",
+            porque:
+              "EventSource only issues GET requests and cannot send custom headers. The tenant authenticates with X-Tenant-Key and the message travels in the body of a POST, so the standard API was ruled out from the start.",
+          },
+          {
+            id: "shadow-dom",
+            titulo: "The widget lives inside a Shadow DOM",
+            decision:
+              "The whole widget mounts in a shadow root, and answer markdown is rendered only after escaping the HTML.",
+            porque:
+              "It is embedded in other people's sites that I have no control over. Without isolation, any client stylesheet can break the chat and the chat can break the client's site. Escaping first also stops a model answer from injecting HTML into the host page.",
+          },
+          {
+            id: "reglas",
+            titulo: "Internal rules stay out of the chat context",
+            decision:
+              "The escalation document is indexed so it can be evaluated, but it is excluded from the context sent to the model.",
+            porque:
+              "It was in, and the model ended up reciting its own operating rules back to the visitor: when to hand off, what conditions to apply. Internal information walking out the front door.",
+          },
+          {
+            id: "leads",
+            titulo: "A single write path for leads",
+            decision:
+              "Every contact comes in through the same path, with deduplication and email normalisation in the database itself.",
+            porque:
+              "When there are two or three places a lead can be written from, the same contact ends up duplicated with the email uppercase in one row and lowercase in another. Solving it in the database is the only way to stop it depending on whoever writes the next bit of code remembering.",
+          },
+        ],
+      },
+      resultados: {
+        titulo: "Results",
+        intro: "What can be measured, measured. What cannot, described for what it is.",
+        items: [
+          {
+            id: "eval",
+            valor: "17/20",
+            etiqueta: "eval questions with the correct chunk in the top four",
+            nota: "Before the embedding model change: 11 out of 20.",
+          },
+          {
+            id: "multitenant",
+            valor: "Multi-tenant",
+            etiqueta: "one API for several businesses, each knowledge base isolated per client",
+          },
+          {
+            id: "idempotente",
+            valor: "Idempotent",
+            etiqueta: "reindexing the docs does not duplicate chunks: the content hash decides",
+          },
+        ],
+      },
+      volver: "Back to projects",
+    },
+  },
+} satisfies SiteContent;
