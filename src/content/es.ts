@@ -25,6 +25,9 @@ export const es = {
     cambiarIdioma: "Cambiar de idioma",
     actualidad: "Actualidad",
     pendiente: "Pendiente de confirmar",
+    navegacionPrincipal: "Navegación principal",
+    perfiles: "Perfiles",
+    navegacionPie: "Enlaces del pie",
   },
 
   nav: {

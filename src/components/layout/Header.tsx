@@ -46,7 +46,7 @@ export function Header() {
             {nav.monograma}
           </Link>
 
-          <nav aria-label={nav.contactar} className="hidden items-center gap-7 md:flex">
+          <nav aria-label={ui.navegacionPrincipal} className="hidden items-center gap-7 md:flex">
             {nav.items.map((item) => (
               <Link
                 key={item.href}
@@ -86,7 +86,7 @@ export function Header() {
       {abierto && (
         <div id="menu-movil" className="border-t border-hairline bg-bg md:hidden">
           <Container>
-            <nav className="flex flex-col py-2" aria-label={ui.abrirMenu}>
+            <nav className="flex flex-col py-2" aria-label={ui.navegacionPrincipal}>
               {nav.items.map((item) => (
                 <Link
                   key={item.href}

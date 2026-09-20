@@ -18,7 +18,7 @@ export function Home() {
 
   return (
     <>
-      <Seo title={seo.title} description={seo.description} ruta="/" />
+      <Seo title={seo.title} />
       <Hero />
       <About />
       <Projects />

@@ -122,21 +122,27 @@ function bloqueDeMetadatos(ruta: Ruta, imagenOg: ImagenOg | null): string {
 }
 
 function escribirRuta(plantilla: string, ruta: Ruta, imagenOg: ImagenOg | null): void {
-  let html = plantilla.replace(
-    /<title>[\s\S]*?<\/title>/,
-    `<title>${escapar(ruta.title)}</title>`,
-  );
+  let html = plantilla.replace(/<title>[\s\S]*?<\/title>/, `<title>${escapar(ruta.title)}</title>`);
 
   const bloque = bloqueDeMetadatos(ruta, imagenOg);
   html = html.includes(MARCA_INICIO)
     ? html.replace(new RegExp(`${MARCA_INICIO}[\\s\\S]*?${MARCA_FIN}`), bloque)
     : html.replace("</head>", `  ${bloque}\n  </head>`);
 
-  const destino =
-    ruta.ruta === "/" ? join(DIST, "index.html") : join(DIST, ruta.ruta, "index.html");
+  if (ruta.ruta === "/") {
+    writeFileSync(join(DIST, "index.html"), html, "utf8");
+    return;
+  }
 
-  mkdirSync(dirname(destino), { recursive: true });
-  writeFileSync(destino, html, "utf8");
+  // Se escriben las dos formas que resuelven los alojamientos estáticos:
+  // /proyectos/avalon-agent.html y /proyectos/avalon-agent/index.html. Con una
+  // sola, un servidor que no resuelva el índice de directorio para rutas sin
+  // barra final acabaría sirviendo el HTML de la portada, y el rastreador de
+  // turno leería el título y la imagen equivocados.
+  for (const destino of [join(DIST, `${ruta.ruta}.html`), join(DIST, ruta.ruta, "index.html")]) {
+    mkdirSync(dirname(destino), { recursive: true });
+    writeFileSync(destino, html, "utf8");
+  }
 }
 
 function escribirSitemapYRobots(): void {
@@ -161,6 +167,49 @@ function escribirSitemapYRobots(): void {
   writeFileSync(join(DIST, "robots.txt"), robots, "utf8");
 }
 
+/**
+ * llms.txt: resumen del sitio en markdown para agentes y modelos, que cada vez
+ * más leen esto antes que el HTML. Sale del mismo contenido que la web.
+ */
+function escribirLlmsTxt(): void {
+  const proyectos = es.proyectos.items
+    .filter((proyecto) => proyecto.visible)
+    .map((proyecto) => `- **${proyecto.titulo}** (${proyecto.estado}): ${proyecto.resumen}`);
+
+  const servicios = es.servicios.items.map(
+    (servicio) => `- **${servicio.titulo}**: ${servicio.descripcion}`,
+  );
+
+  const texto = [
+    `# ${es.hero.nombre}`,
+    "",
+    `> ${es.hero.titular}. ${es.hero.propuesta}`,
+    "",
+    es.disponibilidad,
+    "",
+    "## Quién soy",
+    "",
+    ...es.sobreMi.parrafos,
+    "",
+    "## Proyectos",
+    "",
+    ...proyectos,
+    "",
+    "## Servicios",
+    "",
+    ...servicios,
+    "",
+    "## Enlaces",
+    "",
+    `- GitHub: ${es.hero.github.href}`,
+    `- LinkedIn: ${es.hero.linkedin.href}`,
+    ...(SITIO ? [`- Caso de estudio: ${SITIO}/proyectos/avalon-agent`] : []),
+    "",
+  ].join(String.fromCharCode(10));
+
+  writeFileSync(join(DIST, "llms.txt"), texto, "utf8");
+}
+
 function principal(): void {
   const plantilla = readFileSync(join(DIST, "index.html"), "utf8");
   // Las medidas se leen del propio PNG: declararlas a ojo es pedir que un día
@@ -177,12 +226,19 @@ function principal(): void {
   copyFileSync(join(DIST, "index.html"), join(DIST, "404.html"));
 
   escribirSitemapYRobots();
+  escribirLlmsTxt();
 
   const avisos: string[] = [];
-  if (!SITIO) avisos.push("VITE_SITE_URL sin definir: canonical y Open Graph quedan relativos y no se genera sitemap.xml");
-  if (!imagenOg) avisos.push("sin imagen Open Graph en public/: se omiten og:image y twitter:image");
+  if (!SITIO)
+    avisos.push(
+      "VITE_SITE_URL sin definir: canonical y Open Graph quedan relativos y no se genera sitemap.xml",
+    );
+  if (!imagenOg)
+    avisos.push("sin imagen Open Graph en public/: se omiten og:image y twitter:image");
 
-  console.log(`postbuild: ${rutas.length} rutas prerenderizadas (${rutas.map((r) => r.ruta).join(", ")})`);
+  console.log(
+    `postbuild: ${rutas.length} rutas prerenderizadas (${rutas.map((r) => r.ruta).join(", ")})`,
+  );
   for (const aviso of avisos) console.log(`postbuild: aviso — ${aviso}`);
 }
 

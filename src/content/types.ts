@@ -182,6 +182,9 @@ export interface SiteContent {
     cambiarIdioma: string;
     actualidad: string;
     pendiente: string;
+    navegacionPrincipal: string;
+    perfiles: string;
+    navegacionPie: string;
   };
 
   nav: {

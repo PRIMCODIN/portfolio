@@ -36,7 +36,7 @@ export function CaseStudy() {
 
   return (
     <article>
-      <Seo title={caso.seo.title} description={caso.seo.description} ruta={`/proyectos/${caso.slug}`} />
+      <Seo title={caso.seo.title} />
 
       {/* Cabecera del caso */}
       <Container>
@@ -137,16 +137,17 @@ export function CaseStudy() {
 
             <ol className="mt-12">
               {caso.decisiones.items.map((decision, indice) => (
-                <Reveal key={decision.id} retardo={Math.min(indice, 3) * 60}>
-                  <li className="grid gap-6 border-t border-hairline py-10 lg:grid-cols-12">
-                    <h3 className="text-h3 lg:col-span-5">{decision.titulo}</h3>
-                    <div className="space-y-4 lg:col-span-7">
-                      <p>{decision.decision}</p>
-                      <p className="border-l border-accent pl-5 text-text-muted">
-                        {decision.porque}
-                      </p>
-                    </div>
-                  </li>
+                <Reveal
+                  key={decision.id}
+                  retardo={Math.min(indice, 3) * 60}
+                  as="li"
+                  className="grid gap-6 border-t border-hairline py-10 lg:grid-cols-12"
+                >
+                  <h3 className="text-h3 lg:col-span-5">{decision.titulo}</h3>
+                  <div className="space-y-4 lg:col-span-7">
+                    <p>{decision.decision}</p>
+                    <p className="border-l border-accent pl-5 text-text-muted">{decision.porque}</p>
+                  </div>
                 </Reveal>
               ))}
             </ol>
@@ -165,20 +166,19 @@ export function CaseStudy() {
               <p className="mt-6 max-w-[60ch] text-text-muted">{caso.resultados.intro}</p>
             </Reveal>
 
+            {/* dl > div > dt/dd: el div de cada Reveal es el que agrupa el par. */}
             <dl className="mt-12 grid gap-px overflow-hidden rounded-card border border-hairline bg-hairline sm:grid-cols-3">
               {caso.resultados.items.map((resultado, indice) => (
-                <Reveal key={resultado.id} retardo={indice * 60} className="bg-bg">
-                  <div className="h-full p-7">
-                    <dt className="text-h2">{resultado.valor}</dt>
-                    <dd className="mt-4 text-small text-text-muted">
-                      {resultado.etiqueta}
-                      {resultado.nota && (
-                        <span className="label-mono mt-4 block normal-case tracking-normal">
-                          {resultado.nota}
-                        </span>
-                      )}
-                    </dd>
-                  </div>
+                <Reveal key={resultado.id} retardo={indice * 60} className="h-full bg-bg p-7">
+                  <dt className="text-h2">{resultado.valor}</dt>
+                  <dd className="mt-4 text-small text-text-muted">
+                    {resultado.etiqueta}
+                    {resultado.nota && (
+                      <span className="label-mono mt-4 block normal-case tracking-normal">
+                        {resultado.nota}
+                      </span>
+                    )}
+                  </dd>
                 </Reveal>
               ))}
             </dl>

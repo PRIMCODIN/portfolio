@@ -9,7 +9,7 @@ import { valorPublicable } from "@/lib/contenido";
 import { DotField } from "./DotField";
 
 export function Hero() {
-  const { hero, disponibilidad } = useContent();
+  const { hero, disponibilidad, ui } = useContent();
   const cv = valorPublicable(hero.cvHref);
 
   return (
@@ -61,7 +61,7 @@ export function Hero() {
           </Reveal>
 
           <Reveal retardo={360}>
-            <nav aria-label={hero.github.label} className="mt-10 flex flex-wrap items-center gap-6">
+            <nav aria-label={ui.perfiles} className="mt-10 flex flex-wrap items-center gap-6">
               {[hero.github, hero.linkedin].map((enlace) => (
                 <a
                   key={enlace.href}

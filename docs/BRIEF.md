@@ -115,6 +115,7 @@ Escríbelo en primera persona, cercano, sin frases hechas tipo «apasionado por 
 ## 8. Experiencia (fuente: LinkedIn)
 
 ### Desarrollador Backend e Integración de IA (Prácticas DAM) — YMRO Technologies
+
 Jornada parcial · marzo 2026 – actualidad · Barcelona · Híbrido
 
 Asistente conversacional con IA integrado en una app móvil, desarrollado en un equipo de 6 personas. Rol: backend, orquestación e infraestructura.
@@ -130,6 +131,7 @@ Stack: Flutter · n8n · Dify · Groq · Google Calendar OAuth · Docker
 `TODO`: confirmar si puede nombrarse el producto (Aurora) y mencionar la auditoría técnica posterior del MVP (detectó credenciales expuestas y un webhook sin autenticar; propuso migrar la orquestación a FastAPI + Supabase). Hay restricciones contractuales de portfolio pendientes de cerrar: hasta confirmarlo, ni nombre del producto ni enlaces a código.
 
 ### Cofundador y responsable técnico — Avalon Intelligence
+
 Agencia de automatización con IA para pymes. `TODO`: fechas y cómo presentarlo públicamente (no figura en LinkedIn).
 
 ### Trayectoria previa: trato con cliente
@@ -150,6 +152,7 @@ Agencia de automatización con IA para pymes. `TODO`: fechas y cómo presentarlo
 ## 10. Proyectos
 
 ### Avalon Agent — destacado, con caso de estudio
+
 Asistente conversacional RAG multi-tenant en español para pymes: responde con la base de conocimiento de cada negocio, capta leads y deriva a una persona cuando hace falta.
 
 - Stack: Python, FastAPI, Supabase (PostgreSQL + pgvector con índice HNSW), embeddings `bge-m3` vía Ollama, LLM por endpoint compatible con OpenAI, widget en JavaScript sin dependencias.
@@ -164,26 +167,31 @@ Asistente conversacional RAG multi-tenant en español para pymes: responde con l
 - Estado: `TODO` (en desarrollo / desplegado). Enlace al repo: `TODO`.
 
 ### App de fitness y nutrición — `gymApp` (en desarrollo)
+
 App móvil para registrar calorías y entrenamientos con arquitectura profesional: Clean Architecture y Riverpod en Flutter, backend en Supabase con RLS y orquestación de IA vía n8n para estimar calorías a partir de fotos. Desarrollo con especificaciones documentadas y estructura por capas. Pensada también como futuro SaaS.
 Stack: Flutter · Dart · Riverpod · Clean Architecture · Supabase (RLS) · n8n · Docker
 Repo: https://github.com/PRIMCODIN/gymApp
 
 ### Sistema bancario — `appBancaria`
+
 Dos apps Android nativas (Kotlin + Jetpack Compose) sobre una misma base de datos, modelando el aislamiento de privilegios de un sistema bancario real: panel de administración y app cliente. Transferencias entre usuarios e historial vía Ktor. Chatbot financiero que responde en lenguaje natural sobre los datos del usuario, con agente orquestado en n8n vía webhook. Modelado en Supabase con Row Level Security y gestión de roles sobre datos sensibles.
 Stack: Kotlin · Jetpack Compose · Supabase (PostgreSQL, RLS) · n8n · Ktor · Docker
 Repo: https://github.com/PRIMCODIN/appBancaria
 
 ### Flag Challenge — `flagQuiz`
+
 Juego web de adivinar banderas con varios modos de juego y ranking global en tiempo real, hecho de extremo a extremo: frontend, base de datos y despliegue.
 Stack: React · Vite · Supabase (PostgreSQL, Auth, RLS, Realtime) · Vercel
 Repo: https://github.com/PRIMCODIN/flagQuiz · Demo: https://flag-quiz-primcodin16.vercel.app/
 
 ### Bot de agendado por voz — `agendadorBot`
+
 Pipeline completo audio → cita: bot de Telegram conectado a Make.com que recibe notas de voz, las transcribe y estructura los datos (título, fecha, hora) con un flujo en Dify, crea el evento en Google Calendar vía OAuth y confirma al usuario.
 Stack: Telegram Bot API · Make.com · Dify · Google Calendar API (OAuth)
 Repo: https://github.com/PRIMCODIN/agendadorBot
 
 ### SOCCER N GO (en desarrollo)
+
 App de geolocalización estilo Pokémon GO con estadios de clubes de fútbol, en un equipo de 3. `TODO`: confirmar si se publica ya.
 
 ---

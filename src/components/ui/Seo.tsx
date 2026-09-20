@@ -1,32 +1,12 @@
-import { urlAbsoluta } from "@/lib/sitio";
-
 /**
- * Metadatos por ruta. React 19 eleva title, meta y link al <head> desde
- * cualquier punto del árbol, así que no hace falta ninguna librería.
+ * Título del documento por ruta. React 19 lo eleva al <head> desde cualquier
+ * punto del árbol, así que no hace falta ninguna librería.
  *
- * Ojo: los rastreadores de LinkedIn, WhatsApp o X no ejecutan JavaScript. Lo
- * que ellos leen lo genera el script de postbuild, que escribe estas mismas
- * etiquetas en el HTML servido de cada ruta.
+ * Aquí no se emiten canonical ni Open Graph a propósito: de eso se encarga el
+ * script de postbuild, que los escribe en el HTML servido de cada ruta. Si
+ * además los pintara React, cada página acabaría con dos etiquetas de cada y
+ * los rastreadores verían canonicals en conflicto.
  */
-export function Seo({
-  title,
-  description,
-  ruta,
-}: {
-  title: string;
-  description: string;
-  ruta: string;
-}) {
-  const url = urlAbsoluta(ruta);
-
-  return (
-    <>
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      <link rel="canonical" href={url} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:url" content={url} />
-    </>
-  );
+export function Seo({ title }: { title: string }) {
+  return <title>{title}</title>;
 }

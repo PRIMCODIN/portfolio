@@ -3,7 +3,7 @@ import { IconoEnlaceExterno } from "@/components/ui/icons";
 import { Container } from "./Container";
 
 export function Footer() {
-  const { footer, contacto, hero } = useContent();
+  const { footer, contacto, hero, ui } = useContent();
   const anio = new Date().getFullYear();
 
   return (
@@ -13,7 +13,7 @@ export function Footer() {
           <p>
             © {anio} {footer.derechos}
           </p>
-          <nav className="flex items-center gap-5" aria-label={footer.derechos}>
+          <nav className="flex items-center gap-5" aria-label={ui.navegacionPie}>
             {[hero.github, contacto.linkedin].map((enlace) => (
               <a
                 key={enlace.href}

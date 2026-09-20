@@ -25,6 +25,9 @@ export const en = {
     cambiarIdioma: "Switch language",
     actualidad: "Present",
     pendiente: "To be confirmed",
+    navegacionPrincipal: "Main navigation",
+    perfiles: "Profiles",
+    navegacionPie: "Footer links",
   },
 
   nav: {
@@ -75,7 +78,11 @@ export const en = {
         clave: "Languages",
         valor: "Native Spanish and Catalan · professional English",
       },
-      { id: "formacion", clave: "Education", valor: "Higher degree in software development, year 2" },
+      {
+        id: "formacion",
+        clave: "Education",
+        valor: "Higher degree in software development, year 2",
+      },
     ],
   },
 
@@ -382,8 +389,7 @@ export const en = {
       },
       titulo: "Avalon Agent",
       subtitulo: "A RAG assistant that answers with the business's data, not its own",
-      contexto:
-        "Built for Avalon Intelligence, the AI automation agency I co-founded.",
+      contexto: "Built for Avalon Intelligence, the AI automation agency I co-founded.",
       estado: "In development",
       stack: [
         "Python",
@@ -416,7 +422,11 @@ export const en = {
             titulo: "Ingestion",
             detalle: "Chunked by headings, idempotent by hash",
           },
-          { id: "embeddings", titulo: "Embeddings", detalle: "bge-m3, 1024 dimensions, via Ollama" },
+          {
+            id: "embeddings",
+            titulo: "Embeddings",
+            detalle: "bge-m3, 1024 dimensions, via Ollama",
+          },
           {
             id: "almacen",
             titulo: "Supabase + pgvector",

@@ -7,6 +7,8 @@ interface Props {
   children: ReactNode;
   /** Retardo en milisegundos, para escalonar varios elementos. */
   retardo?: number;
+  /** Etiqueta a renderizar. Dentro de una lista tiene que ser li. */
+  as?: "div" | "li";
   className?: string;
 }
 
@@ -16,8 +18,8 @@ interface Props {
  * transición CSS. Si se ha pedido reducir el movimiento, el contenido nace ya
  * visible y no se llega a observar nada.
  */
-export function Reveal({ children, retardo = 0, className }: Props) {
-  const referencia = useRef<HTMLDivElement>(null);
+export function Reveal({ children, retardo = 0, as: Etiqueta = "div", className }: Props) {
+  const referencia = useRef<HTMLDivElement & HTMLLIElement>(null);
   const menosMovimiento = usePrefiereMenosMovimiento();
   const [visible, setVisible] = useState(false);
 
@@ -40,13 +42,13 @@ export function Reveal({ children, retardo = 0, className }: Props) {
   }, [menosMovimiento]);
 
   return (
-    <div
+    <Etiqueta
       ref={referencia}
       data-visible={visible || menosMovimiento}
       style={retardo ? { transitionDelay: `${retardo}ms` } : undefined}
       className={cn("reveal", className)}
     >
       {children}
-    </div>
+    </Etiqueta>
   );
 }

@@ -5,7 +5,7 @@ export function Chip({ children, className }: { children: string; className?: st
   return (
     <span
       className={cn(
-        "label-mono inline-flex items-center rounded-pill border border-border px-2.5 py-1 leading-none",
+        "label-mono inline-flex items-center rounded-pill border border-border px-2.5 py-1 leading-none normal-case tracking-normal",
         className,
       )}
     >

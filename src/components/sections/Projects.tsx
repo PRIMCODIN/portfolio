@@ -67,12 +67,7 @@ function Tarjeta({ proyecto, textos }: { proyecto: Proyecto; textos: Textos }) {
       <h3 className={cn("mt-7", proyecto.destacado ? "text-h2" : "text-h3")}>{proyecto.titulo}</h3>
       <p className="label-mono mt-2.5">{proyecto.rol}</p>
 
-      <p
-        className={cn(
-          "mt-5 text-text-muted",
-          proyecto.destacado ? "max-w-[52ch]" : "text-small",
-        )}
-      >
+      <p className={cn("mt-5 text-text-muted", proyecto.destacado ? "max-w-[52ch]" : "text-small")}>
         {proyecto.resumen}
       </p>
 

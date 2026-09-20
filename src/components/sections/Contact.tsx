@@ -18,7 +18,13 @@ export function Contact() {
   );
 
   const enlaces = [
-    { id: "email", label: contacto.emailEtiqueta, valor: email, href: `mailto:${email}`, externo: false },
+    {
+      id: "email",
+      label: contacto.emailEtiqueta,
+      valor: email,
+      href: `mailto:${email}`,
+      externo: false,
+    },
     {
       id: "linkedin",
       label: contacto.linkedin.label,
@@ -45,20 +51,18 @@ export function Contact() {
     >
       <ul>
         {enlaces.map((enlace, indice) => (
-          <Reveal key={enlace.id} retardo={indice * 60}>
-            <li>
-              <a
-                href={enlace.href}
-                {...(enlace.externo ? { target: "_blank", rel: "noreferrer noopener" } : {})}
-                className="group flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-t border-hairline py-7 transition-colors duration-[--duration-fast] hover:text-accent"
-              >
-                <span className="label-mono">{enlace.label}</span>
-                <span className="flex items-center gap-2 text-h3">
-                  {enlace.valor}
-                  {enlace.externo && <IconoEnlaceExterno className="opacity-60" />}
-                </span>
-              </a>
-            </li>
+          <Reveal key={enlace.id} retardo={indice * 60} as="li">
+            <a
+              href={enlace.href}
+              {...(enlace.externo ? { target: "_blank", rel: "noreferrer noopener" } : {})}
+              className="group flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-t border-hairline py-7 transition-colors duration-[--duration-fast] hover:text-accent"
+            >
+              <span className="label-mono">{enlace.label}</span>
+              <span className="flex items-center gap-2 text-h3">
+                {enlace.valor}
+                {enlace.externo && <IconoEnlaceExterno className="opacity-60" />}
+              </span>
+            </a>
           </Reveal>
         ))}
       </ul>

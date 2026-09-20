@@ -7,7 +7,10 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
  * dos líneas que marcan el ancho del contenido.
  */
 export function GridLines() {
-  const esAncha = useMediaQuery("(min-width: 769px)");
+  // 768px es el mismo corte que usa el modificador md de Tailwind: si la
+  // retícula de fondo y el bento no comparten punto de ruptura, a ese ancho
+  // exacto las tarjetas se salen de las líneas.
+  const esAncha = useMediaQuery("(min-width: 768px)");
   const esEstrecha = useMediaQuery("(max-width: 480px)");
   const columnas = esEstrecha ? 1 : esAncha ? 12 : 4;
 
