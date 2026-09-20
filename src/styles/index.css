@@ -235,7 +235,9 @@ html[data-theme="dark"] {
   transform: translateY(-200%);
   transition: transform var(--duration-fast) var(--ease-soft);
 
-  &:focus-visible {
+  /* :focus y no :focus-visible: a este enlace solo se llega con teclado, y
+     :focus-visible no siempre casa según cómo se haya movido el foco. */
+  &:focus {
     transform: translateY(0);
   }
 }
