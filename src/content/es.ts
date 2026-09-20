@@ -40,7 +40,7 @@ export const es = {
   },
 
   hero: {
-    etiqueta: "Barcelona · Disponible",
+    etiqueta: "Barcelona",
     nombre: "Víctor Prim Romero",
     titular: "Desarrollador fullstack · IA aplicada",
     propuesta:
