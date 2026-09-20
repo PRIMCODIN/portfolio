@@ -1,4 +1,4 @@
-import { todo, type SiteContent } from "./types";
+import { todo, type SiteContent } from "./types.ts";
 
 /**
  * Contenido en inglés. Debe mantener exactamente las mismas claves que es.ts:

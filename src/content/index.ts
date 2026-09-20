@@ -1,6 +1,6 @@
-import { en } from "./en";
-import { es } from "./es";
-import type { Locale, SiteContent } from "./types";
+import { en } from "./en.ts";
+import { es } from "./es.ts";
+import type { Locale, SiteContent } from "./types.ts";
 
 /** Los dos idiomas disponibles, en orden de aparición en el selector. */
 export const idiomas: readonly Locale[] = ["es", "en"] as const;

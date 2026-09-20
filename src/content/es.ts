@@ -1,4 +1,4 @@
-import { todo, type SiteContent } from "./types";
+import { todo, type SiteContent } from "./types.ts";
 
 /**
  * Contenido en español. Es la fuente de la que bebe toda la interfaz.

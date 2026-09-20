@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 
 import { Section } from "@/components/layout/Section";
+import { AssistantPrompt } from "@/components/ui/AssistantPrompt";
 import { Badge } from "@/components/ui/Badge";
 import { IconoEnlaceExterno } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
@@ -65,6 +66,13 @@ export function Contact() {
       <Reveal retardo={200}>
         <div className="mt-12 border-t border-hairline pt-12">
           <Badge>{disponibilidad}</Badge>
+        </div>
+      </Reveal>
+
+      {/* Solo aparece si el widget está configurado. */}
+      <Reveal retardo={260}>
+        <div className="mt-12 empty:mt-0">
+          <AssistantPrompt />
         </div>
       </Reveal>
     </Section>

@@ -8,6 +8,7 @@ import { ScrollManager } from "@/components/layout/ScrollManager";
 import { SkipLink } from "@/components/ui/SkipLink";
 import { LocaleProvider } from "@/i18n/LocaleProvider";
 import { Home } from "@/pages/Home";
+import { Og } from "@/pages/Og";
 import { ThemeProvider } from "@/theme/ThemeProvider";
 
 // El caso de estudio se carga aparte: no lastra la portada, que es lo que
@@ -34,6 +35,8 @@ function Sitio() {
               </Suspense>
             }
           />
+          {/* Lienzo de la imagen Open Graph: solo en desarrollo. */}
+          {import.meta.env.DEV && <Route path="/og" element={<Og />} />}
           <Route path="*" element={<Home />} />
         </Routes>
       </main>
