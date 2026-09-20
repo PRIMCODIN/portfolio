@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 import { Section } from "@/components/layout/Section";
 import { Chip } from "@/components/ui/Chip";
 import { IconoEnlaceExterno, IconoFlecha } from "@/components/ui/icons";
@@ -12,21 +14,40 @@ type Textos = SiteContent["proyectos"];
 /** Enlace de pie de tarjeta, con subrayado que aparece al pasar por encima. */
 function EnlaceTarjeta({
   href,
+  to,
   children,
   externo,
 }: {
-  href: string;
+  href?: string;
+  to?: string;
   children: string;
   externo?: boolean;
 }) {
-  return (
-    <a
-      href={href}
-      {...(externo ? { target: "_blank", rel: "noreferrer noopener" } : {})}
-      className="inline-flex items-center gap-1.5 text-small text-text-muted underline decoration-transparent underline-offset-4 transition-colors duration-[--duration-fast] hover:text-text hover:decoration-current"
-    >
+  const clases =
+    "inline-flex items-center gap-1.5 text-small text-text-muted underline decoration-transparent underline-offset-4 transition-colors duration-[--duration-fast] hover:text-text hover:decoration-current";
+
+  const contenido = (
+    <>
       {children}
-      {externo ? <IconoEnlaceExterno className="opacity-70" /> : <IconoFlecha className="opacity-70" />}
+      {externo ? (
+        <IconoEnlaceExterno className="opacity-70" />
+      ) : (
+        <IconoFlecha className="opacity-70" />
+      )}
+    </>
+  );
+
+  if (to) {
+    return (
+      <Link to={to} className={clases}>
+        {contenido}
+      </Link>
+    );
+  }
+
+  return (
+    <a href={href} target="_blank" rel="noreferrer noopener" className={clases}>
+      {contenido}
     </a>
   );
 }
@@ -65,7 +86,7 @@ function Tarjeta({ proyecto, textos }: { proyecto: Proyecto; textos: Textos }) {
 
       <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 pt-8">
         {proyecto.casoDeEstudio && (
-          <EnlaceTarjeta href={`/proyectos/${proyecto.casoDeEstudio}`}>
+          <EnlaceTarjeta to={`/proyectos/${proyecto.casoDeEstudio}`}>
             {textos.verCaso}
           </EnlaceTarjeta>
         )}

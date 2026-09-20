@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Link } from "react-router";
 
 import { cn } from "@/lib/cn";
 import { IconoEnlaceExterno } from "./icons";
@@ -16,6 +17,8 @@ interface Props {
   children: ReactNode;
   variante?: Variante;
   href?: string;
+  /** Ruta interna del router; tiene prioridad sobre href. */
+  to?: string;
   /** Fuerza el tratamiento de enlace externo (abre en otra pestaña). */
   externo?: boolean;
   onClick?: () => void;
@@ -31,6 +34,7 @@ export function Button({
   children,
   variante = "secundario",
   href,
+  to,
   externo,
   onClick,
   className,
@@ -43,6 +47,14 @@ export function Button({
     estilos[variante],
     className,
   );
+
+  if (to) {
+    return (
+      <Link to={to} className={clases}>
+        {children}
+      </Link>
+    );
+  }
 
   if (href) {
     return (

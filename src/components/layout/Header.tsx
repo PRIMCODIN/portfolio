@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router";
 
 import { Button } from "@/components/ui/Button";
 import { IconoCerrar, IconoMenu } from "@/components/ui/icons";
@@ -13,6 +14,9 @@ import { Container } from "./Container";
  */
 export function Header() {
   const { nav, ui } = useContent();
+  const { pathname } = useLocation();
+  // Fuera de la portada las anclas tienen que volver a ella primero.
+  const destino = (ancla: string) => (pathname === "/" ? ancla : `/${ancla}`);
   const [abierto, setAbierto] = useState(false);
   const botonMenu = useRef<HTMLButtonElement>(null);
 
@@ -35,22 +39,22 @@ export function Header() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-hairline bg-bg/85 backdrop-blur-md">
       <Container>
         <div className="flex h-[var(--header-h)] items-center justify-between gap-4">
-          <a
-            href="#inicio"
+          <Link
+            to={destino("#inicio")}
             className="label-mono text-text transition-opacity duration-[--duration-fast] hover:opacity-70"
           >
             {nav.monograma}
-          </a>
+          </Link>
 
           <nav aria-label={nav.contactar} className="hidden items-center gap-7 md:flex">
             {nav.items.map((item) => (
-              <a
+              <Link
                 key={item.href}
-                href={item.href}
+                to={destino(item.href)}
                 className="text-small text-text-muted transition-colors duration-[--duration-fast] hover:text-text"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -60,7 +64,7 @@ export function Header() {
             </div>
             <ThemeToggle />
             <div className="hidden md:block">
-              <Button href="#contacto" variante="primario" className="px-4 py-2">
+              <Button to={destino("#contacto")} variante="primario" className="px-4 py-2">
                 {nav.contactar}
               </Button>
             </div>
@@ -84,18 +88,18 @@ export function Header() {
           <Container>
             <nav className="flex flex-col py-2" aria-label={ui.abrirMenu}>
               {nav.items.map((item) => (
-                <a
+                <Link
                   key={item.href}
-                  href={item.href}
+                  to={destino(item.href)}
                   onClick={() => setAbierto(false)}
                   className="border-b border-hairline py-3.5 text-text-muted transition-colors duration-[--duration-fast] last:border-b-0 hover:text-text"
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
               <div className="flex items-center justify-between gap-3 py-4">
                 <LocaleSwitch />
-                <Button href="#contacto" variante="primario" className="px-4 py-2">
+                <Button to={destino("#contacto")} variante="primario" className="px-4 py-2">
                   {nav.contactar}
                 </Button>
               </div>
