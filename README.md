@@ -90,15 +90,31 @@ están **las tres** variables. Si falta cualquiera, no se renderiza nada y no se
 produce ningún error. Copia `.env.example` a `.env` y rellena:
 
 ```bash
-VITE_CHAT_WIDGET_URL=https://asistente.ejemplo.com/widget.js
-VITE_CHAT_API_URL=https://asistente.ejemplo.com/api
+VITE_CHAT_WIDGET_URL=https://asistente.ejemplo.com/widget/widget.js
+VITE_CHAT_API_URL=https://asistente.ejemplo.com
 VITE_CHAT_TENANT_KEY=clave-del-tenant
 ```
+
+`VITE_CHAT_API_URL` va **sin sufijo de ruta**: el widget le concatena
+`/v1/config` y `/v1/chat`, así que un `/api` al final acabaría pidiendo
+`/api/v1/config`. La clave del tenant no es un secreto —viaja en un atributo
+`data-` del HTML—, así que no necesita tratarse como tal.
 
 El script se inyecta una sola vez, con `defer`, pasando la URL de la API y la
 clave del tenant en atributos `data-`. `src/lib/chatWidget.ts` espera que el
 widget exponga `window.avalonWidget.open()`; si no lo hace, el botón no rompe
 nada, simplemente no abre.
+
+Las tres se resuelven **en tiempo de build**: Vite sustituye cada
+`import.meta.env.VITE_*` al compilar, así que cambiarlas exige reconstruir, y
+sin ellas el bloque no llega siquiera al bundle. En un build en la nube tienen
+que estar en el entorno de build del proveedor; las variables de runtime del
+Worker (`vars` de `wrangler.jsonc`) **no** sirven, porque nunca llegan a Vite.
+
+El aspecto y el copy del chat no salen de aquí, sino de la configuración del
+tenant en el servidor. Con `tema: auto` el widget sigue el `data-theme` del
+`<html>` del portfolio, así que el toggle claro/oscuro lo arrastra sin que haya
+que configurar nada en este repo.
 
 ## Despliegue
 
@@ -110,15 +126,32 @@ genera el sitemap; el build lo avisa por consola.
 VITE_SITE_URL=https://tudominio.com npm run build
 ```
 
-### Cloudflare Pages
+### Cloudflare Workers
+
+El sitio se despliega como Worker con assets estáticos, vía
+`@cloudflare/vite-plugin`. `wrangler.jsonc` (en la raíz; el de `src/` no se usa)
+declara `not_found_handling: "single-page-application"`, que es el fallback del
+router y sustituye al viejo `public/_redirects`. Los ficheros estáticos tienen
+prioridad sobre ese fallback, así que las rutas prerenderizadas se sirven con
+sus propios metadatos.
+
+```bash
+npm run preview   # build + wrangler dev, en local
+npm run deploy    # build + wrangler deploy
+```
+
+Lanzado desde esta máquina, el build lee el `.env` local. Si el build corre en
+la nube (Workers Builds, CI), hay que declarar allí las variables **de build**,
+no las de runtime del Worker:
 
 - Build command: `npm run build`
 - Output directory: `dist`
-- Variable de entorno: `VITE_SITE_URL`
+- Variables de entorno: `VITE_SITE_URL`, `VITE_CHAT_WIDGET_URL`,
+  `VITE_CHAT_API_URL`, `VITE_CHAT_TENANT_KEY`
 
-`public/_redirects` ya incluye el fallback SPA (`/* /index.html 200`). Los
-ficheros estáticos tienen prioridad sobre esa regla, así que las rutas
-prerenderizadas se sirven con sus propios metadatos.
+Ojo con el CORS del asistente: el origen desde el que se sirve el sitio tiene
+que estar en la lista del servidor del widget. `wrangler dev` usa el puerto
+8787, que es un origen distinto del `5173` de `npm run dev`.
 
 ### GitHub Pages
 
