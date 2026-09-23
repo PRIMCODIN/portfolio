@@ -6,6 +6,7 @@ import { IconoCerrar, IconoMenu } from "@/components/ui/icons";
 import { LocaleSwitch } from "@/components/ui/LocaleSwitch";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useContent } from "@/i18n/locale-context";
+import { chatDisponible } from "@/lib/chatWidget";
 import { Container } from "./Container";
 
 /**
@@ -14,6 +15,7 @@ import { Container } from "./Container";
  */
 export function Header() {
   const { nav, ui } = useContent();
+  const items = nav.items.filter((item) => !item.requiereChat || chatDisponible);
   const { pathname } = useLocation();
   // Fuera de la portada las anclas tienen que volver a ella primero.
   const destino = (ancla: string) => (pathname === "/" ? ancla : `/${ancla}`);
@@ -47,7 +49,7 @@ export function Header() {
           </Link>
 
           <nav aria-label={ui.navegacionPrincipal} className="hidden items-center gap-7 md:flex">
-            {nav.items.map((item) => (
+            {items.map((item) => (
               <Link
                 key={item.href}
                 to={destino(item.href)}
@@ -87,7 +89,7 @@ export function Header() {
         <div id="menu-movil" className="border-t border-hairline bg-bg md:hidden">
           <Container>
             <nav className="flex flex-col py-2" aria-label={ui.navegacionPrincipal}>
-              {nav.items.map((item) => (
+              {items.map((item) => (
                 <Link
                   key={item.href}
                   to={destino(item.href)}

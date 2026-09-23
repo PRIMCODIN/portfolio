@@ -4,6 +4,11 @@ import { Reveal } from "@/components/ui/Reveal";
 import { cn } from "@/lib/cn";
 import { Container } from "./Container";
 
+/** Lo que recibe cada sección desde Home: su posición entre las que se pintan. */
+export interface PropsSeccion {
+  numero: number;
+}
+
 interface Props {
   id: string;
   /** Número que encabeza la etiqueta mono: // 03 — PROYECTOS */

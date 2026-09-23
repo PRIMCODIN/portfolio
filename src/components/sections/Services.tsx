@@ -1,14 +1,14 @@
-import { Section } from "@/components/layout/Section";
+import { Section, type PropsSeccion } from "@/components/layout/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { useContent } from "@/i18n/locale-context";
 
-export function Services() {
+export function Services({ numero }: PropsSeccion) {
   const { servicios } = useContent();
 
   return (
     <Section
       id="servicios"
-      numero={5}
+      numero={numero}
       etiqueta={servicios.etiqueta}
       titulo={servicios.titulo}
       intro={servicios.intro}

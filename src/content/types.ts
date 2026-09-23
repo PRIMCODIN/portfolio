@@ -189,7 +189,8 @@ export interface SiteContent {
 
   nav: {
     monograma: string;
-    items: Enlace[];
+    /** requiereChat: el enlace solo aparece si el widget está configurado. */
+    items: (Enlace & { requiereChat?: boolean })[];
     contactar: string;
   };
 
@@ -200,17 +201,23 @@ export interface SiteContent {
     propuesta: string;
     verProyectos: string;
     descargarCv: string;
+    /** CTA hacia la sección Agente. Solo se pinta si el widget está configurado. */
+    preguntarAgente: string;
     cvHref: Pendiente<string>;
     github: Enlace;
     linkedin: Enlace;
   };
 
-  /** Bloque del asistente RAG. Solo se pinta si el widget está configurado. */
-  asistente: {
+  /** Sección del agente RAG. Solo se pinta si el widget está configurado. */
+  agente: {
     etiqueta: string;
     titulo: string;
-    descripcion: string;
-    cta: string;
+    intro: string;
+    aviso: string;
+    enlace: string;
+    cargando: string;
+    error: string;
+    errorEnlace: string;
   };
 
   sobreMi: {

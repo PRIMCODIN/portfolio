@@ -35,6 +35,7 @@ export const es = {
     items: [
       { href: "#sobre-mi", label: "Quién soy" },
       { href: "#proyectos", label: "Proyectos" },
+      { href: "#agente", label: "Agente", requiereChat: true },
       { href: "#stack", label: "Stack" },
       { href: "#trayectoria", label: "Trayectoria" },
       { href: "#servicios", label: "Servicios" },
@@ -50,17 +51,22 @@ export const es = {
       "Construyo software de punta a punta: del diseño de la arquitectura a un producto desplegado y funcionando.",
     verProyectos: "Ver proyectos",
     descargarCv: "Descargar CV",
+    preguntarAgente: "Pregúntale a mi agente",
     cvHref: todo("subir public/cv.pdf actualizado y sustituir este valor por /cv.pdf"),
     github: { href: "https://github.com/PRIMCODIN", label: "GitHub" },
     linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },
   },
 
-  asistente: {
-    etiqueta: "Asistente",
-    titulo: "Pregúntale a mi asistente",
-    descripcion:
-      "El mismo asistente RAG que construyo para negocios, esta vez con mi perfil como base de conocimiento. Pregúntale por mi experiencia o por cómo está hecho algo.",
-    cta: "Abrir el asistente",
+  agente: {
+    etiqueta: "AGENTE",
+    titulo: "Pregúntale a mi agente",
+    intro:
+      "Un agente RAG que responde con la información de mi perfil: experiencia, proyectos, stack y forma de trabajar. Es el mismo sistema que construyo para empresas, desplegado en mi propio servidor.",
+    aviso: "Puede equivocarse. Para lo importante, escríbeme directamente.",
+    enlace: "Cómo está hecho",
+    cargando: "Cargando el agente…",
+    error: "No se ha podido cargar el agente.",
+    errorEnlace: "Escríbeme directamente",
   },
 
   sobreMi: {

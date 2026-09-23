@@ -4,13 +4,63 @@ import { Button } from "@/components/ui/Button";
 import { IconoEnlaceExterno, IconoFlecha } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { TodoMark } from "@/components/ui/TodoMark";
-import { useContent } from "@/i18n/locale-context";
+import { usePrefiereMenosMovimiento } from "@/hooks/useMediaQuery";
+import { useContent, useLocale } from "@/i18n/locale-context";
+import { cargarChat, chatDisponible, enfocarChat } from "@/lib/chatWidget";
 import { valorPublicable } from "@/lib/contenido";
 import { DotField } from "./DotField";
 
+/**
+ * Resuelve cuando termina el desplazamiento que está a punto de empezar. Los
+ * navegadores sin scrollend no avisan: ahí se da por terminado a los 800 ms.
+ */
+function finDelDesplazamiento(): Promise<void> {
+  return new Promise((resolver) => {
+    if (!("onscrollend" in window)) {
+      setTimeout(resolver, 800);
+      return;
+    }
+    document.addEventListener("scrollend", () => resolver(), { once: true });
+  });
+}
+
 export function Hero() {
   const { hero, disponibilidad, ui } = useContent();
+  const { locale } = useLocale();
+  const menosMovimiento = usePrefiereMenosMovimiento();
   const cv = valorPublicable(hero.cvHref);
+
+  // Pide el chat antes de llegar, para que la carga corra a la vez que el
+  // desplazamiento, y lo enfoca cuando ha terminado de moverse la página: un
+  // focus a mitad de camino lo cortaría. En pantallas táctiles no se enfoca:
+  // abriría el teclado y taparía el chat que se acaba de mostrar.
+  const preguntarAlAgente = () => {
+    const carga = cargarChat(locale);
+    const destino = document.getElementById("agente");
+    if (!destino) return;
+
+    const comportamiento = menosMovimiento ? "instant" : "smooth";
+
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      destino.scrollIntoView({ behavior: comportamiento, block: "start" });
+      carga.catch(() => {
+        /* El fallo de carga ya lo cuenta la propia sección. */
+      });
+      return;
+    }
+
+    const margen = parseFloat(getComputedStyle(destino).scrollMarginTop) || 0;
+    const yaEnSitio = Math.abs(destino.getBoundingClientRect().top - margen) < 2;
+    const llegada = yaEnSitio ? Promise.resolve() : finDelDesplazamiento();
+    destino.scrollIntoView({ behavior: comportamiento, block: "start" });
+
+    Promise.all([carga, llegada]).then(
+      () => requestAnimationFrame(enfocarChat),
+      () => {
+        /* El fallo de carga ya lo cuenta la propia sección. */
+      },
+    );
+  };
 
   return (
     <section id="inicio" className="relative overflow-hidden">
@@ -49,6 +99,12 @@ export function Hero() {
                 {hero.verProyectos}
                 <IconoFlecha />
               </Button>
+
+              {chatDisponible && (
+                <Button variante="secundario" onClick={preguntarAlAgente}>
+                  {hero.preguntarAgente}
+                </Button>
+              )}
 
               {cv ? (
                 <Button href={cv} variante="secundario">

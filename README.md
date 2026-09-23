@@ -85,9 +85,9 @@ copia ese fichero como punto de partida.
 
 ## Activar el widget del asistente
 
-El bloque «Pregúntale a mi asistente» y la carga del script solo ocurren si
-están **las tres** variables. Si falta cualquiera, no se renderiza nada y no se
-produce ningún error. Copia `.env.example` a `.env` y rellena:
+La sección «Agente», su enlace en la navegación, el botón del hero y la carga
+del script solo existen si están **las tres** variables. Si falta cualquiera,
+no se renderiza nada y no se produce ningún error. Copia `.env.example` a `.env` y rellena:
 
 ```bash
 VITE_CHAT_WIDGET_URL=https://asistente.ejemplo.com/widget/widget.js
@@ -100,10 +100,13 @@ VITE_CHAT_TENANT_KEY=clave-del-tenant
 `/api/v1/config`. La clave del tenant no es un secreto —viaja en un atributo
 `data-` del HTML—, así que no necesita tratarse como tal.
 
-El script se inyecta una sola vez, con `defer`, pasando la URL de la API y la
-clave del tenant en atributos `data-`. `src/lib/chatWidget.ts` espera que el
-widget exponga `window.avalonWidget.open()`; si no lo hace, el botón no rompe
-nada, simplemente no abre.
+El widget se usa en su layout inline (`data-layout="inline"`). El script se
+inyecta una sola vez, con `defer`, cuando la sección Agente se acerca al
+viewport o al pulsar el botón del hero. El chat se monta en un host propio que
+`src/lib/chatWidget.ts` mueve entre un aparcamiento oculto y el hueco de la
+sección, así que la conversación sobrevive a cambiar de idioma o de ruta. Si
+`window.avalonWidget` no aparece en 10 segundos, la sección muestra un aviso con
+un enlace a Contacto.
 
 Las tres se resuelven **en tiempo de build**: Vite sustituye cada
 `import.meta.env.VITE_*` al compilar, así que cambiarlas exige reconstruir, y

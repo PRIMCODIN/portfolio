@@ -1,4 +1,4 @@
-import { Section } from "@/components/layout/Section";
+import { Section, type PropsSeccion } from "@/components/layout/Section";
 import { Chip } from "@/components/ui/Chip";
 import { Reveal } from "@/components/ui/Reveal";
 import { useContent } from "@/i18n/locale-context";
@@ -48,13 +48,13 @@ function Entrada({ experiencia, actualidad }: { experiencia: Experiencia; actual
   );
 }
 
-export function Timeline() {
+export function Timeline({ numero }: PropsSeccion) {
   const { trayectoria, ui } = useContent();
 
   return (
     <Section
       id="trayectoria"
-      numero={4}
+      numero={numero}
       etiqueta={trayectoria.etiqueta}
       titulo={trayectoria.titulo}
     >

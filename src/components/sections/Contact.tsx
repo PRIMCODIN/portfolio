@@ -1,13 +1,12 @@
 import { useMemo } from "react";
 
-import { Section } from "@/components/layout/Section";
-import { AssistantPrompt } from "@/components/ui/AssistantPrompt";
+import { Section, type PropsSeccion } from "@/components/layout/Section";
 import { Badge } from "@/components/ui/Badge";
 import { IconoEnlaceExterno } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { useContent } from "@/i18n/locale-context";
 
-export function Contact() {
+export function Contact({ numero }: PropsSeccion) {
   const { contacto, disponibilidad } = useContent();
 
   // El email se compone en ejecución: la dirección no aparece literal en el
@@ -44,7 +43,7 @@ export function Contact() {
   return (
     <Section
       id="contacto"
-      numero={7}
+      numero={numero}
       etiqueta={contacto.etiqueta}
       titulo={contacto.titulo}
       intro={contacto.intro}
@@ -70,13 +69,6 @@ export function Contact() {
       <Reveal retardo={200}>
         <div className="mt-12 border-t border-hairline pt-12">
           <Badge>{disponibilidad}</Badge>
-        </div>
-      </Reveal>
-
-      {/* Solo aparece si el widget está configurado. */}
-      <Reveal retardo={260}>
-        <div className="mt-12 empty:mt-0">
-          <AssistantPrompt />
         </div>
       </Reveal>
     </Section>

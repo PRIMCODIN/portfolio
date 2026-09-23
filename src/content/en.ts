@@ -35,6 +35,7 @@ export const en = {
     items: [
       { href: "#sobre-mi", label: "About" },
       { href: "#proyectos", label: "Projects" },
+      { href: "#agente", label: "Agent", requiereChat: true },
       { href: "#stack", label: "Stack" },
       { href: "#trayectoria", label: "Experience" },
       { href: "#servicios", label: "Services" },
@@ -50,17 +51,22 @@ export const en = {
       "I build software end to end: from designing the architecture to a product deployed and running.",
     verProyectos: "See projects",
     descargarCv: "Download CV",
+    preguntarAgente: "Ask my agent",
     cvHref: todo("subir public/cv.pdf actualizado y sustituir este valor por /cv.pdf"),
     github: { href: "https://github.com/PRIMCODIN", label: "GitHub" },
     linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },
   },
 
-  asistente: {
-    etiqueta: "Assistant",
-    titulo: "Ask my assistant",
-    descripcion:
-      "The same RAG assistant I build for businesses, this time with my own profile as its knowledge base. Ask it about my experience or how something was built.",
-    cta: "Open the assistant",
+  agente: {
+    etiqueta: "AGENT",
+    titulo: "Ask my agent",
+    intro:
+      "A RAG agent that answers from my own profile: experience, projects, stack and how I work. It's the same system I build for businesses, running on my own server.",
+    aviso: "It can make mistakes. For anything important, write to me directly.",
+    enlace: "How it's built",
+    cargando: "Loading the agent…",
+    error: "The agent couldn't load.",
+    errorEnlace: "Write to me directly",
   },
 
   sobreMi: {

@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-import { Section } from "@/components/layout/Section";
+import { Section, type PropsSeccion } from "@/components/layout/Section";
 import { Chip } from "@/components/ui/Chip";
 import { IconoEnlaceExterno, IconoFlecha } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
@@ -11,8 +11,9 @@ import { valorPublicable } from "@/lib/contenido";
 
 type Textos = SiteContent["proyectos"];
 
-/** Enlace de pie de tarjeta, con subrayado que aparece al pasar por encima. */
-function EnlaceTarjeta({
+/** Enlace de pie de tarjeta, con subrayado que aparece al pasar por encima.
+ *  También lo usa la sección Agente para enlazar al caso de estudio. */
+export function EnlaceTarjeta({
   href,
   to,
   children,
@@ -100,7 +101,7 @@ function Tarjeta({ proyecto, textos }: { proyecto: Proyecto; textos: Textos }) {
   );
 }
 
-export function Projects() {
+export function Projects({ numero }: PropsSeccion) {
   const { proyectos } = useContent();
   const visibles = proyectos.items.filter((proyecto) => proyecto.visible);
   const destacados = visibles.filter((proyecto) => proyecto.destacado);
@@ -115,7 +116,7 @@ export function Projects() {
   return (
     <Section
       id="proyectos"
-      numero={2}
+      numero={numero}
       etiqueta={proyectos.etiqueta}
       titulo={proyectos.titulo}
       intro={proyectos.intro}

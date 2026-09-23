@@ -1,15 +1,15 @@
-import { Section } from "@/components/layout/Section";
+import { Section, type PropsSeccion } from "@/components/layout/Section";
 import { Chip } from "@/components/ui/Chip";
 import { Reveal } from "@/components/ui/Reveal";
 import { useContent } from "@/i18n/locale-context";
 
-export function Stack() {
+export function Stack({ numero }: PropsSeccion) {
   const { stack } = useContent();
 
   return (
     <Section
       id="stack"
-      numero={3}
+      numero={numero}
       etiqueta={stack.etiqueta}
       titulo={stack.titulo}
       intro={stack.intro}
