@@ -260,16 +260,20 @@ html[data-theme="dark"] {
   }
 }
 
-/* Aparición al entrar en el viewport. El atributo lo gobierna <Reveal>. */
+/* Aparición al entrar en el viewport. El atributo lo gobierna <Reveal>: solo
+   se oculta lo que empezó fuera de la pantalla, y solo si no se ha pedido
+   reducir el movimiento. Sin JavaScript no hay atributo que oculte nada. */
 @utility reveal {
-  opacity: 0;
-  transform: translateY(12px);
-  transition:
-    opacity 500ms var(--ease-soft),
-    transform 500ms var(--ease-soft);
+  @media (prefers-reduced-motion: no-preference) {
+    &[data-reveal="oculto"] {
+      opacity: 0;
+      transform: translateY(12px);
+    }
 
-  &[data-visible="true"] {
-    opacity: 1;
-    transform: none;
+    &[data-reveal="visible"] {
+      transition:
+        opacity 500ms var(--ease-soft),
+        transform 500ms var(--ease-soft);
+    }
   }
 }

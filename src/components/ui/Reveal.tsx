@@ -13,29 +13,46 @@ interface Props {
 }
 
 /**
+ * - inicial: tal como sale del HTML, visible. Sin JavaScript se queda así.
+ * - oculto: estaba fuera de la pantalla al montar; espera a entrar.
+ * - visible: ha entrado y aparece con la transición.
+ */
+type Estado = "inicial" | "oculto" | "visible";
+
+/**
  * Aparición al entrar en el viewport: un fundido con un desplazamiento corto.
- * No usa ninguna librería de animación, solo IntersectionObserver y una
- * transición CSS. Si se ha pedido reducir el movimiento, el contenido nace ya
- * visible y no se llega a observar nada.
+ * Solo se anima lo que empieza fuera de la pantalla. Lo que ya se ve al
+ * cargar no se toca, así que nunca hay contenido visible con la opacidad
+ * rebajada. Sin JavaScript, o si se ha pedido reducir el movimiento, todo se
+ * queda en su estado inicial, que es visible.
  */
 export function Reveal({ children, retardo = 0, as: Etiqueta = "div", className }: Props) {
   const referencia = useRef<HTMLDivElement & HTMLLIElement>(null);
   const menosMovimiento = usePrefiereMenosMovimiento();
-  const [visible, setVisible] = useState(false);
+  const [estado, setEstado] = useState<Estado>("inicial");
 
   useEffect(() => {
     const elemento = referencia.current;
     if (!elemento || menosMovimiento) return;
 
-    const observador = new IntersectionObserver(
-      (entradas) => {
-        if (entradas.some((entrada) => entrada.isIntersecting)) {
-          setVisible(true);
-          observador.disconnect();
-        }
-      },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.05 },
-    );
+    // La primera notificación dice si el elemento ya estaba en pantalla: en
+    // ese caso se queda como está y se deja de observar.
+    let primera = true;
+    const observador = new IntersectionObserver((entradas) => {
+      const dentro = entradas.some((entrada) => entrada.isIntersecting);
+
+      if (primera) {
+        primera = false;
+        if (dentro) observador.disconnect();
+        else setEstado("oculto");
+        return;
+      }
+
+      if (dentro) {
+        setEstado("visible");
+        observador.disconnect();
+      }
+    });
 
     observador.observe(elemento);
     return () => observador.disconnect();
@@ -44,8 +61,8 @@ export function Reveal({ children, retardo = 0, as: Etiqueta = "div", className 
   return (
     <Etiqueta
       ref={referencia}
-      data-visible={visible || menosMovimiento}
-      style={retardo ? { transitionDelay: `${retardo}ms` } : undefined}
+      data-reveal={menosMovimiento ? "inicial" : estado}
+      style={retardo && estado === "visible" ? { transitionDelay: `${retardo}ms` } : undefined}
       className={cn("reveal", className)}
     >
       {children}
