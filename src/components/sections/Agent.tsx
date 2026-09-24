@@ -1,6 +1,6 @@
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 
-import { Section } from "@/components/layout/Section";
+import { Container } from "@/components/layout/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { useContent, useLocale } from "@/i18n/locale-context";
 import { acoplarChat, cargarChat, desacoplarChat } from "@/lib/chatWidget";
@@ -17,6 +17,11 @@ type Estado = "cargando" | "listo" | "error";
  * aparcamiento al desmontarse. El hueco reserva su alto desde el primer render
  * para que la carga no desplace nada. Reveal solo envuelve la columna de
  * texto: entre el chat y el documento no puede haber ningún transform.
+ *
+ * Al llegar a /#agente tiene que verse entera sin desplazarse: la sección
+ * ocupa el alto de la pantalla, su ancla se detiene justo bajo la cabecera y
+ * el chat mide como mucho la pantalla menos la cabecera y 4rem de aire, que
+ * es lo que deja libre el centrado vertical.
  */
 export function AgentSection() {
   const { agente } = useContent();
@@ -62,41 +67,52 @@ export function AgentSection() {
   }, []);
 
   return (
-    <Section id="agente" titulo={agente.titulo}>
-      <div className="grid gap-10 md:grid-cols-12 md:gap-12">
-        <Reveal className="md:col-span-5">
-          <p className="max-w-[52ch] text-text-muted">{agente.intro}</p>
-          <p className="mt-5 max-w-[52ch] text-small text-text-muted">{agente.aviso}</p>
-          <div className="mt-8">
-            <EnlaceTarjeta to="/proyectos/chatbot-rag">{agente.enlace}</EnlaceTarjeta>
-          </div>
-        </Reveal>
+    <section
+      id="agente"
+      className="scroll-mt-[var(--header-h)] border-t border-hairline"
+      aria-labelledby="agente-titulo"
+    >
+      <Container>
+        <div className="flex min-h-svh flex-col justify-center py-12 lg:py-8">
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
+            <Reveal className="lg:col-span-5">
+              <h2 id="agente-titulo" className="text-h2">
+                {agente.titulo}
+              </h2>
+              <p className="mt-6 max-w-[52ch] text-text-muted">{agente.intro}</p>
+              <p className="mt-5 max-w-[52ch] text-small text-text-muted">{agente.aviso}</p>
+              <div className="mt-8">
+                <EnlaceTarjeta to="/proyectos/chatbot-rag">{agente.enlace}</EnlaceTarjeta>
+              </div>
+            </Reveal>
 
-        <div className="relative h-[min(560px,75svh)] overflow-hidden rounded-card border border-border md:col-span-7 md:h-[560px]">
-          <div ref={hueco} className="absolute inset-0" />
+            <div className="relative h-[min(560px,75svh)] min-w-0 overflow-hidden rounded-card border border-border lg:col-span-7 lg:h-[min(560px,calc(100svh-var(--header-h)-4rem))]">
+              <div ref={hueco} className="absolute inset-0" />
 
-          {estado !== "listo" && (
-            <div
-              role="status"
-              className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-7 text-center"
-            >
-              {estado === "cargando" ? (
-                <p className="label-mono">{agente.cargando}</p>
-              ) : (
-                <>
-                  <p className="text-small text-text-muted">{agente.error}</p>
-                  <a
-                    href="#contacto"
-                    className="text-small text-text underline underline-offset-4 transition-colors duration-[--duration-fast] hover:text-accent"
-                  >
-                    {agente.errorEnlace}
-                  </a>
-                </>
+              {estado !== "listo" && (
+                <div
+                  role="status"
+                  className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-7 text-center"
+                >
+                  {estado === "cargando" ? (
+                    <p className="label-mono">{agente.cargando}</p>
+                  ) : (
+                    <>
+                      <p className="text-small text-text-muted">{agente.error}</p>
+                      <a
+                        href="#contacto"
+                        className="text-small text-text underline underline-offset-4 transition-colors duration-[--duration-fast] hover:text-accent"
+                      >
+                        {agente.errorEnlace}
+                      </a>
+                    </>
+                  )}
+                </div>
               )}
             </div>
-          )}
+          </div>
         </div>
-      </div>
-    </Section>
+      </Container>
+    </section>
   );
 }
