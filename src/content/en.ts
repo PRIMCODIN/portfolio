@@ -50,8 +50,7 @@ export const en = {
     verProyectos: "See projects",
     descargarCv: "Download CV",
     hablarConAgente: "Talk to my AI agent",
-    hablarConAgenteSubtexto:
-      "Ask it about my experience. Turn on technical mode to see how it works under the hood.",
+    hablarConAgenteSubtexto: "Ask it about my experience, my projects or my stack.",
     cvHref: "/cv-victor-prim-romero.pdf",
     github: { href: "https://github.com/PRIMCODIN", label: "GitHub" },
     linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },
