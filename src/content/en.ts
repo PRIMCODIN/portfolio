@@ -10,9 +10,9 @@ export const en = {
   disponibilidad: "Open to opportunities · on-site or hybrid in the Barcelona area",
 
   seo: {
-    title: "Víctor Prim Romero — Fullstack developer · Applied AI",
+    title: "Víctor Prim Romero — Backend developer · Applied AI",
     description:
-      "Fullstack developer focused on backend, applied AI and DevOps. I build software end to end, from the architecture to a deployed, working product. Barcelona.",
+      "Backend developer and applied AI: APIs, RAG systems and deployment on Linux. I build software end to end, from the architecture to a deployed, working product. Barcelona.",
   },
 
   ui: {
@@ -45,7 +45,7 @@ export const en = {
   hero: {
     etiqueta: "Barcelona",
     nombre: "Víctor Prim Romero",
-    titular: "Fullstack developer · Applied AI",
+    titular: "Backend developer · Applied AI",
     propuesta:
       "I build software end to end: from designing the architecture to a product deployed and running.",
     verProyectos: "See projects",

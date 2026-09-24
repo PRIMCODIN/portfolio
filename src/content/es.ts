@@ -10,9 +10,9 @@ export const es = {
   disponibilidad: "Abierto a oportunidades · presencial o híbrido en el área de Barcelona",
 
   seo: {
-    title: "Víctor Prim Romero — Desarrollador fullstack · IA aplicada",
+    title: "Víctor Prim Romero — Desarrollador backend · IA aplicada",
     description:
-      "Desarrollador fullstack centrado en backend, IA aplicada y DevOps. Construyo software de punta a punta: de la arquitectura al producto desplegado. Barcelona.",
+      "Desarrollador backend e IA aplicada: APIs, sistemas RAG y despliegue en Linux. Construyo software de punta a punta, de la arquitectura al producto desplegado. Barcelona.",
   },
 
   ui: {
@@ -45,7 +45,7 @@ export const es = {
   hero: {
     etiqueta: "Barcelona",
     nombre: "Víctor Prim Romero",
-    titular: "Desarrollador fullstack · IA aplicada",
+    titular: "Desarrollador backend · IA aplicada",
     propuesta:
       "Construyo software de punta a punta: del diseño de la arquitectura a un producto desplegado y funcionando.",
     verProyectos: "Ver proyectos",
