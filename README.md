@@ -78,8 +78,8 @@ No hay que tocar ningún componente: `src/pages/CaseStudy.tsx` es genérico y la
 ruta `/proyectos/:slug` ya existe. El postbuild detecta el caso nuevo y le
 genera su HTML y su entrada en el sitemap automáticamente.
 
-El diagrama de arquitectura sí es propio de cada caso: el de Avalon vive en
-`src/case-studies/avalon/ArchitectureDiagram.tsx`, con las posiciones de las
+El diagrama de arquitectura sí es propio de cada caso: el del chatbot RAG vive en
+`src/case-studies/chatbot-rag/ArchitectureDiagram.tsx`, con las posiciones de las
 cajas en el componente y los textos en el contenido. Para un caso nuevo, se
 copia ese fichero como punto de partida.
 

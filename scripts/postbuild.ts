@@ -135,7 +135,7 @@ function escribirRuta(plantilla: string, ruta: Ruta, imagenOg: ImagenOg | null):
   }
 
   // Se escriben las dos formas que resuelven los alojamientos estáticos:
-  // /proyectos/avalon-agent.html y /proyectos/avalon-agent/index.html. Con una
+  // /proyectos/chatbot-rag.html y /proyectos/chatbot-rag/index.html. Con una
   // sola, un servidor que no resuelva el índice de directorio para rutas sin
   // barra final acabaría sirviendo el HTML de la portada, y el rastreador de
   // turno leería el título y la imagen equivocados.
@@ -195,7 +195,7 @@ function escribirLlmsTxt(): void {
     "",
     `- GitHub: ${es.hero.github.href}`,
     `- LinkedIn: ${es.hero.linkedin.href}`,
-    ...(SITIO ? [`- Caso de estudio: ${SITIO}/proyectos/avalon-agent`] : []),
+    ...(SITIO ? [`- Caso de estudio: ${SITIO}/proyectos/chatbot-rag`] : []),
     "",
   ].join(String.fromCharCode(10));
 

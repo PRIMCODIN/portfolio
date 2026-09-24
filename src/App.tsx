@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 
 import { Footer } from "@/components/layout/Footer";
 import { GridLines } from "@/components/layout/GridLines";
@@ -27,6 +27,11 @@ function Sitio() {
       <main id="contenido">
         <Routes>
           <Route path="/" element={<Home />} />
+          {/* Antigua URL del caso de estudio. */}
+          <Route
+            path="/proyectos/avalon-agent"
+            element={<Navigate to="/proyectos/chatbot-rag" replace />}
+          />
           <Route
             path="/proyectos/:slug"
             element={

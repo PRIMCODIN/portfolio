@@ -68,7 +68,7 @@ export function AgentSection() {
           <p className="max-w-[52ch] text-text-muted">{agente.intro}</p>
           <p className="mt-5 max-w-[52ch] text-small text-text-muted">{agente.aviso}</p>
           <div className="mt-8">
-            <EnlaceTarjeta to="/proyectos/avalon-agent">{agente.enlace}</EnlaceTarjeta>
+            <EnlaceTarjeta to="/proyectos/chatbot-rag">{agente.enlace}</EnlaceTarjeta>
           </div>
         </Reveal>
 

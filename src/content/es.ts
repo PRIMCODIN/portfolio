@@ -102,7 +102,7 @@ export const es = {
         rol: "Diseño, backend, RAG y widget",
         estado: "En desarrollo",
         stack: ["Python", "FastAPI", "Supabase", "pgvector", "HNSW", "bge-m3", "SSE", "Shadow DOM"],
-        casoDeEstudio: "avalon-agent",
+        casoDeEstudio: "chatbot-rag",
       },
       {
         id: "gymapp",
@@ -344,19 +344,19 @@ export const es = {
   },
 
   casosDeEstudio: {
-    "avalon-agent": {
-      id: "avalon-agent",
-      slug: "avalon-agent",
+    "chatbot-rag": {
+      id: "chatbot-rag",
+      slug: "chatbot-rag",
       seo: {
-        title: "Avalon Agent — Caso de estudio · Víctor Prim Romero",
+        title: "Chatbot RAG multi-tenant — Caso de estudio · Víctor Prim Romero",
         description:
-          "Asistente RAG multi-tenant en español para pymes: arquitectura, decisiones técnicas y el diagnóstico de embeddings que subió el eval de recuperación de 11/20 a 17/20.",
+          "Chatbot RAG multi-tenant en español con FastAPI, pgvector y streaming SSE, desplegado en un VPS Linux: arquitectura, decisiones técnicas, evals y despliegue.",
       },
-      titulo: "Avalon Agent",
-      subtitulo: "Un asistente RAG que responde con los datos del negocio, no con los suyos",
+      titulo: "Chatbot RAG multi-tenant",
+      subtitulo: "FastAPI · pgvector · SSE · widget embebible",
       contexto:
-        "Desarrollado para Avalon Intelligence, agencia de automatización con IA que cofundé.",
-      estado: "En desarrollo",
+        "Nació como el asistente de una agencia de automatización con IA que cofundé, que fue su primer tenant de prueba. Hoy es también el agente de este portfolio.",
+      estado: "En producción",
       stack: [
         "Python",
         "FastAPI",
@@ -368,21 +368,24 @@ export const es = {
         "Ollama",
         "SSE",
         "Shadow DOM",
+        "Docker",
+        "Caddy",
+        "Linux",
       ],
       problema: {
         titulo: "El problema",
         parrafos: [
           "Una pyme recibe cada día las mismas diez preguntas: horarios, precios, condiciones, si cubrís mi zona. Alguien del equipo las responde a mano, casi siempre tarde, y quien preguntaba ya se ha ido a otra parte.",
           "La solución evidente es un chatbot, y ahí empieza el problema de verdad: un modelo genérico contesta con total seguridad cosas que no son ciertas, y un negocio no puede permitirse que su asistente invente un precio o una cobertura.",
-          "Avalon Agent es un servicio único que atiende a varios negocios a la vez. Cada uno tiene su base de conocimiento aislada, el asistente responde solo con ella, capta el contacto de quien está interesado y deriva a una persona cuando la conversación se sale de lo que sabe.",
+          "El sistema es un servicio único que atiende a varios tenants a la vez. Cada uno tiene su base de conocimiento aislada, el asistente responde solo con ella, capta el contacto de quien está interesado y deriva a una persona cuando la conversación se sale de lo que sabe.",
         ],
       },
       arquitectura: {
         titulo: "La arquitectura",
         intro:
-          "Dos recorridos separados: el de ingesta, que ocurre cuando cambia la documentación del negocio, y el de consulta, que ocurre en cada mensaje del visitante.",
+          "Dos recorridos separados: el de ingesta, que ocurre cuando cambia la documentación de un tenant, y el de consulta, que ocurre en cada mensaje del visitante.",
         nodos: [
-          { id: "fuentes", titulo: "Documentación", detalle: "Markdown por negocio" },
+          { id: "fuentes", titulo: "Documentación", detalle: "Markdown por tenant" },
           {
             id: "ingesta",
             titulo: "Ingesta",
@@ -403,11 +406,15 @@ export const es = {
             titulo: "Widget",
             detalle: "JavaScript sin dependencias, Shadow DOM",
           },
-          { id: "api", titulo: "FastAPI", detalle: "Tenant autenticado con X-Tenant-Key" },
+          {
+            id: "api",
+            titulo: "FastAPI",
+            detalle: "Tenant por X-Tenant-Key, límites por tenant e IP",
+          },
           {
             id: "busqueda",
             titulo: "Búsqueda vectorial",
-            detalle: "match_chunks: los 4 mejores fragmentos del tenant",
+            detalle: "Por tenant; dos consultas fusionadas por posición",
           },
           { id: "llm", titulo: "LLM con tools", detalle: "capture_lead y handoff_human" },
           { id: "respuesta", titulo: "Streaming SSE", detalle: "fetch + ReadableStream" },
@@ -422,7 +429,7 @@ export const es = {
             id: "eval",
             titulo: "Un eval de recuperación como criterio de avance",
             decision:
-              "20 preguntas reales de cliente contra la base de conocimiento; el fragmento correcto tiene que aparecer entre los cuatro primeros resultados.",
+              "Preguntas reales de cliente contra la base de conocimiento; el fragmento correcto tiene que aparecer entre los primeros resultados.",
             porque:
               "Sin una medida, «ahora parece que responde mejor» no es un criterio, es una sensación. Con el eval, cada cambio en el troceado, en el modelo o en el prompt se acepta o se descarta con un número delante.",
           },
@@ -435,6 +442,37 @@ export const es = {
               "El eval destapó que nomic-embed-text generaba un espacio de similitud degenerado en español: el rango de puntuaciones estaba comprimido y había preguntas fuera de dominio puntuando por encima de aciertos reales, así que el orden de los resultados era casi ruido. Con bge-m3 el eval pasó de 11/20 a 17/20 sin tocar nada más.",
           },
           {
+            id: "fusion",
+            titulo: "Dos consultas fusionadas por posición, no por puntuación",
+            decision:
+              "Las consultas cortas lanzan dos búsquedas y los resultados se combinan según la posición que ocupa cada fragmento en cada lista, no según su puntuación.",
+            porque:
+              "Una consulta de dos o tres palabras da poca señal y la búsqueda falla más. Las puntuaciones de dos consultas distintas no están en la misma escala, así que compararlas premia a la que puntúa alto por construcción; la posición sí es comparable. Con las consultas cortas del eval se pasó de 10/12 a 12/12.",
+          },
+          {
+            id: "eval-conversacional",
+            titulo: "Un eval conversacional alimentado con fallos reales",
+            decision:
+              "Además del eval de recuperación, un eval de conversaciones completas. Cada fallo real que aparece en producción se convierte en un caso de regresión.",
+            porque:
+              "La recuperación puede acertar y la respuesta fallar igual. Convertir cada fallo en un caso garantiza que un error arreglado no vuelve con el siguiente cambio de prompt o de modelo.",
+          },
+          {
+            id: "aislamiento",
+            titulo: "Aislamiento entre tenants verificado con tests",
+            decision:
+              "Todo acceso a los datos va acotado al tenant autenticado, y hay tests automáticos que comprueban que un tenant no puede llegar a los datos de otro.",
+            porque:
+              "En un sistema multi-tenant una fuga entre clientes es el peor fallo posible. «El filtro está puesto» no es una garantía; un test que falla en cuanto deja de estarlo, sí.",
+          },
+          {
+            id: "limites",
+            titulo: "Límites de consumo por tenant y por IP",
+            decision: "La API limita cuántas peticiones acepta de cada tenant y de cada IP.",
+            porque:
+              "Es un endpoint público que acaba llamando a un LLM. Sin límites, un bucle o un abuso se convierten en coste y en un servicio degradado para el resto de tenants.",
+          },
+          {
             id: "streaming",
             titulo: "Streaming con fetch y ReadableStream, no con EventSource",
             decision:
@@ -443,12 +481,20 @@ export const es = {
               "EventSource solo hace peticiones GET y no permite enviar cabeceras propias. El tenant se autentica con X-Tenant-Key y el mensaje viaja en el cuerpo de un POST, así que la API estándar quedaba descartada desde el principio.",
           },
           {
+            id: "modo-tecnico",
+            titulo: "Un modo técnico dentro del propio chat",
+            decision:
+              "El chat tiene un modo técnico que muestra en tiempo real las métricas de cada respuesta.",
+            porque:
+              "Para quien evalúa el sistema, ver cómo responde por dentro vale más que cualquier descripción. Y a mí me sirve para detectar un comportamiento raro sin ir a los logs.",
+          },
+          {
             id: "shadow-dom",
             titulo: "El widget vive dentro de un Shadow DOM",
             decision:
               "Todo el widget se monta en un shadow root, y el markdown de las respuestas se renderiza después de escapar el HTML.",
             porque:
-              "Se incrusta en webs ajenas sobre las que no tengo ningún control. Sin aislamiento, cualquier hoja de estilos del cliente puede romper el chat y el chat puede romper la web del cliente. El escape previo evita además que una respuesta del modelo inyecte HTML en la página anfitriona.",
+              "Se incrusta en webs ajenas sobre las que no tengo ningún control. Sin aislamiento, cualquier hoja de estilos de la página anfitriona puede romper el chat y el chat puede romper la página. El escape previo evita además que una respuesta del modelo inyecte HTML en ella.",
           },
           {
             id: "reglas",
@@ -468,6 +514,18 @@ export const es = {
           },
         ],
       },
+      despliegue: {
+        titulo: "Despliegue",
+        intro:
+          "La API corre en un VPS con Linux (Ubuntu LTS) que despliego y mantengo yo. El servidor está cerrado por defecto y solo abre lo imprescindible.",
+        items: [
+          "Acceso solo por clave SSH, con el acceso de root y por contraseña desactivados.",
+          "Firewall ufw con solo los puertos 22, 80 y 443 abiertos.",
+          "Actualizaciones de seguridad automáticas.",
+          "Docker Compose con Caddy, FastAPI y Ollama. Caddy gestiona el HTTPS automático y es el único servicio expuesto; Ollama sirve bge-m3 en CPU.",
+          "La base de datos vive en Supabase cloud, y este portfolio, en Cloudflare Workers.",
+        ],
+      },
       resultados: {
         titulo: "Resultados",
         intro: "Lo que se puede medir, medido. Lo que no, contado como lo que es.",
@@ -475,14 +533,21 @@ export const es = {
           {
             id: "eval",
             valor: "17/20",
-            etiqueta: "preguntas del eval con el fragmento correcto entre los cuatro primeros",
+            etiqueta: "preguntas del eval con el fragmento correcto entre los primeros resultados",
             nota: "Antes del cambio de modelo de embeddings: 11 de 20.",
+          },
+          {
+            id: "consultas-cortas",
+            valor: "12/12",
+            etiqueta:
+              "consultas cortas del eval resueltas tras fusionar dos búsquedas por posición",
+            nota: "Antes de la fusión: 10 de 12.",
           },
           {
             id: "multitenant",
             valor: "Multi-tenant",
             etiqueta:
-              "una sola API para varios negocios, con la base de conocimiento aislada por cliente",
+              "una sola API para varios tenants, con el aislamiento entre ellos verificado con tests",
           },
           {
             id: "idempotente",

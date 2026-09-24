@@ -147,6 +147,12 @@ export interface CasoDeEstudio {
     titulo: string;
     items: DecisionTecnica[];
   };
+  /** Dónde y cómo corre en producción. */
+  despliegue: {
+    titulo: string;
+    intro: string;
+    items: string[];
+  };
   resultados: {
     titulo: string;
     intro: string;

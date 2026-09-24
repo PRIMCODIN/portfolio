@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router";
 
-import { ArchitectureDiagram } from "@/case-studies/avalon/ArchitectureDiagram";
+import { ArchitectureDiagram } from "@/case-studies/chatbot-rag/ArchitectureDiagram";
 import { Container } from "@/components/layout/Container";
 import { Chip } from "@/components/ui/Chip";
 import { IconoFlecha } from "@/components/ui/icons";
@@ -149,6 +149,31 @@ export function CaseStudy() {
         </Container>
       </section>
 
+      {/* Despliegue */}
+      <section className="border-t border-hairline">
+        <Container>
+          <div className="py-[var(--section-y)]">
+            <Reveal>
+              <h2 className="text-h2">{caso.despliegue.titulo}</h2>
+              <p className="mt-6 max-w-[60ch] text-text-muted">{caso.despliegue.intro}</p>
+            </Reveal>
+
+            <ul className="mt-12 lg:w-8/12">
+              {caso.despliegue.items.map((item, indice) => (
+                <Reveal
+                  key={item.slice(0, 24)}
+                  retardo={Math.min(indice, 3) * 60}
+                  as="li"
+                  className="border-t border-hairline py-5"
+                >
+                  {item}
+                </Reveal>
+              ))}
+            </ul>
+          </div>
+        </Container>
+      </section>
+
       {/* Resultados */}
       <section className="border-t border-hairline">
         <Container>
@@ -159,7 +184,7 @@ export function CaseStudy() {
             </Reveal>
 
             {/* dl > div > dt/dd: el div de cada Reveal es el que agrupa el par. */}
-            <dl className="mt-12 grid gap-px overflow-hidden rounded-card border border-hairline bg-hairline sm:grid-cols-3">
+            <dl className="mt-12 grid gap-px overflow-hidden rounded-card border border-hairline bg-hairline sm:grid-cols-2">
               {caso.resultados.items.map((resultado, indice) => (
                 <Reveal key={resultado.id} retardo={indice * 60} className="h-full bg-bg p-7">
                   <dt className="text-h2">{resultado.valor}</dt>

@@ -106,7 +106,7 @@ export const en = {
         rol: "Design, backend, RAG and widget",
         estado: "In development",
         stack: ["Python", "FastAPI", "Supabase", "pgvector", "HNSW", "bge-m3", "SSE", "Shadow DOM"],
-        casoDeEstudio: "avalon-agent",
+        casoDeEstudio: "chatbot-rag",
       },
       {
         id: "gymapp",
@@ -348,18 +348,19 @@ export const en = {
   },
 
   casosDeEstudio: {
-    "avalon-agent": {
-      id: "avalon-agent",
-      slug: "avalon-agent",
+    "chatbot-rag": {
+      id: "chatbot-rag",
+      slug: "chatbot-rag",
       seo: {
-        title: "Avalon Agent — Case study · Víctor Prim Romero",
+        title: "Multi-tenant RAG chatbot — Case study · Víctor Prim Romero",
         description:
-          "Multi-tenant RAG assistant in Spanish for small businesses: architecture, technical decisions and the embedding diagnosis that took the retrieval eval from 11/20 to 17/20.",
+          "Multi-tenant RAG chatbot in Spanish built with FastAPI, pgvector and SSE streaming, deployed on a Linux VPS: architecture, technical decisions, evals and deployment.",
       },
-      titulo: "Avalon Agent",
-      subtitulo: "A RAG assistant that answers with the business's data, not its own",
-      contexto: "Built for Avalon Intelligence, the AI automation agency I co-founded.",
-      estado: "In development",
+      titulo: "Multi-tenant RAG chatbot",
+      subtitulo: "FastAPI · pgvector · SSE · embeddable widget",
+      contexto:
+        "It started as the assistant for an AI automation agency I co-founded, which was its first test tenant. Today it is also the agent on this portfolio.",
+      estado: "In production",
       stack: [
         "Python",
         "FastAPI",
@@ -371,21 +372,24 @@ export const en = {
         "Ollama",
         "SSE",
         "Shadow DOM",
+        "Docker",
+        "Caddy",
+        "Linux",
       ],
       problema: {
         titulo: "The problem",
         parrafos: [
           "A small business gets the same ten questions every day: opening hours, prices, terms, whether you cover my area. Someone on the team answers them by hand, almost always late, and the person asking has already gone elsewhere.",
           "The obvious answer is a chatbot, and that is where the real problem starts: a generic model states things that are not true with complete confidence, and a business cannot afford an assistant that invents a price or a coverage area.",
-          "Avalon Agent is a single service running for several businesses at once. Each one has its own isolated knowledge base, the assistant answers only from it, captures the contact details of interested visitors and hands off to a person when the conversation goes beyond what it knows.",
+          "The system is a single service running for several tenants at once. Each one has its own isolated knowledge base, the assistant answers only from it, captures the contact details of interested visitors and hands off to a person when the conversation goes beyond what it knows.",
         ],
       },
       arquitectura: {
         titulo: "The architecture",
         intro:
-          "Two separate paths: ingestion, which happens when the business documentation changes, and querying, which happens on every visitor message.",
+          "Two separate paths: ingestion, which happens when a tenant's documentation changes, and querying, which happens on every visitor message.",
         nodos: [
-          { id: "fuentes", titulo: "Documentation", detalle: "Markdown per business" },
+          { id: "fuentes", titulo: "Documentation", detalle: "Markdown per tenant" },
           {
             id: "ingesta",
             titulo: "Ingestion",
@@ -402,11 +406,15 @@ export const en = {
             detalle: "HNSW index, isolated per tenant",
           },
           { id: "widget", titulo: "Widget", detalle: "Dependency-free JavaScript, Shadow DOM" },
-          { id: "api", titulo: "FastAPI", detalle: "Tenant authenticated with X-Tenant-Key" },
+          {
+            id: "api",
+            titulo: "FastAPI",
+            detalle: "Tenant via X-Tenant-Key, limits per tenant and IP",
+          },
           {
             id: "busqueda",
             titulo: "Vector search",
-            detalle: "match_chunks: the tenant's top 4 chunks",
+            detalle: "Per tenant; two queries fused by rank",
           },
           { id: "llm", titulo: "LLM with tools", detalle: "capture_lead and handoff_human" },
           { id: "respuesta", titulo: "SSE streaming", detalle: "fetch + ReadableStream" },
@@ -421,7 +429,7 @@ export const en = {
             id: "eval",
             titulo: "A retrieval eval as the gate for every change",
             decision:
-              "20 real customer questions against the knowledge base; the correct chunk has to appear in the top four results.",
+              "Real customer questions against the knowledge base; the correct chunk has to appear among the top results.",
             porque:
               "Without a measure, “it seems to answer better now” is not a criterion, it is a feeling. With the eval, every change to the chunking, the model or the prompt is accepted or rejected with a number attached.",
           },
@@ -434,6 +442,37 @@ export const en = {
               "The eval exposed that nomic-embed-text produced a degenerate similarity space in Spanish: the score range was compressed and out-of-domain questions were scoring above genuine matches, so the ranking was close to noise. With bge-m3 the eval went from 11/20 to 17/20 with nothing else changed.",
           },
           {
+            id: "fusion",
+            titulo: "Two queries fused by rank, not by score",
+            decision:
+              "Short queries run two searches, and the results are combined by the position each chunk holds in each list, not by its score.",
+            porque:
+              "A two- or three-word query carries little signal and retrieval fails more often. Scores from two different queries are not on the same scale, so comparing them rewards whichever one scores high by construction; rank is comparable. On the eval's short queries it went from 10/12 to 12/12.",
+          },
+          {
+            id: "eval-conversacional",
+            titulo: "A conversational eval fed by real failures",
+            decision:
+              "On top of the retrieval eval, an eval of full conversations. Every real failure that shows up in production becomes a regression case.",
+            porque:
+              "Retrieval can be right and the answer still wrong. Turning every failure into a case guarantees that a fixed bug does not come back with the next prompt or model change.",
+          },
+          {
+            id: "aislamiento",
+            titulo: "Tenant isolation verified with tests",
+            decision:
+              "Every data access is scoped to the authenticated tenant, and automated tests check that one tenant cannot reach another tenant's data.",
+            porque:
+              "In a multi-tenant system a leak between clients is the worst possible failure. “The filter is in place” is not a guarantee; a test that fails as soon as it is not, is.",
+          },
+          {
+            id: "limites",
+            titulo: "Usage limits per tenant and per IP",
+            decision: "The API limits how many requests it accepts from each tenant and each IP.",
+            porque:
+              "It is a public endpoint that ends up calling an LLM. Without limits, a loop or an abuse turns into cost and a degraded service for every other tenant.",
+          },
+          {
             id: "streaming",
             titulo: "Streaming with fetch and ReadableStream, not EventSource",
             decision:
@@ -442,12 +481,20 @@ export const en = {
               "EventSource only issues GET requests and cannot send custom headers. The tenant authenticates with X-Tenant-Key and the message travels in the body of a POST, so the standard API was ruled out from the start.",
           },
           {
+            id: "modo-tecnico",
+            titulo: "A technical mode inside the chat itself",
+            decision:
+              "The chat has a technical mode that shows each answer's metrics in real time.",
+            porque:
+              "For anyone evaluating the system, seeing how it answers under the hood is worth more than any description. And it lets me spot odd behaviour without going to the logs.",
+          },
+          {
             id: "shadow-dom",
             titulo: "The widget lives inside a Shadow DOM",
             decision:
               "The whole widget mounts in a shadow root, and answer markdown is rendered only after escaping the HTML.",
             porque:
-              "It is embedded in other people's sites that I have no control over. Without isolation, any client stylesheet can break the chat and the chat can break the client's site. Escaping first also stops a model answer from injecting HTML into the host page.",
+              "It is embedded in other people's sites that I have no control over. Without isolation, any stylesheet on the host page can break the chat and the chat can break the page. Escaping first also stops a model answer from injecting HTML into it.",
           },
           {
             id: "reglas",
@@ -467,6 +514,18 @@ export const en = {
           },
         ],
       },
+      despliegue: {
+        titulo: "Deployment",
+        intro:
+          "The API runs on a Linux VPS (Ubuntu LTS) that I deploy and maintain myself. The server is closed by default and only opens what it must.",
+        items: [
+          "SSH key access only, with root login and password authentication disabled.",
+          "ufw firewall with only ports 22, 80 and 443 open.",
+          "Automatic security updates.",
+          "Docker Compose with Caddy, FastAPI and Ollama. Caddy handles automatic HTTPS and is the only exposed service; Ollama serves bge-m3 on CPU.",
+          "The database lives in Supabase cloud, and this portfolio on Cloudflare Workers.",
+        ],
+      },
       resultados: {
         titulo: "Results",
         intro: "What can be measured, measured. What cannot, described for what it is.",
@@ -474,13 +533,19 @@ export const en = {
           {
             id: "eval",
             valor: "17/20",
-            etiqueta: "eval questions with the correct chunk in the top four",
+            etiqueta: "eval questions with the correct chunk among the top results",
             nota: "Before the embedding model change: 11 out of 20.",
+          },
+          {
+            id: "consultas-cortas",
+            valor: "12/12",
+            etiqueta: "short eval queries solved after fusing two searches by rank",
+            nota: "Before the fusion: 10 out of 12.",
           },
           {
             id: "multitenant",
             valor: "Multi-tenant",
-            etiqueta: "one API for several businesses, each knowledge base isolated per client",
+            etiqueta: "one API for several tenants, with isolation between them verified by tests",
           },
           {
             id: "idempotente",
