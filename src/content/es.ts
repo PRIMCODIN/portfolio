@@ -240,6 +240,17 @@ export const es = {
     tituloFormacion: "Formación",
     tecnica: [
       {
+        id: "chatbot-rag",
+        puesto: "Chatbot RAG multi-tenant",
+        empresa: "Proyecto propio",
+        inicio: "agosto 2026",
+        fin: null,
+        logros: [
+          "Diseño y desarrollo completo de un asistente conversacional RAG multi-tenant: API en FastAPI con streaming SSE, búsqueda vectorial con pgvector, aislamiento entre tenants verificado con tests, evals de retrieval y conversacionales, y un widget embebible. Desplegado en un VPS Linux que gestiono yo. Es el asistente de este portfolio.",
+        ],
+        casoDeEstudio: "chatbot-rag",
+      },
+      {
         id: "ymro",
         puesto: "Desarrollador backend e integración de IA (Prácticas DAM)",
         empresa: "YMRO Technologies",

@@ -75,6 +75,8 @@ export interface Experiencia {
   ubicacion?: string;
   logros: string[];
   stack?: string[];
+  /** Identificador del caso de estudio asociado, si lo tiene. */
+  casoDeEstudio?: string;
 }
 
 export interface Formacion {

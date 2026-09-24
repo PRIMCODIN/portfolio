@@ -5,9 +5,18 @@ import { useContent } from "@/i18n/locale-context";
 import type { Experiencia } from "@/content/types";
 import { cn } from "@/lib/cn";
 import { valorPublicable } from "@/lib/contenido";
+import { EnlaceTarjeta } from "./Projects";
 
 /** Una entrada de la línea temporal. El punto solo se tiñe si sigue en curso. */
-function Entrada({ experiencia, actualidad }: { experiencia: Experiencia; actualidad: string }) {
+function Entrada({
+  experiencia,
+  actualidad,
+  verCaso,
+}: {
+  experiencia: Experiencia;
+  actualidad: string;
+  verCaso: string;
+}) {
   const enCurso = experiencia.fin === null;
   const modalidad = valorPublicable(experiencia.modalidad);
   const meta = [experiencia.empresa, modalidad, experiencia.ubicacion].filter(Boolean).join(" · ");
@@ -44,12 +53,18 @@ function Entrada({ experiencia, actualidad }: { experiencia: Experiencia; actual
           ))}
         </ul>
       )}
+
+      {experiencia.casoDeEstudio && (
+        <div className="mt-5">
+          <EnlaceTarjeta to={`/proyectos/${experiencia.casoDeEstudio}`}>{verCaso}</EnlaceTarjeta>
+        </div>
+      )}
     </li>
   );
 }
 
 export function Timeline() {
-  const { trayectoria, ui } = useContent();
+  const { trayectoria, proyectos, ui } = useContent();
 
   return (
     <Section id="trayectoria" titulo={trayectoria.titulo}>
@@ -63,6 +78,7 @@ export function Timeline() {
                   key={experiencia.id}
                   experiencia={experiencia}
                   actualidad={ui.actualidad}
+                  verCaso={proyectos.verCaso}
                 />
               ))}
             </ul>
@@ -89,6 +105,7 @@ export function Timeline() {
                     key={experiencia.id}
                     experiencia={experiencia}
                     actualidad={ui.actualidad}
+                    verCaso={proyectos.verCaso}
                   />
                 ))}
               </ul>
