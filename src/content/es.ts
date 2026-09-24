@@ -494,14 +494,6 @@ export const es = {
               "EventSource solo hace peticiones GET y no permite enviar cabeceras propias. El tenant se autentica con X-Tenant-Key y el mensaje viaja en el cuerpo de un POST, así que la API estándar quedaba descartada desde el principio.",
           },
           {
-            id: "modo-tecnico",
-            titulo: "Un modo técnico dentro del propio chat",
-            decision:
-              "El chat tiene un modo técnico que muestra en tiempo real las métricas de cada respuesta.",
-            porque:
-              "Para quien evalúa el sistema, ver cómo responde por dentro vale más que cualquier descripción. Y a mí me sirve para detectar un comportamiento raro sin ir a los logs.",
-          },
-          {
             id: "shadow-dom",
             titulo: "El widget vive dentro de un Shadow DOM",
             decision:

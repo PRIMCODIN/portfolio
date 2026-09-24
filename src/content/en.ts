@@ -494,14 +494,6 @@ export const en = {
               "EventSource only issues GET requests and cannot send custom headers. The tenant authenticates with X-Tenant-Key and the message travels in the body of a POST, so the standard API was ruled out from the start.",
           },
           {
-            id: "modo-tecnico",
-            titulo: "A technical mode inside the chat itself",
-            decision:
-              "The chat has a technical mode that shows each answer's metrics in real time.",
-            porque:
-              "For anyone evaluating the system, seeing how it answers under the hood is worth more than any description. And it lets me spot odd behaviour without going to the logs.",
-          },
-          {
             id: "shadow-dom",
             titulo: "The widget lives inside a Shadow DOM",
             decision:
