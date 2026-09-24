@@ -18,7 +18,15 @@ interface Props {
  */
 export function Section({ id, titulo, intro, children, className }: Props) {
   return (
-    <section id={id} className={cn("border-t border-hairline", className)}>
+    // Al llegar por ancla, el margen negativo se come casi todo el padding
+    // superior para que el titular quede cerca de la cabecera, como en #agente.
+    <section
+      id={id}
+      className={cn(
+        "scroll-mt-[calc(var(--header-h)-var(--section-y)+3rem)] border-t border-hairline",
+        className,
+      )}
+    >
       <Container>
         <div className="py-[var(--section-y)]">
           <Reveal>
