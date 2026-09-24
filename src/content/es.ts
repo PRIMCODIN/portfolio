@@ -368,7 +368,7 @@ export const es = {
       titulo: "Chatbot RAG multi-tenant",
       subtitulo: "FastAPI · pgvector · SSE · widget embebible",
       contexto:
-        "Nació como el asistente de una agencia de automatización con IA que cofundé, que fue su primer tenant de prueba. Hoy es también el agente de este portfolio.",
+        "Nació como asistente de una agencia de automatización con IA que cofundé; fue su primer tenant de prueba. Hoy también es el agente de este portfolio.",
       estado: "En producción",
       stack: [
         "Python",

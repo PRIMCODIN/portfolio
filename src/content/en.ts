@@ -372,7 +372,7 @@ export const en = {
       titulo: "Multi-tenant RAG chatbot",
       subtitulo: "FastAPI · pgvector · SSE · embeddable widget",
       contexto:
-        "It started as the assistant for an AI automation agency I co-founded, which was its first test tenant. Today it is also the agent on this portfolio.",
+        "It started as the assistant for an AI automation agency I co-founded; it was its first test tenant. Today it is also the agent on this portfolio.",
       estado: "In production",
       stack: [
         "Python",
