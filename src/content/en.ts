@@ -97,15 +97,15 @@ export const en = {
     verDemo: "Demo",
     items: [
       {
-        id: "avalon-agent",
+        id: "chatbot-rag",
         visible: true,
         destacado: true,
-        titulo: "Avalon Agent",
+        titulo: "Multi-tenant RAG chatbot",
         resumen:
-          "Multi-tenant RAG assistant in Spanish for small businesses: it answers from each company's own knowledge base, captures leads and hands off to a human when needed. I diagnosed that the embedding model was degrading Spanish retrieval, and switching it took the retrieval eval from 11/20 to 17/20.",
-        rol: "Design, backend, RAG and widget",
-        estado: "In development",
-        stack: ["Python", "FastAPI", "Supabase", "pgvector", "HNSW", "bge-m3", "SSE", "Shadow DOM"],
+          "Multi-tenant conversational RAG assistant in Spanish, with a FastAPI API and SSE streaming, vector search with pgvector and an embeddable widget. It is the agent on this page, deployed on a Linux VPS that I manage myself. I diagnosed that the embedding model was degrading Spanish retrieval, solved short queries by fusing two searches by rank, and verified tenant isolation with tests.",
+        rol: "Personal project · design, backend, RAG and deployment",
+        estado: "In production",
+        stack: ["Python", "FastAPI", "pgvector", "bge-m3", "SSE", "Docker", "Caddy", "Linux"],
         casoDeEstudio: "chatbot-rag",
       },
       {

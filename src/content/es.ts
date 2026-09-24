@@ -93,15 +93,15 @@ export const es = {
     verDemo: "Demo",
     items: [
       {
-        id: "avalon-agent",
+        id: "chatbot-rag",
         visible: true,
         destacado: true,
-        titulo: "Avalon Agent",
+        titulo: "Chatbot RAG multi-tenant",
         resumen:
-          "Asistente conversacional RAG multi-tenant en español para pymes: responde con la base de conocimiento de cada negocio, capta leads y deriva a una persona cuando hace falta. Diagnostiqué que el modelo de embeddings degradaba la búsqueda en español y el cambio subió el eval de recuperación de 11/20 a 17/20.",
-        rol: "Diseño, backend, RAG y widget",
-        estado: "En desarrollo",
-        stack: ["Python", "FastAPI", "Supabase", "pgvector", "HNSW", "bge-m3", "SSE", "Shadow DOM"],
+          "Asistente conversacional RAG multi-tenant en español, con API en FastAPI y streaming SSE, búsqueda vectorial con pgvector y un widget embebible. Es el agente de esta página, desplegado en un VPS Linux que gestiono yo. Diagnostiqué que el modelo de embeddings degradaba la búsqueda en español, resolví las consultas cortas fusionando dos búsquedas por posición y verifiqué con tests el aislamiento entre tenants.",
+        rol: "Proyecto propio · diseño, backend, RAG y despliegue",
+        estado: "En producción",
+        stack: ["Python", "FastAPI", "pgvector", "bge-m3", "SSE", "Docker", "Caddy", "Linux"],
         casoDeEstudio: "chatbot-rag",
       },
       {
