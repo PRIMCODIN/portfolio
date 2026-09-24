@@ -7,7 +7,6 @@ import { AgentSection } from "@/components/sections/Agent";
 import { Contact } from "@/components/sections/Contact";
 import { Now } from "@/components/sections/Now";
 import { Projects } from "@/components/sections/Projects";
-import { Services } from "@/components/sections/Services";
 import { Stack } from "@/components/sections/Stack";
 import { Timeline } from "@/components/sections/Timeline";
 import { Seo } from "@/components/ui/Seo";
@@ -25,7 +24,6 @@ const secciones: { id: string; Componente: ComponentType<PropsSeccion> }[] = [
   ...(chatDisponible ? [{ id: "agente", Componente: AgentSection }] : []),
   { id: "stack", Componente: Stack },
   { id: "trayectoria", Componente: Timeline },
-  { id: "servicios", Componente: Services },
   { id: "ahora", Componente: Now },
   { id: "contacto", Componente: Contact },
 ];

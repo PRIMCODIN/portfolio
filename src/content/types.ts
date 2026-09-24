@@ -92,12 +92,6 @@ export interface GrupoStack {
   items: string[];
 }
 
-export interface Servicio {
-  id: string;
-  titulo: string;
-  descripcion: string;
-}
-
 /* --------------------------------------------------------------------------
    Casos de estudio
    --------------------------------------------------------------------------
@@ -254,13 +248,6 @@ export interface SiteContent {
     tecnica: Experiencia[];
     previa: Experiencia[];
     formacion: Formacion[];
-  };
-
-  servicios: {
-    etiqueta: string;
-    titulo: string;
-    intro: string;
-    items: Servicio[];
   };
 
   ahora: {

@@ -1,7 +1,7 @@
 # Portfolio — Víctor Prim Romero
 
-Web personal: escaparate profesional y, a medio plazo, marca para servicios de
-automatización con IA. Sitio estático, sin backend, bilingüe español/inglés,
+Web personal orientada a la búsqueda de empleo: proyectos, experiencia, CV y
+el agente RAG embebido. Sitio estático, sin backend, bilingüe español/inglés,
 con tema claro y oscuro.
 
 **Stack:** Vite · React 19 · TypeScript estricto · Tailwind CSS v4 · React Router.

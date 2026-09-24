@@ -38,7 +38,6 @@ export const es = {
       { href: "#agente", label: "Agente", requiereChat: true },
       { href: "#stack", label: "Stack" },
       { href: "#trayectoria", label: "Trayectoria" },
-      { href: "#servicios", label: "Servicios" },
     ],
     contactar: "Contactar",
   },
@@ -322,45 +321,12 @@ export const es = {
     ],
   },
 
-  servicios: {
-    etiqueta: "Servicios",
-    titulo: "En qué puedo ayudar a un negocio",
-    intro:
-      "Automatización e IA aplicada para pymes: lo mismo que hago en Avalon Intelligence, ofrecido también por mi cuenta.",
-    items: [
-      {
-        id: "automatizacion",
-        titulo: "Automatización de procesos con IA",
-        descripcion:
-          "Las tareas que tu equipo repite cada día —pasar datos de un sitio a otro, responder lo mismo, hacer el seguimiento— convertidas en flujos que se ejecutan solos, con una persona supervisando donde de verdad importa.",
-      },
-      {
-        id: "asistentes",
-        titulo: "Asistentes y chatbots RAG",
-        descripcion:
-          "Un asistente que responde con la información validada de tu negocio, no con lo que se imagina. Resuelve las preguntas de siempre, capta el contacto de quien está interesado y deriva a una persona cuando la conversación lo pide.",
-      },
-      {
-        id: "integraciones",
-        titulo: "Integraciones y APIs",
-        descripcion:
-          "CRM, calendario, facturación, WhatsApp y servicios de IA conectados entre sí para que los datos dejen de pasar por un teclado y de perderse por el camino.",
-      },
-      {
-        id: "apps",
-        titulo: "Apps móviles y web a medida",
-        descripcion:
-          "De la arquitectura al despliegue: una aplicación pensada para mantenerse y crecer, no solo para enseñarla en una reunión.",
-      },
-    ],
-  },
-
   ahora: {
     etiqueta: "Ahora",
     titulo: "En qué estoy y hacia dónde voy",
     parrafos: [
       "Busco mi primer puesto como desarrollador en backend, IA aplicada o producto, en un equipo donde pueda ver el problema de negocio completo y no solo el ticket.",
-      "Quiero seguir construyendo sistemas de IA que resuelvan problemas reales y que se puedan medir con datos, no con demos. A medio plazo, ofrecer esos servicios con mi propia marca.",
+      "Quiero seguir construyendo sistemas de IA que resuelvan problemas reales y que se puedan medir con datos, no con demos.",
     ],
   },
 
@@ -368,7 +334,7 @@ export const es = {
     etiqueta: "Contacto",
     titulo: "Hablemos",
     intro:
-      "Si tienes un puesto, un proyecto o simplemente una duda técnica, escríbeme. Respondo a todo.",
+      "Si tienes un puesto, una propuesta de proyecto o una duda técnica, escríbeme. Respondo a todo.",
     emailEtiqueta: "Email",
     emailPartes: ["vprimromero", "gmail.com"],
     linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },

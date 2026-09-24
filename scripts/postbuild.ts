@@ -176,10 +176,6 @@ function escribirLlmsTxt(): void {
     .filter((proyecto) => proyecto.visible)
     .map((proyecto) => `- **${proyecto.titulo}** (${proyecto.estado}): ${proyecto.resumen}`);
 
-  const servicios = es.servicios.items.map(
-    (servicio) => `- **${servicio.titulo}**: ${servicio.descripcion}`,
-  );
-
   const texto = [
     `# ${es.hero.nombre}`,
     "",
@@ -194,10 +190,6 @@ function escribirLlmsTxt(): void {
     "## Proyectos",
     "",
     ...proyectos,
-    "",
-    "## Servicios",
-    "",
-    ...servicios,
     "",
     "## Enlaces",
     "",

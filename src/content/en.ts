@@ -38,7 +38,6 @@ export const en = {
       { href: "#agente", label: "Agent", requiereChat: true },
       { href: "#stack", label: "Stack" },
       { href: "#trayectoria", label: "Experience" },
-      { href: "#servicios", label: "Services" },
     ],
     contactar: "Get in touch",
   },
@@ -326,45 +325,12 @@ export const en = {
     ],
   },
 
-  servicios: {
-    etiqueta: "Services",
-    titulo: "How I can help a business",
-    intro:
-      "Automation and applied AI for small businesses: the same work I do at Avalon Intelligence, also available directly from me.",
-    items: [
-      {
-        id: "automatizacion",
-        titulo: "AI process automation",
-        descripcion:
-          "The tasks your team repeats every day — moving data around, answering the same thing, chasing follow-ups — turned into flows that run on their own, with a person supervising where it actually matters.",
-      },
-      {
-        id: "asistentes",
-        titulo: "RAG assistants and chatbots",
-        descripcion:
-          "An assistant that answers from your business's validated information, not from what it imagines. It resolves the usual questions, captures the contact details of interested visitors and hands off to a person when the conversation calls for it.",
-      },
-      {
-        id: "integraciones",
-        titulo: "Integrations and APIs",
-        descripcion:
-          "CRM, calendar, invoicing, WhatsApp and AI services wired together so data stops going through a keyboard and stops getting lost on the way.",
-      },
-      {
-        id: "apps",
-        titulo: "Custom mobile and web apps",
-        descripcion:
-          "From architecture to deployment: an application built to be maintained and to grow, not just to be shown in a meeting.",
-      },
-    ],
-  },
-
   ahora: {
     etiqueta: "Now",
     titulo: "What I am on and where I am going",
     parrafos: [
       "I am looking for my first role as a developer in backend, applied AI or product, on a team where I can see the whole business problem and not just the ticket.",
-      "I want to keep building AI systems that solve real problems and can be measured with data, not with demos. In the medium term, to offer those services under my own brand.",
+      "I want to keep building AI systems that solve real problems and can be measured with data, not with demos.",
     ],
   },
 
@@ -372,7 +338,7 @@ export const en = {
     etiqueta: "Contact",
     titulo: "Let's talk",
     intro:
-      "If you have a role, a project or just a technical question, write to me. I answer everything.",
+      "If you have a role, a project proposal or a technical question, write to me. I reply to everything.",
     emailEtiqueta: "Email",
     emailPartes: ["vprimromero", "gmail.com"],
     linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },
