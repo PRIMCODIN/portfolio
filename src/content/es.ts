@@ -43,7 +43,6 @@ export const es = {
   },
 
   hero: {
-    etiqueta: "Barcelona",
     nombre: "Víctor Prim Romero",
     titular: "Desarrollador backend · IA aplicada",
     propuesta:

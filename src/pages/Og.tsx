@@ -2,15 +2,17 @@ import { useContent } from "@/i18n/locale-context";
 
 /**
  * Lienzo de la imagen Open Graph, exactamente 1200x630. Solo se monta en
- * desarrollo: sirve para capturarla una vez y guardarla en public/og.jpg.
- * No forma parte del sitio publicado.
+ * desarrollo: sirve para capturarla una vez y guardarla en public/og.png.
+ * No forma parte del sitio publicado. Se captura en tema oscuro: los tokens
+ * de color salen de html[data-theme="dark"], así que el navegador tiene que
+ * estar en oscuro (prefers-color-scheme o el toggle) al hacer la captura.
  */
 export function Og() {
   const { hero, disponibilidad } = useContent();
 
   return (
     <div
-      data-theme="light"
+      data-theme="dark"
       className="fixed top-0 left-0 z-[999] flex flex-col justify-between overflow-hidden bg-bg"
       style={{ width: 1200, height: 630, padding: 72 }}
     >
@@ -21,12 +23,9 @@ export function Og() {
         ))}
       </div>
 
-      <div className="relative">
-        <p className="label-mono" style={{ fontSize: 18, letterSpacing: "0.12em" }}>
-          {"// "}
-          {hero.etiqueta}
-        </p>
-      </div>
+      {/* Hueco de la antigua etiqueta superior: mantiene el nombre y el pie
+          donde estaban. */}
+      <div aria-hidden="true" className="relative" style={{ height: 25 }} />
 
       <div className="relative">
         <p

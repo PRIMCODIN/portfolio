@@ -189,7 +189,6 @@ export interface SiteContent {
   };
 
   hero: {
-    etiqueta: string;
     nombre: string;
     titular: string;
     propuesta: string;
