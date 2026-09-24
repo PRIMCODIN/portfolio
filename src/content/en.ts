@@ -58,7 +58,7 @@ export const en = {
   agente: {
     titulo: "Ask my agent",
     intro:
-      "A RAG agent that answers from my own profile: experience, projects, stack and how I work. It's the same system I build for businesses, running on my own server.",
+      "A RAG agent that answers from my own profile: experience, projects, stack and how I work. It's a multi-tenant RAG system I designed and deployed on my own server.",
     aviso: "It can make mistakes. For anything important, write to me directly.",
     enlace: "How it's built",
     cargando: "Loading the agent…",
@@ -70,7 +70,7 @@ export const en = {
     titulo: "I understand the problem before I code it",
     parrafos: [
       "Before I wrote code I spent years on the other side of the phone and the counter: technical support, casino tables, retail. That teaches you something no course does: how to listen to a badly explained problem, how to stay calm when the person in front of you is not, and how to give an answer that lands the first time.",
-      "Today I study Multiplatform Application Development, work as a backend and AI integration developer, and build my own projects all the way to production. What interests me is the part that holds the product up: data architecture, service orchestration and deployment. And I am still interested in the conversation with whoever is going to use it.",
+      "Today I study Multiplatform Application Development, am doing an internship as a backend and AI integration developer at YMRO Technologies, and build my own projects all the way to production. What interests me is the part that holds the product up: data architecture, service orchestration and deployment. And I am still interested in the conversation with whoever is going to use it.",
     ],
     datos: [
       { id: "ubicacion", clave: "Location", valor: "Barcelona" },
@@ -304,7 +304,7 @@ export const en = {
       {
         id: "dam",
         titulo: "Higher Degree in Multiplatform Application Development",
-        centro: "Davante MEDAC, Viladecans",
+        centro: "Davante MEDAC, L'Hospitalet de Llobregat",
         inicio: "September 2025",
         fin: null,
         nota: "Year 2",

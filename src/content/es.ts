@@ -58,7 +58,7 @@ export const es = {
   agente: {
     titulo: "Pregúntale a mi agente",
     intro:
-      "Un agente RAG que responde con la información de mi perfil: experiencia, proyectos, stack y forma de trabajar. Es el mismo sistema que construyo para empresas, desplegado en mi propio servidor.",
+      "Un agente RAG que responde con la información de mi perfil: experiencia, proyectos, stack y forma de trabajar. Es un sistema RAG multi-tenant que he diseñado y desplegado en mi propio servidor.",
     aviso: "Puede equivocarse. Para lo importante, escríbeme directamente.",
     enlace: "Cómo está hecho",
     cargando: "Cargando el agente…",
@@ -70,7 +70,7 @@ export const es = {
     titulo: "Entiendo el problema antes de programarlo",
     parrafos: [
       "Antes de escribir código pasé años al otro lado del teléfono y del mostrador: soporte técnico, mesas de casino, tienda. Ahí se aprende algo que no enseña ningún curso: a escuchar un problema mal explicado, a mantener la calma cuando quien tienes delante no la tiene y a devolver una respuesta que se entienda a la primera.",
-      "Hoy estudio Desarrollo de Aplicaciones Multiplataforma, trabajo como desarrollador backend e integración de IA y construyo proyectos propios que llevo hasta producción. Me interesa la parte que sostiene el producto: la arquitectura de datos, la orquestación de los servicios y el despliegue. Y me sigue interesando la conversación con quien lo va a usar.",
+      "Hoy estudio Desarrollo de Aplicaciones Multiplataforma, hago prácticas como desarrollador backend e integración de IA en YMRO Technologies y construyo proyectos propios que llevo hasta producción. Me interesa la parte que sostiene el producto: la arquitectura de datos, la orquestación de los servicios y el despliegue. Y me sigue interesando la conversación con quien lo va a usar.",
     ],
     datos: [
       { id: "ubicacion", clave: "Ubicación", valor: "Barcelona" },
@@ -300,7 +300,7 @@ export const es = {
       {
         id: "dam",
         titulo: "CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)",
-        centro: "Davante MEDAC, Viladecans",
+        centro: "Davante MEDAC, L'Hospitalet de Llobregat",
         inicio: "septiembre 2025",
         fin: null,
         nota: "2.º curso",
