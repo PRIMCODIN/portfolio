@@ -16,11 +16,23 @@ export function Stack() {
             <div className="h-full p-6">
               <h3 className="label-mono">{grupo.titulo}</h3>
               <ul className="mt-5 flex flex-wrap gap-2">
-                {grupo.items.map((item) => (
-                  <li key={item}>
-                    <Chip>{item}</Chip>
-                  </li>
-                ))}
+                {grupo.items.map((item) => {
+                  const lectura = stack.lecturas[item];
+                  return (
+                    <li key={item}>
+                      {lectura ? (
+                        <>
+                          <span aria-hidden="true">
+                            <Chip>{item}</Chip>
+                          </span>
+                          <span className="sr-only">{lectura}</span>
+                        </>
+                      ) : (
+                        <Chip>{item}</Chip>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </Reveal>

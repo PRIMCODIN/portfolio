@@ -230,6 +230,9 @@ export interface SiteContent {
   stack: {
     titulo: string;
     intro: string;
+    /** Cómo debe leerse un elemento que un lector de pantalla pronunciaría
+     *  mal o descartaría, como «C#». La clave es el texto visible. */
+    lecturas: Record<string, string>;
     grupos: GrupoStack[];
   };
 

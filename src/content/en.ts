@@ -175,6 +175,7 @@ export const en = {
     titulo: "What I work with",
     intro:
       "Tools I have used on real projects, not in a tutorial. No percentage bars: either it solved something, or it is not on this list.",
+    lecturas: { "C#": "C sharp" },
     grupos: [
       {
         id: "lenguajes",
@@ -193,6 +194,10 @@ export const en = {
           "pgvector",
           "MongoDB",
           "Docker",
+          "Docker Compose",
+          "Linux",
+          "Caddy",
+          "Cloudflare",
           "OAuth",
           "Row Level Security",
         ],
