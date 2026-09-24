@@ -102,7 +102,7 @@ VITE_CHAT_TENANT_KEY=clave-del-tenant
 
 El widget se usa en su layout inline (`data-layout="inline"`). El script se
 inyecta una sola vez, con `defer`, cuando la sección Agente se acerca al
-viewport o al pulsar el botón del hero. El chat se monta en un host propio que
+viewport. El botón del hero es un ancla a `#agente`. El chat se monta en un host propio que
 `src/lib/chatWidget.ts` mueve entre un aparcamiento oculto y el hueco de la
 sección, así que la conversación sobrevive a cambiar de idioma o de ruta. Si
 `window.avalonWidget` no aparece en 10 segundos, la sección muestra un aviso con

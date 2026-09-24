@@ -242,6 +242,24 @@ html[data-theme="dark"] {
   }
 }
 
+/* Halo que late despacio alrededor del CTA principal, con el acento del
+   tema (claro u oscuro). Solo para quien no pide reducir el movimiento. */
+@keyframes halo-acento {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-accent) 45%, transparent);
+  }
+  35%,
+  100% {
+    box-shadow: 0 0 0 12px color-mix(in oklab, var(--color-accent) 0%, transparent);
+  }
+}
+
+@utility halo-acento {
+  @media (prefers-reduced-motion: no-preference) {
+    animation: halo-acento 3s var(--ease-soft) infinite;
+  }
+}
+
 /* Aparición al entrar en el viewport. El atributo lo gobierna <Reveal>. */
 @utility reveal {
   opacity: 0;

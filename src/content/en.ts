@@ -49,7 +49,9 @@ export const en = {
       "I build software end to end: from designing the architecture to a product deployed and running.",
     verProyectos: "See projects",
     descargarCv: "Download CV",
-    preguntarAgente: "Ask my agent",
+    hablarConAgente: "Talk to my AI agent",
+    hablarConAgenteSubtexto:
+      "Ask it about my experience. Turn on technical mode to see how it works under the hood.",
     cvHref: todo("subir public/cv.pdf actualizado y sustituir este valor por /cv.pdf"),
     github: { href: "https://github.com/PRIMCODIN", label: "GitHub" },
     linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },

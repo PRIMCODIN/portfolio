@@ -202,8 +202,10 @@ export interface SiteContent {
     propuesta: string;
     verProyectos: string;
     descargarCv: string;
-    /** CTA hacia la sección Agente. Solo se pinta si el widget está configurado. */
-    preguntarAgente: string;
+    /** CTA principal hacia la sección Agente, con su subtexto. Solo se pinta
+     *  si el widget está configurado. */
+    hablarConAgente: string;
+    hablarConAgenteSubtexto: string;
     cvHref: Pendiente<string>;
     github: Enlace;
     linkedin: Enlace;

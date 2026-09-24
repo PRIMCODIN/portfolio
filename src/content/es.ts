@@ -49,7 +49,9 @@ export const es = {
       "Construyo software de punta a punta: del diseño de la arquitectura a un producto desplegado y funcionando.",
     verProyectos: "Ver proyectos",
     descargarCv: "Descargar CV",
-    preguntarAgente: "Pregúntale a mi agente",
+    hablarConAgente: "Habla con mi agente IA",
+    hablarConAgenteSubtexto:
+      "Pregúntale por mi experiencia. Activa el modo técnico para ver cómo funciona por dentro.",
     cvHref: todo("subir public/cv.pdf actualizado y sustituir este valor por /cv.pdf"),
     github: { href: "https://github.com/PRIMCODIN", label: "GitHub" },
     linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },

@@ -142,10 +142,6 @@ export function desacoplarChat(): void {
   }
 }
 
-export function enfocarChat(): void {
-  window.avalonWidget?.focus?.();
-}
-
 /** Todavía no tiene efecto en el widget; la conexión queda hecha. */
 export function cambiarIdiomaChat(locale: Locale): void {
   window.avalonWidget?.setLang?.(locale);
