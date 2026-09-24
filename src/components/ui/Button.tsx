@@ -21,6 +21,8 @@ interface Props {
   to?: string;
   /** Fuerza el tratamiento de enlace externo (abre en otra pestaña). */
   externo?: boolean;
+  /** Descarga el destino en lugar de abrirlo. */
+  descargar?: boolean;
   onClick?: () => void;
   className?: string;
   type?: "button" | "submit";
@@ -36,6 +38,7 @@ export function Button({
   href,
   to,
   externo,
+  descargar,
   onClick,
   className,
   type = "button",
@@ -61,6 +64,7 @@ export function Button({
       <a
         href={href}
         className={clases}
+        download={descargar || undefined}
         {...(esExterno && !href.startsWith("mailto:")
           ? { target: "_blank", rel: "noreferrer noopener" }
           : {})}

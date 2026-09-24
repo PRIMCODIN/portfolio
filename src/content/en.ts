@@ -1,4 +1,4 @@
-import { todo, type SiteContent } from "./types.ts";
+import type { SiteContent } from "./types.ts";
 
 /**
  * Contenido en inglés. Debe mantener exactamente las mismas claves que es.ts:
@@ -52,7 +52,7 @@ export const en = {
     hablarConAgente: "Talk to my AI agent",
     hablarConAgenteSubtexto:
       "Ask it about my experience. Turn on technical mode to see how it works under the hood.",
-    cvHref: todo("subir public/cv.pdf actualizado y sustituir este valor por /cv.pdf"),
+    cvHref: "/cv-victor-prim-romero.pdf",
     github: { href: "https://github.com/PRIMCODIN", label: "GitHub" },
     linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },
   },
@@ -350,6 +350,7 @@ export const en = {
     intro:
       "If you have a role, a project proposal or a technical question, write to me. I reply to everything.",
     emailEtiqueta: "Email",
+    cvEtiqueta: "CV",
     emailPartes: ["vprimromero", "gmail.com"],
     linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },
     github: { href: "https://github.com/PRIMCODIN", label: "GitHub" },

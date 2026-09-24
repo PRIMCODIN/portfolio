@@ -1,4 +1,4 @@
-import { todo, type SiteContent } from "./types.ts";
+import type { SiteContent } from "./types.ts";
 
 /**
  * Contenido en español. Es la fuente de la que bebe toda la interfaz.
@@ -52,7 +52,7 @@ export const es = {
     hablarConAgente: "Habla con mi agente IA",
     hablarConAgenteSubtexto:
       "Pregúntale por mi experiencia. Activa el modo técnico para ver cómo funciona por dentro.",
-    cvHref: todo("subir public/cv.pdf actualizado y sustituir este valor por /cv.pdf"),
+    cvHref: "/cv-victor-prim-romero.pdf",
     github: { href: "https://github.com/PRIMCODIN", label: "GitHub" },
     linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },
   },
@@ -346,6 +346,7 @@ export const es = {
     intro:
       "Si tienes un puesto, una propuesta de proyecto o una duda técnica, escríbeme. Respondo a todo.",
     emailEtiqueta: "Email",
+    cvEtiqueta: "CV",
     emailPartes: ["vprimromero", "gmail.com"],
     linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },
     github: { href: "https://github.com/PRIMCODIN", label: "GitHub" },

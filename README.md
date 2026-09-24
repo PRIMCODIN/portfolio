@@ -36,7 +36,7 @@ Los dos se validan contra el tipo `SiteContent` de `src/content/types.ts` con
 Un valor que todavía no se puede publicar se envuelve con `todo()`:
 
 ```ts
-cvHref: todo("subir public/cv.pdf actualizado y sustituir este valor por /cv.pdf"),
+repo: todo("publicar el repositorio y poner aquí su URL"),
 ```
 
 En desarrollo aparece un chip ámbar con la nota al lado del hueco. **En

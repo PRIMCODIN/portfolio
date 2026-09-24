@@ -3,15 +3,13 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { IconoEnlaceExterno, IconoFlecha } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
-import { TodoMark } from "@/components/ui/TodoMark";
 import { useContent } from "@/i18n/locale-context";
 import { chatDisponible } from "@/lib/chatWidget";
-import { valorPublicable } from "@/lib/contenido";
+import { cvDisponible } from "@/lib/cv";
 import { DotField } from "./DotField";
 
 export function Hero() {
   const { hero, disponibilidad, ui } = useContent();
-  const cv = valorPublicable(hero.cvHref);
 
   return (
     <section id="inicio" className="relative overflow-hidden">
@@ -55,12 +53,10 @@ export function Hero() {
                   {!chatDisponible && <IconoFlecha />}
                 </Button>
 
-                {cv ? (
-                  <Button href={cv} variante="secundario">
+                {cvDisponible && (
+                  <Button href={hero.cvHref} variante="secundario" descargar>
                     {hero.descargarCv}
                   </Button>
-                ) : (
-                  <TodoMark valor={hero.cvHref} />
                 )}
               </div>
 

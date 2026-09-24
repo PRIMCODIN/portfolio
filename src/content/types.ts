@@ -206,7 +206,8 @@ export interface SiteContent {
      *  si el widget está configurado. */
     hablarConAgente: string;
     hablarConAgenteSubtexto: string;
-    cvHref: Pendiente<string>;
+    /** Ruta del PDF en public/. Los enlaces solo se pintan si existe al compilar. */
+    cvHref: string;
     github: Enlace;
     linkedin: Enlace;
   };
@@ -266,6 +267,7 @@ export interface SiteContent {
     titulo: string;
     intro: string;
     emailEtiqueta: string;
+    cvEtiqueta: string;
     /** El email se guarda partido para no servirlo literal en el HTML. */
     emailPartes: [string, string];
     linkedin: Enlace;

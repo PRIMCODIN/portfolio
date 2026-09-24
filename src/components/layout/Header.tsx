@@ -7,6 +7,7 @@ import { LocaleSwitch } from "@/components/ui/LocaleSwitch";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useContent } from "@/i18n/locale-context";
 import { chatDisponible } from "@/lib/chatWidget";
+import { cvDisponible } from "@/lib/cv";
 import { Container } from "./Container";
 
 /**
@@ -14,7 +15,7 @@ import { Container } from "./Container";
  * móvil se pliega en un panel que se cierra al elegir destino o con Escape.
  */
 export function Header() {
-  const { nav, ui } = useContent();
+  const { nav, hero, ui } = useContent();
   const items = nav.items.filter((item) => !item.requiereChat || chatDisponible);
   const { pathname } = useLocation();
   // Fuera de la portada las anclas tienen que volver a ella primero.
@@ -65,6 +66,14 @@ export function Header() {
               <LocaleSwitch />
             </div>
             <ThemeToggle />
+            {/* Solo desde lg: en md, con la navegación completa, no cabe. */}
+            {cvDisponible && (
+              <div className="hidden lg:block">
+                <Button href={hero.cvHref} variante="secundario" descargar className="px-4 py-2">
+                  {hero.descargarCv}
+                </Button>
+              </div>
+            )}
             <div className="hidden md:block">
               <Button to={destino("#contacto")} variante="primario" className="px-4 py-2">
                 {nav.contactar}
@@ -99,11 +108,23 @@ export function Header() {
                   {item.label}
                 </Link>
               ))}
-              <div className="flex items-center justify-between gap-3 py-4">
+              <div className="flex flex-wrap items-center justify-between gap-3 py-4">
                 <LocaleSwitch />
-                <Button to={destino("#contacto")} variante="primario" className="px-4 py-2">
-                  {nav.contactar}
-                </Button>
+                <div className="flex flex-wrap items-center gap-2">
+                  {cvDisponible && (
+                    <Button
+                      href={hero.cvHref}
+                      variante="secundario"
+                      descargar
+                      className="px-4 py-2"
+                    >
+                      {hero.descargarCv}
+                    </Button>
+                  )}
+                  <Button to={destino("#contacto")} variante="primario" className="px-4 py-2">
+                    {nav.contactar}
+                  </Button>
+                </div>
               </div>
             </nav>
           </Container>

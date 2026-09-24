@@ -12,6 +12,9 @@ interface ImportMetaEnv {
   readonly VITE_CHAT_TENANT_KEY?: string;
 }
 
+/** true si public/cv-victor-prim-romero.pdf existía al compilar (vite.config.ts). */
+declare const __CV_DISPONIBLE__: boolean;
+
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }

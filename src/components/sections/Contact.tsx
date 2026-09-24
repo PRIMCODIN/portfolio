@@ -5,9 +5,10 @@ import { Badge } from "@/components/ui/Badge";
 import { IconoEnlaceExterno } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { useContent } from "@/i18n/locale-context";
+import { cvDisponible } from "@/lib/cv";
 
 export function Contact() {
-  const { contacto, disponibilidad } = useContent();
+  const { contacto, hero, disponibilidad } = useContent();
 
   // El email se compone en ejecución: la dirección no aparece literal en el
   // HTML que se sirve, que es lo que rastrean los recolectores de spam.
@@ -24,6 +25,18 @@ export function Contact() {
       href: `mailto:${email}`,
       externo: false,
     },
+    ...(cvDisponible
+      ? [
+          {
+            id: "cv",
+            label: contacto.cvEtiqueta,
+            valor: hero.descargarCv,
+            href: hero.cvHref,
+            externo: false,
+            descargar: true,
+          },
+        ]
+      : []),
     {
       id: "linkedin",
       label: contacto.linkedin.label,
@@ -48,6 +61,7 @@ export function Contact() {
             <a
               href={enlace.href}
               {...(enlace.externo ? { target: "_blank", rel: "noreferrer noopener" } : {})}
+              {...("descargar" in enlace ? { download: true } : {})}
               className="group flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-t border-hairline py-7 transition-colors duration-[--duration-fast] hover:text-accent"
             >
               <span className="label-mono">{enlace.label}</span>
