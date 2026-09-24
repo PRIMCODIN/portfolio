@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 
-import { Section, type PropsSeccion } from "@/components/layout/Section";
+import { Section } from "@/components/layout/Section";
 import { Badge } from "@/components/ui/Badge";
 import { IconoEnlaceExterno } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { useContent } from "@/i18n/locale-context";
 
-export function Contact({ numero }: PropsSeccion) {
+export function Contact() {
   const { contacto, disponibilidad } = useContent();
 
   // El email se compone en ejecución: la dirección no aparece literal en el
@@ -41,13 +41,7 @@ export function Contact({ numero }: PropsSeccion) {
   ];
 
   return (
-    <Section
-      id="contacto"
-      numero={numero}
-      etiqueta={contacto.etiqueta}
-      titulo={contacto.titulo}
-      intro={contacto.intro}
-    >
+    <Section id="contacto" titulo={contacto.titulo} intro={contacto.intro}>
       <ul>
         {enlaces.map((enlace, indice) => (
           <Reveal key={enlace.id} retardo={indice * 60} as="li">

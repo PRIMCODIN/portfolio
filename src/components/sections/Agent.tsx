@@ -1,6 +1,6 @@
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 
-import { Section, type PropsSeccion } from "@/components/layout/Section";
+import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { useContent, useLocale } from "@/i18n/locale-context";
 import { acoplarChat, cargarChat, desacoplarChat } from "@/lib/chatWidget";
@@ -18,7 +18,7 @@ type Estado = "cargando" | "listo" | "error";
  * para que la carga no desplace nada. Reveal solo envuelve la columna de
  * texto: entre el chat y el documento no puede haber ningún transform.
  */
-export function AgentSection({ numero }: PropsSeccion) {
+export function AgentSection() {
   const { agente } = useContent();
   const { locale } = useLocale();
   const hueco = useRef<HTMLDivElement>(null);
@@ -62,7 +62,7 @@ export function AgentSection({ numero }: PropsSeccion) {
   }, []);
 
   return (
-    <Section id="agente" numero={numero} etiqueta={agente.etiqueta} titulo={agente.titulo}>
+    <Section id="agente" titulo={agente.titulo}>
       <div className="grid gap-10 md:grid-cols-12 md:gap-12">
         <Reveal className="md:col-span-5">
           <p className="max-w-[52ch] text-text-muted">{agente.intro}</p>

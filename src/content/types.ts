@@ -204,7 +204,6 @@ export interface SiteContent {
 
   /** Sección del agente RAG. Solo se pinta si el widget está configurado. */
   agente: {
-    etiqueta: string;
     titulo: string;
     intro: string;
     aviso: string;
@@ -215,14 +214,12 @@ export interface SiteContent {
   };
 
   sobreMi: {
-    etiqueta: string;
     titulo: string;
     parrafos: string[];
     datos: { id: string; clave: string; valor: string }[];
   };
 
   proyectos: {
-    etiqueta: string;
     titulo: string;
     intro: string;
     verCaso: string;
@@ -232,14 +229,12 @@ export interface SiteContent {
   };
 
   stack: {
-    etiqueta: string;
     titulo: string;
     intro: string;
     grupos: GrupoStack[];
   };
 
   trayectoria: {
-    etiqueta: string;
     titulo: string;
     tituloTecnica: string;
     tituloPrevia: string;
@@ -251,13 +246,11 @@ export interface SiteContent {
   };
 
   ahora: {
-    etiqueta: string;
     titulo: string;
     parrafos: string[];
   };
 
   contacto: {
-    etiqueta: string;
     titulo: string;
     intro: string;
     emailEtiqueta: string;

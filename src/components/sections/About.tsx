@@ -1,12 +1,12 @@
-import { Section, type PropsSeccion } from "@/components/layout/Section";
+import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { useContent } from "@/i18n/locale-context";
 
-export function About({ numero }: PropsSeccion) {
+export function About() {
   const { sobreMi } = useContent();
 
   return (
-    <Section id="sobre-mi" numero={numero} etiqueta={sobreMi.etiqueta} titulo={sobreMi.titulo}>
+    <Section id="sobre-mi" titulo={sobreMi.titulo}>
       <div className="grid gap-12 lg:grid-cols-12">
         <Reveal className="lg:col-span-7">
           <div className="space-y-6">

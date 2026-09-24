@@ -69,14 +69,7 @@ export function Hero() {
       <Container className="relative">
         <div className="flex min-h-[min(92svh,960px)] flex-col justify-center pt-[calc(var(--header-h)+4rem)] pb-28">
           <Reveal>
-            <p className="label-mono">
-              {"// "}
-              {hero.etiqueta}
-            </p>
-          </Reveal>
-
-          <Reveal retardo={60}>
-            <h1 className="mt-7 text-display">{hero.nombre}</h1>
+            <h1 className="text-display">{hero.nombre}</h1>
           </Reveal>
 
           <Reveal retardo={120}>

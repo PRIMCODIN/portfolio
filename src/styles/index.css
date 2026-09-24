@@ -216,7 +216,7 @@ html[data-theme="dark"] {
   padding-inline: var(--gutter);
 }
 
-/* Etiqueta técnica en mono: // 01 — PROYECTOS */
+/* Texto técnico en mono: estados, chips, fechas, metadatos. */
 @utility label-mono {
   font-family: var(--font-mono);
   font-size: var(--text-mono);

@@ -57,7 +57,6 @@ export const en = {
   },
 
   agente: {
-    etiqueta: "AGENT",
     titulo: "Ask my agent",
     intro:
       "A RAG agent that answers from my own profile: experience, projects, stack and how I work. It's the same system I build for businesses, running on my own server.",
@@ -69,7 +68,6 @@ export const en = {
   },
 
   sobreMi: {
-    etiqueta: "About",
     titulo: "I understand the problem before I code it",
     parrafos: [
       "Before I wrote code I spent years on the other side of the phone and the counter: technical support, casino tables, retail. That teaches you something no course does: how to listen to a badly explained problem, how to stay calm when the person in front of you is not, and how to give an answer that lands the first time.",
@@ -92,7 +90,6 @@ export const en = {
   },
 
   proyectos: {
-    etiqueta: "Projects",
     titulo: "Things I built and had to keep running",
     intro:
       "Personal and team projects, all taken past the demo stage: data architecture, deployment and the decisions I had to justify along the way.",
@@ -176,7 +173,6 @@ export const en = {
   },
 
   stack: {
-    etiqueta: "Stack",
     titulo: "What I work with",
     intro:
       "Tools I have used on real projects, not in a tutorial. No percentage bars: either it solved something, or it is not on this list.",
@@ -236,7 +232,6 @@ export const en = {
   },
 
   trayectoria: {
-    etiqueta: "Experience",
     titulo: "Experience and education",
     tituloTecnica: "Technical experience",
     tituloPrevia: "Earlier career: working with customers",
@@ -326,7 +321,6 @@ export const en = {
   },
 
   ahora: {
-    etiqueta: "Now",
     titulo: "What I am on and where I am going",
     parrafos: [
       "I am looking for my first role as a developer in backend, applied AI or product, on a team where I can see the whole business problem and not just the ticket.",
@@ -335,7 +329,6 @@ export const en = {
   },
 
   contacto: {
-    etiqueta: "Contact",
     titulo: "Let's talk",
     intro:
       "If you have a role, a project proposal or a technical question, write to me. I reply to everything.",

@@ -57,7 +57,6 @@ export const es = {
   },
 
   agente: {
-    etiqueta: "AGENTE",
     titulo: "Pregúntale a mi agente",
     intro:
       "Un agente RAG que responde con la información de mi perfil: experiencia, proyectos, stack y forma de trabajar. Es el mismo sistema que construyo para empresas, desplegado en mi propio servidor.",
@@ -69,7 +68,6 @@ export const es = {
   },
 
   sobreMi: {
-    etiqueta: "Quién soy",
     titulo: "Entiendo el problema antes de programarlo",
     parrafos: [
       "Antes de escribir código pasé años al otro lado del teléfono y del mostrador: soporte técnico, mesas de casino, tienda. Ahí se aprende algo que no enseña ningún curso: a escuchar un problema mal explicado, a mantener la calma cuando quien tienes delante no la tiene y a devolver una respuesta que se entienda a la primera.",
@@ -88,7 +86,6 @@ export const es = {
   },
 
   proyectos: {
-    etiqueta: "Proyectos",
     titulo: "Cosas que he construido y he tenido que sostener",
     intro:
       "Proyectos propios y de equipo, todos llevados más allá de la demo: arquitectura de datos, despliegue y las decisiones que hubo que justificar por el camino.",
@@ -172,7 +169,6 @@ export const es = {
   },
 
   stack: {
-    etiqueta: "Stack",
     titulo: "Con qué trabajo",
     intro:
       "Herramientas que he usado en proyectos reales, no en un tutorial. Sin barras de porcentaje: o ha servido para resolver algo, o no está en esta lista.",
@@ -232,7 +228,6 @@ export const es = {
   },
 
   trayectoria: {
-    etiqueta: "Trayectoria",
     titulo: "Experiencia y formación",
     tituloTecnica: "Experiencia técnica",
     tituloPrevia: "Trayectoria previa: trato con cliente",
@@ -322,7 +317,6 @@ export const es = {
   },
 
   ahora: {
-    etiqueta: "Ahora",
     titulo: "En qué estoy y hacia dónde voy",
     parrafos: [
       "Busco mi primer puesto como desarrollador en backend, IA aplicada o producto, en un equipo donde pueda ver el problema de negocio completo y no solo el ticket.",
@@ -331,7 +325,6 @@ export const es = {
   },
 
   contacto: {
-    etiqueta: "Contacto",
     titulo: "Hablemos",
     intro:
       "Si tienes un puesto, una propuesta de proyecto o una duda técnica, escríbeme. Respondo a todo.",

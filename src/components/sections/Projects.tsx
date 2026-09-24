@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-import { Section, type PropsSeccion } from "@/components/layout/Section";
+import { Section } from "@/components/layout/Section";
 import { Chip } from "@/components/ui/Chip";
 import { IconoEnlaceExterno, IconoFlecha } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
@@ -101,7 +101,7 @@ function Tarjeta({ proyecto, textos }: { proyecto: Proyecto; textos: Textos }) {
   );
 }
 
-export function Projects({ numero }: PropsSeccion) {
+export function Projects() {
   const { proyectos } = useContent();
   const visibles = proyectos.items.filter((proyecto) => proyecto.visible);
   const destacados = visibles.filter((proyecto) => proyecto.destacado);
@@ -114,13 +114,7 @@ export function Projects({ numero }: PropsSeccion) {
   };
 
   return (
-    <Section
-      id="proyectos"
-      numero={numero}
-      etiqueta={proyectos.etiqueta}
-      titulo={proyectos.titulo}
-      intro={proyectos.intro}
-    >
+    <Section id="proyectos" titulo={proyectos.titulo} intro={proyectos.intro}>
       {/* gap-px sobre el color de la retícula: una sola línea de 1px separa
           celdas vecinas, sin bordes duplicados. */}
       <div className="grid gap-px overflow-hidden rounded-card border border-hairline bg-hairline md:grid-cols-12">

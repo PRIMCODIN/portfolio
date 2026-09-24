@@ -26,7 +26,7 @@ export function CaseStudy() {
             to="/#proyectos"
             className="mt-6 inline-flex items-center gap-2 text-small text-text-muted hover:text-text"
           >
-            {contenido.proyectos.etiqueta}
+            {contenido.nav.items.find((item) => item.href === "#proyectos")?.label}
             <IconoFlecha />
           </Link>
         </div>
@@ -79,9 +79,7 @@ export function CaseStudy() {
         <Container>
           <div className="py-[var(--section-y)]">
             <Reveal>
-              <h2 className="label-mono">
-                {"// "}01 — {caso.problema.titulo}
-              </h2>
+              <h2 className="text-h2">{caso.problema.titulo}</h2>
             </Reveal>
             <div className="mt-8 grid gap-6 lg:grid-cols-12">
               <Reveal retardo={60} className="lg:col-span-8">
@@ -101,9 +99,7 @@ export function CaseStudy() {
         <Container>
           <div className="py-[var(--section-y)]">
             <Reveal>
-              <h2 className="label-mono">
-                {"// "}02 — {caso.arquitectura.titulo}
-              </h2>
+              <h2 className="text-h2">{caso.arquitectura.titulo}</h2>
               <p className="mt-6 max-w-[60ch] text-text-muted">{caso.arquitectura.intro}</p>
             </Reveal>
 
@@ -130,9 +126,7 @@ export function CaseStudy() {
         <Container>
           <div className="py-[var(--section-y)]">
             <Reveal>
-              <h2 className="label-mono">
-                {"// "}03 — {caso.decisiones.titulo}
-              </h2>
+              <h2 className="text-h2">{caso.decisiones.titulo}</h2>
             </Reveal>
 
             <ol className="mt-12">
@@ -160,9 +154,7 @@ export function CaseStudy() {
         <Container>
           <div className="py-[var(--section-y)]">
             <Reveal>
-              <h2 className="label-mono">
-                {"// "}04 — {caso.resultados.titulo}
-              </h2>
+              <h2 className="text-h2">{caso.resultados.titulo}</h2>
               <p className="mt-6 max-w-[60ch] text-text-muted">{caso.resultados.intro}</p>
             </Reveal>
 
