@@ -99,6 +99,118 @@ export const es = {
         titulo: "Fuentes",
       },
     },
+    esquema: {
+      etiqueta: "Cómo funciona",
+      titulo: "Qué pasa cuando le preguntas",
+      subtitulo: {
+        antes:
+          "Cada respuesta recorre cuatro pasos. Debajo de cada uno, lo que ocurrió de verdad con la pregunta «",
+        despues: "».",
+      },
+      ejemplo: "Ejemplo",
+      pasos: [
+        {
+          id: "pregunta",
+          titulo: "Preguntas",
+          descripcion: "Escribes en lenguaje natural, sin menús ni palabras clave.",
+          tecnica: "widget · SSE",
+        },
+        {
+          id: "entiende",
+          titulo: "Entiende",
+          descripcion:
+            "Convierte tu pregunta en un vector que captura su significado. Si es una pregunta corta de seguimiento, prepara una segunda búsqueda con el contexto del turno anterior.",
+          tecnica: "bge-m3 · 1024 dim.",
+          metrica: "178 ms",
+        },
+        {
+          id: "busca",
+          titulo: "Busca",
+          descripcion:
+            "Encuentra los fragmentos más parecidos de su base de conocimiento y, si hubo dos búsquedas, las combina por posición.",
+          tecnica: "pgvector · HNSW · RRF",
+          metrica: "3 fragmentos · 88 ms",
+        },
+        {
+          id: "responde",
+          titulo: "Responde",
+          descripcion:
+            "Un LLM redacta la respuesta solo con lo encontrado, en streaming y con las fuentes.",
+          tecnica: "Claude Haiku 4.5",
+          metrica: "primer token 1,22 s · total 2,52 s",
+        },
+      ],
+      turno: {
+        pregunta: "¿Qué stack tiene?",
+        vector: "[0.021, −0.137, 0.088, …]",
+        fuentes: [
+          "stack.md › Herramientas",
+          "stack.md › Cómo elige la herramienta",
+          "stack.md › Backend e infraestructura",
+        ],
+        respuesta:
+          "Víctor usa FastAPI y Pydantic en Python para backend, y también Ktor en Kotlin…",
+      },
+      limites: {
+        titulo: "Todo dentro de límites",
+        items: [
+          "Presupuesto diario de tokens",
+          "12 turnos por sesión",
+          "tope por IP",
+          "solo responde con su base de conocimiento",
+        ],
+      },
+      usos: {
+        etiqueta: "Para qué sirve",
+        titulo: "Un sistema, muchos usos",
+        destacado: {
+          indicador: "En vivo en esta web",
+          titulo: "Asistente de este portfolio",
+          descripcion:
+            "Responde sobre mi experiencia, proyectos, stack y forma de trabajar, con las fuentes de cada respuesta.",
+          ejemplo: "¿Ha trabajado con pgvector?",
+          boton: "Pruébalo en el chat",
+        },
+        otrosTitulo: "Otras aplicaciones del mismo sistema",
+        otros: [
+          {
+            id: "soporte",
+            titulo: "Atención al cliente",
+            ejemplo: "¿Hacéis envíos a Canarias?",
+            descripcion: "Contesta desde las FAQ y políticas del negocio.",
+          },
+          {
+            id: "captacion",
+            titulo: "Captación de contactos",
+            ejemplo: "Quiero un presupuesto",
+            descripcion: "Pide nombre, email y necesidad, y lo registra sin duplicados.",
+          },
+          {
+            id: "derivacion",
+            titulo: "Derivación a una persona",
+            ejemplo: "Quiero hablar con alguien",
+            descripcion: "Deja el caso preparado para un humano, con un resumen.",
+          },
+          {
+            id: "documentacion",
+            titulo: "Documentación interna",
+            ejemplo: "¿Cómo se piden las vacaciones?",
+            descripcion: "Busca en los manuales de la empresa y cita la fuente.",
+          },
+        ],
+        multitenant: {
+          titulo: "Multi-tenant",
+          descripcion:
+            "Una sola API sirve a varios clientes, cada uno con su base de conocimiento, su configuración, sus límites y sus dominios permitidos, aislados entre sí.",
+          api: "API",
+          inquilinos: [
+            { id: "victor", nombre: "Portfolio · victor", estado: "Activo", activo: true },
+            { id: "tienda", nombre: "Tienda online", estado: "Ejemplo", activo: false },
+            { id: "clinica", nombre: "Clínica", estado: "Ejemplo", activo: false },
+          ],
+        },
+      },
+    },
   },
 
   sobreMi: {

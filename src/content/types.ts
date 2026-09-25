@@ -164,6 +164,70 @@ export interface CasoDeEstudio {
 }
 
 /* --------------------------------------------------------------------------
+   Esquema de la sección Agente
+   --------------------------------------------------------------------------
+   El componente elige icono y bloque de ejemplo por `id`. */
+
+export interface PasoEsquema {
+  id: "pregunta" | "entiende" | "busca" | "responde";
+  titulo: string;
+  descripcion: string;
+  /** Etiqueta técnica en mono: «pgvector · HNSW · RRF». */
+  tecnica: string;
+  /** Medida real del paso en el turno de ejemplo, con el formato del idioma. */
+  metrica?: string;
+}
+
+export interface UsoEsquema {
+  id: "soporte" | "captacion" | "derivacion" | "documentacion";
+  titulo: string;
+  ejemplo: string;
+  descripcion: string;
+}
+
+export interface EsquemaAgente {
+  etiqueta: string;
+  titulo: string;
+  /** El subtítulo cita la pregunta del turno, que se pinta aparte con
+   *  lang="es": aquí va lo que la rodea, comillas incluidas. */
+  subtitulo: { antes: string; despues: string };
+  /** Rótulo del bloque de ejemplo de cada paso. */
+  ejemplo: string;
+  pasos: PasoEsquema[];
+  /** Datos reales del turno. Son iguales en los dos idiomas y se pintan con
+   *  lang="es". */
+  turno: {
+    pregunta: string;
+    vector: string;
+    fuentes: string[];
+    respuesta: string;
+  };
+  limites: {
+    titulo: string;
+    items: string[];
+  };
+  usos: {
+    etiqueta: string;
+    titulo: string;
+    destacado: {
+      indicador: string;
+      titulo: string;
+      descripcion: string;
+      ejemplo: string;
+      boton: string;
+    };
+    otrosTitulo: string;
+    otros: UsoEsquema[];
+    multitenant: {
+      titulo: string;
+      descripcion: string;
+      api: string;
+      inquilinos: { id: string; nombre: string; estado: string; activo: boolean }[];
+    };
+  };
+}
+
+/* --------------------------------------------------------------------------
    Contenido completo del sitio
    -------------------------------------------------------------------------- */
 
@@ -256,6 +320,8 @@ export interface SiteContent {
         titulo: string;
       };
     };
+    /** Esquema estático bajo el chat: cómo funciona y para qué sirve. */
+    esquema: EsquemaAgente;
   };
 
   sobreMi: {

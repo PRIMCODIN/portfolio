@@ -12,6 +12,7 @@ import {
   suscribirInspector,
 } from "@/lib/chatWidget";
 import { cn } from "@/lib/cn";
+import { EsquemaAgente } from "./EsquemaAgente";
 import { InspectorTurno } from "./InspectorTurno";
 import { EnlaceTarjeta } from "./Projects";
 
@@ -45,6 +46,7 @@ const CAPA =
 export function AgentSection() {
   const { agente } = useContent();
   const { locale } = useLocale();
+  const seccion = useRef<HTMLElement>(null);
   const hueco = useRef<HTMLDivElement>(null);
   const [estado, setEstado] = useState<Estado>("cargando");
   const inspector = useSyncExternalStore(suscribirInspector, leerInspector, leerInspectorServidor);
@@ -87,8 +89,20 @@ export function AgentSection() {
     };
   }, []);
 
+  /** Botón del esquema: vuelve al chat y, si el widget lo permite, enfoca su
+   *  campo de texto. focus() usa preventScroll, así que no corta el scroll. */
+  const probarChat = () => {
+    const menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    seccion.current?.scrollIntoView({
+      behavior: menosMovimiento ? "auto" : "smooth",
+      block: "start",
+    });
+    window.avalonWidget?.focus?.();
+  };
+
   return (
     <section
+      ref={seccion}
       id="agente"
       className="scroll-mt-[var(--header-h)] border-t border-hairline"
       aria-labelledby="agente-titulo"
@@ -160,6 +174,8 @@ export function AgentSection() {
             </div>
           </div>
         </div>
+
+        <EsquemaAgente alProbar={probarChat} />
       </Container>
     </section>
   );
