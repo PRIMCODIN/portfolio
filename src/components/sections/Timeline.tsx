@@ -90,7 +90,7 @@ export function Timeline() {
               <summary className="flex cursor-pointer list-none items-center gap-3 text-h3 marker:content-none">
                 <span
                   aria-hidden="true"
-                  className="text-text-muted transition-transform duration-[--duration-fast] group-open:rotate-45"
+                  className="text-text-muted transition-transform duration-(--duration-fast) group-open:rotate-45"
                 >
                   +
                 </span>

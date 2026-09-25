@@ -149,7 +149,7 @@ export function AgentSection() {
                       <p className="text-small text-text-muted">{agente.error}</p>
                       <a
                         href="#contacto"
-                        className="text-small text-text underline underline-offset-4 transition-colors duration-[--duration-fast] hover:text-accent"
+                        className="text-small text-text underline underline-offset-4 transition-colors duration-(--duration-fast) hover:text-accent"
                       >
                         {agente.errorEnlace}
                       </a>

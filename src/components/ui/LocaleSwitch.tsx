@@ -23,7 +23,7 @@ export function LocaleSwitch() {
             aria-pressed={activo}
             onClick={() => setLocale(idioma)}
             className={cn(
-              "label-mono rounded-pill px-2.5 py-1 transition-colors duration-[--duration-fast] ease-[--ease-soft]",
+              "label-mono rounded-pill px-2.5 py-1 transition-colors duration-(--duration-fast) ease-(--ease-soft)",
               activo ? "bg-text text-bg" : "hover:text-text",
             )}
           >

@@ -44,7 +44,7 @@ export function Header() {
         <div className="flex h-[var(--header-h)] items-center justify-between gap-4">
           <Link
             to={destino("#inicio")}
-            className="label-mono text-text transition-opacity duration-[--duration-fast] hover:opacity-70"
+            className="label-mono text-text transition-opacity duration-(--duration-fast) hover:opacity-70"
           >
             {nav.monograma}
           </Link>
@@ -54,7 +54,7 @@ export function Header() {
               <Link
                 key={item.href}
                 to={destino(item.href)}
-                className="text-small text-text-muted transition-colors duration-[--duration-fast] hover:text-text"
+                className="text-small text-text-muted transition-colors duration-(--duration-fast) hover:text-text"
               >
                 {item.label}
               </Link>
@@ -86,7 +86,7 @@ export function Header() {
               aria-expanded={abierto}
               aria-controls="menu-movil"
               aria-label={abierto ? ui.cerrarMenu : ui.abrirMenu}
-              className="inline-flex size-9 items-center justify-center rounded-pill border border-border text-text-muted transition-colors duration-[--duration-fast] hover:border-text hover:text-text md:hidden"
+              className="inline-flex size-9 items-center justify-center rounded-pill border border-border text-text-muted transition-colors duration-(--duration-fast) hover:border-text hover:text-text md:hidden"
             >
               {abierto ? <IconoCerrar /> : <IconoMenu />}
             </button>
@@ -103,7 +103,7 @@ export function Header() {
                   key={item.href}
                   to={destino(item.href)}
                   onClick={() => setAbierto(false)}
-                  className="border-b border-hairline py-3.5 text-text-muted transition-colors duration-[--duration-fast] last:border-b-0 hover:text-text"
+                  className="border-b border-hairline py-3.5 text-text-muted transition-colors duration-(--duration-fast) last:border-b-0 hover:text-text"
                 >
                   {item.label}
                 </Link>

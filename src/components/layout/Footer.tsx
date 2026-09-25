@@ -20,7 +20,7 @@ export function Footer() {
                 href={enlace.href}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex items-center gap-1.5 transition-colors duration-[--duration-fast] hover:text-text"
+                className="inline-flex items-center gap-1.5 transition-colors duration-(--duration-fast) hover:text-text"
               >
                 {enlace.label}
                 <IconoEnlaceExterno className="opacity-70" />

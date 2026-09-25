@@ -44,7 +44,7 @@ export function CaseStudy() {
           <Reveal>
             <Link
               to="/#proyectos"
-              className="label-mono inline-flex items-center gap-2 transition-colors duration-[--duration-fast] hover:text-text"
+              className="label-mono inline-flex items-center gap-2 transition-colors duration-(--duration-fast) hover:text-text"
             >
               <IconoFlecha className="rotate-180" />
               {caso.volver}
@@ -203,7 +203,7 @@ export function CaseStudy() {
             <Reveal retardo={200}>
               <Link
                 to="/#proyectos"
-                className="mt-14 inline-flex items-center gap-2 text-small text-text-muted transition-colors duration-[--duration-fast] hover:text-text"
+                className="mt-14 inline-flex items-center gap-2 text-small text-text-muted transition-colors duration-(--duration-fast) hover:text-text"
               >
                 <IconoFlecha className="rotate-180" />
                 {caso.volver}

@@ -46,7 +46,7 @@ export function Button({
   const esExterno = externo ?? (href?.startsWith("http") || href?.startsWith("mailto:")) ?? false;
   const clases = cn(
     "inline-flex items-center justify-center gap-2 rounded-pill px-5 py-2.5 text-small font-medium",
-    "transition-[background-color,border-color,color,filter] duration-[--duration-fast] ease-[--ease-soft]",
+    "transition-[background-color,border-color,color,filter] duration-(--duration-fast) ease-(--ease-soft)",
     estilos[variante],
     className,
   );

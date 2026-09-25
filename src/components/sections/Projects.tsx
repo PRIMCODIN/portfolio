@@ -25,7 +25,7 @@ export function EnlaceTarjeta({
   externo?: boolean;
 }) {
   const clases =
-    "inline-flex items-center gap-1.5 text-small text-text-muted underline decoration-transparent underline-offset-4 transition-colors duration-[--duration-fast] hover:text-text hover:decoration-current";
+    "inline-flex items-center gap-1.5 text-small text-text-muted underline decoration-transparent underline-offset-4 transition-colors duration-(--duration-fast) hover:text-text hover:decoration-current";
 
   const contenido = (
     <>
@@ -59,7 +59,7 @@ function Tarjeta({ proyecto, textos }: { proyecto: Proyecto; textos: Textos }) {
   return (
     <article
       className={cn(
-        "group flex h-full flex-col bg-bg transition-colors duration-[--duration-base] ease-[--ease-soft] hover:bg-bg-subtle",
+        "group flex h-full flex-col bg-bg transition-colors duration-(--duration-base) ease-(--ease-soft) hover:bg-bg-subtle",
         proyecto.destacado ? "p-7 sm:p-9" : "p-7",
       )}
     >

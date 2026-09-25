@@ -62,7 +62,7 @@ export function Contact() {
               href={enlace.href}
               {...(enlace.externo ? { target: "_blank", rel: "noreferrer noopener" } : {})}
               {...("descargar" in enlace ? { download: true } : {})}
-              className="group flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-t border-hairline py-7 transition-colors duration-[--duration-fast] hover:text-accent"
+              className="group flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-t border-hairline py-7 transition-colors duration-(--duration-fast) hover:text-accent"
             >
               <span className="label-mono">{enlace.label}</span>
               <span className="flex items-center gap-2 text-h3">

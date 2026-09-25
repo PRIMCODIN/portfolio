@@ -14,7 +14,7 @@ export function ThemeToggle() {
       onClick={alternarTema}
       aria-label={etiqueta}
       title={etiqueta}
-      className="inline-flex size-9 items-center justify-center rounded-pill border border-border text-text-muted transition-colors duration-[--duration-fast] ease-[--ease-soft] hover:border-text hover:text-text"
+      className="inline-flex size-9 items-center justify-center rounded-pill border border-border text-text-muted transition-colors duration-(--duration-fast) ease-(--ease-soft) hover:border-text hover:text-text"
     >
       {tema === "dark" ? <IconoSol /> : <IconoLuna />}
     </button>
