@@ -66,6 +66,38 @@ export const en = {
     cargando: "Loading the agent…",
     error: "The agent couldn't load.",
     errorEnlace: "Write to me directly",
+    inspector: {
+      etiqueta: "Technical details of the answer",
+      vacio: "Ask a question to see how the answer is built",
+      resumen: {
+        titulo: "Summary",
+        tokens: "tokens",
+      },
+      tiempos: {
+        titulo: "Timings",
+        preparacion: "Preparation",
+        embeddings: "Embeddings",
+        busqueda: "Search",
+        guardar: "Save message",
+        llm: "LLM",
+        pasadas: "passes",
+        herramientas: "Tools",
+        otros: "Other",
+        total: "Total",
+        primerToken: "first token",
+      },
+      consultas: {
+        titulo: "Queries",
+        notaB: "B runs on short follow-up questions and adds the context of the previous turn",
+      },
+      fragmentos: {
+        titulo: "Chunks",
+        candidatos: "candidates considered",
+      },
+      fuentes: {
+        titulo: "Sources",
+      },
+    },
   },
 
   sobreMi: {

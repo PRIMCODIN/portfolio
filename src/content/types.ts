@@ -221,6 +221,41 @@ export interface SiteContent {
     cargando: string;
     error: string;
     errorEnlace: string;
+    /** Inspector del turno: sustituye al texto de la columna, desde lg, con
+     *  el modo técnico del widget encendido. Los números los compone el
+     *  componente («12 candidatos considerados», «LLM · 2 pasadas»). */
+    inspector: {
+      etiqueta: string;
+      vacio: string;
+      resumen: {
+        titulo: string;
+        tokens: string;
+      };
+      tiempos: {
+        titulo: string;
+        preparacion: string;
+        embeddings: string;
+        busqueda: string;
+        guardar: string;
+        llm: string;
+        pasadas: string;
+        herramientas: string;
+        otros: string;
+        total: string;
+        primerToken: string;
+      };
+      consultas: {
+        titulo: string;
+        notaB: string;
+      };
+      fragmentos: {
+        titulo: string;
+        candidatos: string;
+      };
+      fuentes: {
+        titulo: string;
+      };
+    };
   };
 
   sobreMi: {

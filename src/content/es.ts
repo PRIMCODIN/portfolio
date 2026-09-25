@@ -66,6 +66,39 @@ export const es = {
     cargando: "Cargando el agente…",
     error: "No se ha podido cargar el agente.",
     errorEnlace: "Escríbeme directamente",
+    inspector: {
+      etiqueta: "Detalles técnicos de la respuesta",
+      vacio: "Haz una pregunta para ver cómo se genera la respuesta",
+      resumen: {
+        titulo: "Resumen",
+        tokens: "tokens",
+      },
+      tiempos: {
+        titulo: "Tiempos",
+        preparacion: "Preparación",
+        embeddings: "Embeddings",
+        busqueda: "Búsqueda",
+        guardar: "Guardar mensaje",
+        llm: "LLM",
+        pasadas: "pasadas",
+        herramientas: "Herramientas",
+        otros: "Otros",
+        total: "Total",
+        primerToken: "primer token",
+      },
+      consultas: {
+        titulo: "Consultas",
+        notaB:
+          "B se lanza en preguntas cortas de seguimiento y añade el contexto del turno anterior",
+      },
+      fragmentos: {
+        titulo: "Fragmentos",
+        candidatos: "candidatos considerados",
+      },
+      fuentes: {
+        titulo: "Fuentes",
+      },
+    },
   },
 
   sobreMi: {

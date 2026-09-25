@@ -1,12 +1,31 @@
-import { useEffect, useEffectEvent, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState, useSyncExternalStore } from "react";
 
 import { Container } from "@/components/layout/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { useContent, useLocale } from "@/i18n/locale-context";
-import { acoplarChat, cargarChat, desacoplarChat } from "@/lib/chatWidget";
+import {
+  acoplarChat,
+  cargarChat,
+  desacoplarChat,
+  leerInspector,
+  leerInspectorServidor,
+  suscribirInspector,
+} from "@/lib/chatWidget";
+import { cn } from "@/lib/cn";
+import { InspectorTurno } from "./InspectorTurno";
 import { EnlaceTarjeta } from "./Projects";
 
 type Estado = "cargando" | "listo" | "error";
+
+/** Alto del chat desde lg. La columna de texto mide lo mismo para que el
+ *  inspector no haga crecer la fila. */
+const ALTO_LG = "lg:h-[min(560px,calc(100svh-var(--header-h)-4rem))]";
+
+/** Las dos capas de la columna (texto e inspector) ocupan la misma celda y
+ *  se funden entre sí. Con prefers-reduced-motion la regla global anula la
+ *  transición. */
+const CAPA =
+  "[grid-area:1/1] transition-[opacity,visibility] duration-(--duration-base) ease-(--ease-soft)";
 
 /**
  * Sección con el chat del agente embebido. Home solo la monta si el widget
@@ -28,6 +47,8 @@ export function AgentSection() {
   const { locale } = useLocale();
   const hueco = useRef<HTMLDivElement>(null);
   const [estado, setEstado] = useState<Estado>("cargando");
+  const inspector = useSyncExternalStore(suscribirInspector, leerInspector, leerInspectorServidor);
+  const verInspector = inspector.conectado && inspector.modoTecnico;
 
   // El idioma solo cuenta para la primera carga; cambiarlo no debe volver a
   // observar ni a cargar nada.
@@ -75,18 +96,45 @@ export function AgentSection() {
       <Container>
         <div className="flex min-h-svh flex-col justify-center py-12 lg:py-8">
           <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
-            <Reveal className="lg:col-span-5">
+            <Reveal className={cn("flex min-w-0 flex-col lg:col-span-5", ALTO_LG)}>
               <h2 id="agente-titulo" className="text-h2">
                 {agente.titulo}
               </h2>
-              <p className="mt-6 max-w-[52ch] text-text-muted">{agente.intro}</p>
-              <p className="mt-5 max-w-[52ch] text-small text-text-muted">{agente.aviso}</p>
-              <div className="mt-8">
-                <EnlaceTarjeta to="/proyectos/chatbot-rag">{agente.enlace}</EnlaceTarjeta>
+              <div className="mt-6 grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] grid-rows-[minmax(0,1fr)]">
+                <div
+                  className={cn(CAPA, verInspector && "invisible opacity-0")}
+                  inert={verInspector}
+                >
+                  <p className="max-w-[52ch] text-text-muted">{agente.intro}</p>
+                  <p className="mt-5 max-w-[52ch] text-small text-text-muted">{agente.aviso}</p>
+                  <div className="mt-8">
+                    <EnlaceTarjeta to="/proyectos/chatbot-rag">{agente.enlace}</EnlaceTarjeta>
+                  </div>
+                </div>
+
+                {inspector.conectado && (
+                  <div
+                    role="region"
+                    aria-label={agente.inspector.etiqueta}
+                    inert={!verInspector}
+                    className={cn(
+                      CAPA,
+                      "overflow-y-auto overscroll-contain rounded-card border border-border bg-bg-subtle",
+                      !verInspector && "invisible opacity-0",
+                    )}
+                  >
+                    <InspectorTurno key={inspector.turno} metricas={inspector.metricas} />
+                  </div>
+                )}
               </div>
             </Reveal>
 
-            <div className="relative h-[min(560px,75svh)] min-w-0 overflow-hidden rounded-card border border-border lg:col-span-7 lg:h-[min(560px,calc(100svh-var(--header-h)-4rem))]">
+            <div
+              className={cn(
+                "relative h-[min(560px,75svh)] min-w-0 overflow-hidden rounded-card border border-border lg:col-span-7",
+                ALTO_LG,
+              )}
+            >
               <div ref={hueco} className="absolute inset-0" />
 
               {estado !== "listo" && (
