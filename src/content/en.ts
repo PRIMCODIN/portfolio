@@ -63,18 +63,33 @@ export const en = {
       "A RAG agent that answers from my own profile: experience, projects, stack and how I work. It's a multi-tenant RAG system I designed and deployed on my own server.",
     aviso: "It can make mistakes. For anything important, write to me directly.",
     enlace: "How it's built",
+    enlaceEsquema: "How it works",
+    modoTecnico: {
+      titulo: "See inside.",
+      texto:
+        "Turn on technical mode and every answer shows which passages it found, how long each step took and what it cost.",
+      boton: "Turn on technical mode",
+      activo: "Technical mode on",
+    },
     cargando: "Loading the agent…",
     error: "The agent couldn't load.",
     errorEnlace: "Write to me directly",
     inspector: {
       etiqueta: "Technical details of the answer",
       vacio: "Ask a question to see how the answer is built",
-      resumen: {
-        titulo: "Summary",
-        tokens: "tokens",
+      sinDatos: "No data for this turn",
+      fichas: {
+        modelo: "Model",
+        tokens: "Tokens",
+        coste: "Cost",
+        total: "Total",
+      },
+      pestanas: {
+        etiqueta: "Turn details",
+        tiempos: "Timings",
+        busqueda: "Search",
       },
       tiempos: {
-        titulo: "Timings",
         preparacion: "Preparation",
         embeddings: "Embeddings",
         busqueda: "Search",
@@ -83,7 +98,6 @@ export const en = {
         pasadas: "passes",
         herramientas: "Tools",
         otros: "Other",
-        total: "Total",
         primerToken: "first token",
       },
       consultas: {
@@ -133,7 +147,8 @@ export const en = {
         {
           id: "responde",
           titulo: "Answer",
-          descripcion: "An LLM writes the answer using only what it found, streamed and with sources.",
+          descripcion:
+            "An LLM writes the answer using only what it found, streamed and with sources.",
           tecnica: "Claude Haiku 4.5",
           metrica: "first token 1.22 s · total 2.52 s",
         },

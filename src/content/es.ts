@@ -63,18 +63,33 @@ export const es = {
       "Un agente RAG que responde con la información de mi perfil: experiencia, proyectos, stack y forma de trabajar. Es un sistema RAG multi-tenant que he diseñado y desplegado en mi propio servidor.",
     aviso: "Puede equivocarse. Para lo importante, escríbeme directamente.",
     enlace: "Cómo está hecho",
+    enlaceEsquema: "Cómo funciona",
+    modoTecnico: {
+      titulo: "Míralo por dentro.",
+      texto:
+        "Activa el modo técnico y cada respuesta enseña qué fragmentos encontró, cuánto tardó cada paso y lo que costó.",
+      boton: "Activar modo técnico",
+      activo: "Modo técnico activado",
+    },
     cargando: "Cargando el agente…",
     error: "No se ha podido cargar el agente.",
     errorEnlace: "Escríbeme directamente",
     inspector: {
       etiqueta: "Detalles técnicos de la respuesta",
       vacio: "Haz una pregunta para ver cómo se genera la respuesta",
-      resumen: {
-        titulo: "Resumen",
-        tokens: "tokens",
+      sinDatos: "Sin datos para este turno",
+      fichas: {
+        modelo: "Modelo",
+        tokens: "Tokens",
+        coste: "Coste",
+        total: "Total",
+      },
+      pestanas: {
+        etiqueta: "Detalles del turno",
+        tiempos: "Tiempos",
+        busqueda: "Búsqueda",
       },
       tiempos: {
-        titulo: "Tiempos",
         preparacion: "Preparación",
         embeddings: "Embeddings",
         busqueda: "Búsqueda",
@@ -83,7 +98,6 @@ export const es = {
         pasadas: "pasadas",
         herramientas: "Herramientas",
         otros: "Otros",
-        total: "Total",
         primerToken: "primer token",
       },
       consultas: {

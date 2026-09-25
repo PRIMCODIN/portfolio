@@ -13,7 +13,8 @@
  *
  * Desde lg el widget delega en la página los detalles técnicos de cada turno
  * (inspector externo): este módulo escucha sus eventos y los publica en un
- * store mínimo que la sección Agente lee con useSyncExternalStore.
+ * store mínimo que la sección Agente lee con useSyncExternalStore. El estado
+ * del modo técnico se sigue a cualquier ancho, porque de él depende el CTA.
  */
 
 import type { Locale } from "@/content/types";
@@ -82,6 +83,9 @@ interface ApiWidget {
   focus?: () => void;
   setLang?: (lang: string) => void;
   activarInspectorExterno?: (activo: boolean) => void;
+  setModoTecnico?: (activo: boolean) => void;
+  /** null si el tenant no tiene modo técnico o aún no hay configuración. */
+  getModoTecnico?: () => boolean | null;
 }
 
 declare global {
@@ -203,11 +207,13 @@ export function cargarChat(locale: Locale): Promise<void> {
 /** Lleva el chat al hueco de la sección Agente. */
 export function acoplarChat(hueco: HTMLElement): void {
   hueco.appendChild(obtenerHost());
+  seguirModoTecnico();
   conectarInspector();
 }
 
 /** Devuelve el chat al aparcamiento, fuera del árbol de React. */
 export function desacoplarChat(): void {
+  dejarDeSeguirModoTecnico();
   desconectarInspector();
   if (host && aparcamiento && host.parentElement !== aparcamiento) {
     aparcamiento.appendChild(host);
@@ -218,20 +224,30 @@ export function desacoplarChat(): void {
    Inspector externo
    -------------------------------------------------------------------------- */
 
+export type PestanaInspector = "tiempos" | "busqueda";
+
 export interface EstadoInspector {
   /** El widget delega en la página: solo desde lg y con el chat acoplado. */
   conectado: boolean;
+  /** El widget tiene setModoTecnico y el tenant, modo técnico. A cualquier
+   *  ancho, con el chat acoplado. */
+  tecnicoDisponible: boolean;
   modoTecnico: boolean;
   metricas: MetricasTurno | null;
   /** Sube con cada chat:turno. Sirve de key para reiniciar el inspector. */
   turno: number;
+  /** Pestaña elegida en el inspector. Vive aquí para sobrevivir al cambio de
+   *  turno, que remonta el componente. */
+  pestana: PestanaInspector;
 }
 
 const INSPECTOR_INICIAL: EstadoInspector = {
   conectado: false,
+  tecnicoDisponible: false,
   modoTecnico: false,
   metricas: null,
   turno: 0,
+  pestana: "tiempos",
 };
 
 /** Por debajo de lg el widget usa su propio panel técnico. */
@@ -260,8 +276,53 @@ export function leerInspectorServidor(): EstadoInspector {
   return INSPECTOR_INICIAL;
 }
 
+export function elegirPestana(pestana: PestanaInspector): void {
+  actualizarInspector({ pestana });
+}
+
+/** Lo mismo que pulsar el interruptor del widget. El store se entera por
+ *  chat:modo-tecnico, como con el interruptor. */
+export function activarModoTecnico(): void {
+  window.avalonWidget?.setModoTecnico?.(true);
+}
+
+/** El modo técnico según el widget. null si no lo tiene el tenant, si aún no
+ *  hay configuración o si el widget es anterior a getModoTecnico. */
+function leerModoTecnico(): boolean | null {
+  const widget = window.avalonWidget;
+  if (typeof widget?.setModoTecnico !== "function") return null;
+  if (typeof widget.getModoTecnico !== "function") return null;
+  return widget.getModoTecnico() ?? null;
+}
+
 function alCambiarModo(evento: WindowEventMap["chat:modo-tecnico"]): void {
-  actualizarInspector({ modoTecnico: evento.detail.activo === true });
+  actualizarInspector({
+    tecnicoDisponible: leerModoTecnico() !== null,
+    modoTecnico: evento.detail.activo === true,
+  });
+}
+
+let siguiendoModo = false;
+
+/**
+ * Escucha el modo técnico a cualquier ancho y parte del estado real. Si el
+ * widget aún no tiene la configuración, el getter da null y el estado llega
+ * con el chat:modo-tecnico inicial. Idempotente, como conectarInspector.
+ */
+function seguirModoTecnico(): void {
+  if (siguiendoModo) return;
+  siguiendoModo = true;
+  window.addEventListener("chat:modo-tecnico", alCambiarModo);
+
+  const inicial = leerModoTecnico();
+  actualizarInspector({ tecnicoDisponible: inicial !== null, modoTecnico: inicial === true });
+}
+
+function dejarDeSeguirModoTecnico(): void {
+  if (!siguiendoModo) return;
+  siguiendoModo = false;
+  window.removeEventListener("chat:modo-tecnico", alCambiarModo);
+  actualizarInspector({ tecnicoDisponible: false, modoTecnico: false });
 }
 
 function alCambiarTurno(evento: WindowEventMap["chat:turno"]): void {
@@ -276,17 +337,16 @@ function activarInspector(activo: boolean): void {
   inspectorActivo = activo;
 
   if (activo) {
-    // Los listeners van antes de registrarse: el widget emite el estado
-    // actual en el mismo momento.
-    window.addEventListener("chat:modo-tecnico", alCambiarModo);
+    // El listener va antes de registrarse: el widget emite el estado actual
+    // en el mismo momento. El de chat:modo-tecnico ya está puesto.
     window.addEventListener("chat:turno", alCambiarTurno);
     actualizarInspector({ conectado: true });
     window.avalonWidget?.activarInspectorExterno?.(true);
   } else {
-    window.removeEventListener("chat:modo-tecnico", alCambiarModo);
+    // modoTecnico no se toca: por debajo de lg lo sigue necesitando el CTA.
     window.removeEventListener("chat:turno", alCambiarTurno);
     window.avalonWidget?.activarInspectorExterno?.(false);
-    actualizarInspector({ conectado: false, modoTecnico: false, metricas: null });
+    actualizarInspector({ conectado: false, metricas: null });
   }
 }
 

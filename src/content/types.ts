@@ -282,6 +282,16 @@ export interface SiteContent {
     intro: string;
     aviso: string;
     enlace: string;
+    /** Salto al esquema de debajo del chat. */
+    enlaceEsquema: string;
+    /** CTA de la columna de texto que enciende el modo técnico del widget.
+     *  Solo se pinta si el widget lo permite. */
+    modoTecnico: {
+      titulo: string;
+      texto: string;
+      boton: string;
+      activo: string;
+    };
     cargando: string;
     error: string;
     errorEnlace: string;
@@ -291,12 +301,20 @@ export interface SiteContent {
     inspector: {
       etiqueta: string;
       vacio: string;
-      resumen: {
-        titulo: string;
+      /** Una pestaña sin nada que enseñar (métricas antiguas). */
+      sinDatos: string;
+      fichas: {
+        modelo: string;
         tokens: string;
+        coste: string;
+        total: string;
+      };
+      pestanas: {
+        etiqueta: string;
+        tiempos: string;
+        busqueda: string;
       };
       tiempos: {
-        titulo: string;
         preparacion: string;
         embeddings: string;
         busqueda: string;
@@ -305,7 +323,6 @@ export interface SiteContent {
         pasadas: string;
         herramientas: string;
         otros: string;
-        total: string;
         primerToken: string;
       };
       consultas: {

@@ -206,6 +206,9 @@ function Multitenant({ textos }: { textos: Textos["usos"]["multitenant"] }) {
   );
 }
 
+/** Ancla estable del esquema, para el enlace «Cómo funciona» de la sección. */
+export const ID_ESQUEMA = "como-funciona";
+
 /**
  * Esquema estático bajo el chat: qué pasa con una pregunta, con los datos de
  * un turno real, y para qué más sirve el mismo sistema. Solo el botón es
@@ -216,7 +219,10 @@ export function EsquemaAgente({ alProbar }: { alProbar: () => void }) {
   const { usos } = textos;
 
   return (
-    <div className="pt-12 pb-[var(--section-y)] lg:pt-16">
+    <div
+      id={ID_ESQUEMA}
+      className="scroll-mt-[var(--header-h)] pt-12 pb-[var(--section-y)] lg:pt-16"
+    >
       <Reveal>
         <header className="max-w-[64ch]">
           <p className="label-mono">{textos.etiqueta}</p>
@@ -288,10 +294,7 @@ export function EsquemaAgente({ alProbar }: { alProbar: () => void }) {
         <h4 className="mt-12 font-medium">{usos.otrosTitulo}</h4>
         <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {usos.otros.map((uso) => (
-            <li
-              key={uso.id}
-              className="flex flex-col rounded-card border border-border bg-bg p-5"
-            >
+            <li key={uso.id} className="flex flex-col rounded-card border border-border bg-bg p-5">
               <CirculoIcono icono={ICONOS_USO[uso.id]} />
               <h5 className="mt-4 font-medium">{uso.titulo}</h5>
               <p className="mt-3 w-fit max-w-full rounded-card rounded-br-sm border border-hairline bg-bg-subtle px-3 py-1.5 text-small">

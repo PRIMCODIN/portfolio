@@ -1,20 +1,30 @@
-import { useEffect, useEffectEvent, useRef, useState, useSyncExternalStore } from "react";
+import {
+  useEffect,
+  useEffectEvent,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type MouseEvent,
+} from "react";
 
 import { Container } from "@/components/layout/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { useContent, useLocale } from "@/i18n/locale-context";
+import { IconoFlecha } from "@/components/ui/icons";
 import {
   acoplarChat,
+  activarModoTecnico,
   cargarChat,
   desacoplarChat,
+  elegirPestana,
   leerInspector,
   leerInspectorServidor,
   suscribirInspector,
 } from "@/lib/chatWidget";
 import { cn } from "@/lib/cn";
-import { EsquemaAgente } from "./EsquemaAgente";
+import { EsquemaAgente, ID_ESQUEMA } from "./EsquemaAgente";
 import { InspectorTurno } from "./InspectorTurno";
-import { EnlaceTarjeta } from "./Projects";
+import { CLASES_ENLACE_TARJETA as CLASES_ENLACE, EnlaceTarjeta } from "./Projects";
 
 type Estado = "cargando" | "listo" | "error";
 
@@ -27,6 +37,48 @@ const ALTO_LG = "lg:h-[min(560px,calc(100svh-var(--header-h)-4rem))]";
  *  transición. */
 const CAPA =
   "[grid-area:1/1] transition-[opacity,visibility] duration-(--duration-base) ease-(--ease-soft)";
+
+/** Scroll suave, o instantáneo con prefers-reduced-motion. */
+function comportamientoScroll(): ScrollBehavior {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+}
+
+/** Por debajo de lg el chat va debajo del texto: el CTA tiene que llevar a él. */
+const CONSULTA_LG = "(min-width: 1024px)";
+
+/**
+ * Invitación a encender el modo técnico del widget. Con el modo encendido se
+ * queda a la vista, desactivada, para que en móvil se vea que ha funcionado;
+ * desde lg la tapa el inspector.
+ */
+function CtaModoTecnico({ activo, alActivar }: { activo: boolean; alActivar: () => void }) {
+  const textos = useContent().agente.modoTecnico;
+
+  return (
+    <div className="mt-5 max-w-[52ch] rounded-card border border-[color-mix(in_oklab,var(--color-accent)_35%,var(--color-border))] bg-bg-subtle p-4">
+      <p className="font-medium">{textos.titulo}</p>
+      <p className="mt-1 text-small text-text-muted">{textos.texto}</p>
+      <button
+        type="button"
+        onClick={alActivar}
+        disabled={activo}
+        aria-pressed={activo}
+        className="mt-3 inline-flex items-center gap-2 rounded-pill border border-accent px-4 py-1.5 text-small font-medium text-accent transition-colors duration-(--duration-fast) ease-(--ease-soft) hover:bg-accent hover:text-accent-contrast disabled:cursor-default disabled:border-border disabled:text-text-muted disabled:hover:bg-transparent"
+      >
+        {activo && (
+          <svg
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+            className="size-3.5 fill-none stroke-current stroke-[1.75]"
+          >
+            <path d="M3.5 8.5l3 3 6-7" />
+          </svg>
+        )}
+        {activo ? textos.activo : textos.boton}
+      </button>
+    </div>
+  );
+}
 
 /**
  * Sección con el chat del agente embebido. Home solo la monta si el widget
@@ -47,6 +99,7 @@ export function AgentSection() {
   const { agente } = useContent();
   const { locale } = useLocale();
   const seccion = useRef<HTMLElement>(null);
+  const chat = useRef<HTMLDivElement>(null);
   const hueco = useRef<HTMLDivElement>(null);
   const [estado, setEstado] = useState<Estado>("cargando");
   const inspector = useSyncExternalStore(suscribirInspector, leerInspector, leerInspectorServidor);
@@ -92,12 +145,25 @@ export function AgentSection() {
   /** Botón del esquema: vuelve al chat y, si el widget lo permite, enfoca su
    *  campo de texto. focus() usa preventScroll, así que no corta el scroll. */
   const probarChat = () => {
-    const menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    seccion.current?.scrollIntoView({
-      behavior: menosMovimiento ? "auto" : "smooth",
-      block: "start",
-    });
+    seccion.current?.scrollIntoView({ behavior: comportamientoScroll(), block: "start" });
     window.avalonWidget?.focus?.();
+  };
+
+  /** CTA del modo técnico. Desde lg la columna pasa sola al inspector; por
+   *  debajo, el chat queda debajo del texto y hay que llevar la vista a él. */
+  const encenderModoTecnico = () => {
+    activarModoTecnico();
+    if (!window.matchMedia(CONSULTA_LG).matches) {
+      chat.current?.scrollIntoView({ behavior: comportamientoScroll(), block: "center" });
+    }
+  };
+
+  /** Enlace al esquema: sin tocar el hash, que ScrollManager recolocaría. */
+  const irAlEsquema = (evento: MouseEvent<HTMLAnchorElement>) => {
+    const destino = document.getElementById(ID_ESQUEMA);
+    if (!destino) return;
+    evento.preventDefault();
+    destino.scrollIntoView({ behavior: comportamientoScroll(), block: "start" });
   };
 
   return (
@@ -120,9 +186,19 @@ export function AgentSection() {
                   inert={verInspector}
                 >
                   <p className="max-w-[52ch] text-text-muted">{agente.intro}</p>
+                  {estado === "listo" && inspector.tecnicoDisponible && (
+                    <CtaModoTecnico
+                      activo={inspector.modoTecnico}
+                      alActivar={encenderModoTecnico}
+                    />
+                  )}
                   <p className="mt-5 max-w-[52ch] text-small text-text-muted">{agente.aviso}</p>
-                  <div className="mt-8">
+                  <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
                     <EnlaceTarjeta to="/proyectos/chatbot-rag">{agente.enlace}</EnlaceTarjeta>
+                    <a href={`#${ID_ESQUEMA}`} onClick={irAlEsquema} className={CLASES_ENLACE}>
+                      {agente.enlaceEsquema}
+                      <IconoFlecha className="rotate-90 opacity-70" />
+                    </a>
                   </div>
                 </div>
 
@@ -137,13 +213,19 @@ export function AgentSection() {
                       !verInspector && "invisible opacity-0",
                     )}
                   >
-                    <InspectorTurno key={inspector.turno} metricas={inspector.metricas} />
+                    <InspectorTurno
+                      key={inspector.turno}
+                      metricas={inspector.metricas}
+                      pestana={inspector.pestana}
+                      alElegirPestana={elegirPestana}
+                    />
                   </div>
                 )}
               </div>
             </Reveal>
 
             <div
+              ref={chat}
               className={cn(
                 "relative h-[min(560px,75svh)] min-w-0 overflow-hidden rounded-card border border-border lg:col-span-7",
                 ALTO_LG,

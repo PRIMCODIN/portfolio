@@ -13,6 +13,11 @@ type Textos = SiteContent["proyectos"];
 
 /** Enlace de pie de tarjeta, con subrayado que aparece al pasar por encima.
  *  También lo usa la sección Agente para enlazar al caso de estudio. */
+/** Estilo de los enlaces de pie de tarjeta, para enlaces hermanos que no
+ *  pasan por EnlaceTarjeta. */
+export const CLASES_ENLACE_TARJETA =
+  "inline-flex items-center gap-1.5 text-small text-text-muted underline decoration-transparent underline-offset-4 transition-colors duration-(--duration-fast) hover:text-text hover:decoration-current";
+
 export function EnlaceTarjeta({
   href,
   to,
@@ -24,8 +29,7 @@ export function EnlaceTarjeta({
   children: string;
   externo?: boolean;
 }) {
-  const clases =
-    "inline-flex items-center gap-1.5 text-small text-text-muted underline decoration-transparent underline-offset-4 transition-colors duration-(--duration-fast) hover:text-text hover:decoration-current";
+  const clases = CLASES_ENLACE_TARJETA;
 
   const contenido = (
     <>
