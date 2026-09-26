@@ -9,7 +9,8 @@
     "build": "tsc --noEmit && vite build && node scripts/postbuild.ts",
     "preview": "npm run build && wrangler dev",
     "lint": "eslint .",
-    "check": "tsc --noEmit && eslint . && prettier --check .",
+    "test": "node --test src/lib/cascada.test.ts",
+    "check": "tsc --noEmit && eslint . && prettier --check . && npm test",
     "format": "prettier --write .",
     "deploy": "npm run build && wrangler deploy"
   },

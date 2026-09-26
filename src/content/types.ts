@@ -303,27 +303,28 @@ export interface SiteContent {
       vacio: string;
       /** Una pestaña sin nada que enseñar (métricas antiguas). */
       sinDatos: string;
-      fichas: {
-        modelo: string;
-        tokens: string;
-        coste: string;
-        total: string;
-      };
       pestanas: {
         etiqueta: string;
         tiempos: string;
         busqueda: string;
       };
       tiempos: {
-        preparacion: string;
+        limites: string;
+        conversacion: string;
         embeddings: string;
         busqueda: string;
         guardar: string;
+        /** El bloque LLM cuando el primer token no lo divide, y el pie. */
         llm: string;
-        pasadas: string;
-        herramientas: string;
+        llmEspera: string;
+        llmGeneracion: string;
         otros: string;
+        /** title de la fila «Otros». */
+        otrosTitulo: string;
+        servidor: string;
+        total: string;
         primerToken: string;
+        pasadas: string;
       };
       consultas: {
         titulo: string;

@@ -2,99 +2,34 @@ import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from "rea
 
 import type { SiteContent } from "@/content/types";
 import { useContent, useLocale } from "@/i18n/locale-context";
+import { calcularCascada, porcentaje, type FilaCascada, type IdFila } from "@/lib/cascada";
 import type { FragmentoTurno, MetricasTurno, PestanaInspector } from "@/lib/chatWidget";
 import { cn } from "@/lib/cn";
 
 type Textos = SiteContent["agente"]["inspector"];
 
-interface Tramo {
-  id: string;
-  nombre: string;
-  ms: number;
-  /** Mezcla del acento con la superficie: sin colores nuevos, sigue al tema. */
-  color: string;
-}
-
 const PESTANAS: PestanaInspector[] = ["tiempos", "busqueda"];
+
+const NOMBRE_FILA: Record<IdFila, keyof Textos["tiempos"]> = {
+  limites: "limites",
+  conversacion: "conversacion",
+  embeddings: "embeddings",
+  busqueda: "busqueda",
+  guardar: "guardar",
+  llm: "llm",
+  "llm-espera": "llmEspera",
+  "llm-generacion": "llmGeneracion",
+  otros: "otros",
+};
+
+/** Dos colores y nada más, los dos del tema: servidor en gris y LLM en acento. */
+function colorBarra(fila: Pick<FilaCascada, "tipo" | "fase">): string {
+  if (fila.tipo === "servidor") return "bg-text-muted opacity-55";
+  return fila.fase === "espera" ? "bg-accent opacity-40" : "bg-accent";
+}
 
 function esNumero(valor: unknown): valor is number {
   return typeof valor === "number" && Number.isFinite(valor);
-}
-
-function mezclaAcento(porcentaje: number): string {
-  return `color-mix(in oklab, var(--color-accent) ${porcentaje}%, var(--color-surface))`;
-}
-
-/**
- * Tramos de la barra de tiempos, en orden de ejecución. Cada uno solo si su
- * clave es numérica; «Otros» es lo que queda hasta el total.
- */
-function calcularTramos(tiempos: NonNullable<MetricasTurno["tiempos"]>, textos: Textos): Tramo[] {
-  const t = textos.tiempos;
-  const tramos: Tramo[] = [];
-
-  const preparacion = [tiempos.limites_ms, tiempos.conversacion_ms].filter(esNumero);
-  if (preparacion.length > 0) {
-    tramos.push({
-      id: "preparacion",
-      nombre: t.preparacion,
-      ms: preparacion.reduce((a, b) => a + b, 0),
-      color: mezclaAcento(22),
-    });
-  }
-  if (esNumero(tiempos.embeddings_ms)) {
-    tramos.push({
-      id: "embeddings",
-      nombre: t.embeddings,
-      ms: tiempos.embeddings_ms,
-      color: mezclaAcento(38),
-    });
-  }
-  if (esNumero(tiempos.match_chunks_ms)) {
-    tramos.push({
-      id: "busqueda",
-      nombre: t.busqueda,
-      ms: tiempos.match_chunks_ms,
-      color: mezclaAcento(54),
-    });
-  }
-  if (esNumero(tiempos.guardar_usuario_ms)) {
-    tramos.push({
-      id: "guardar",
-      nombre: t.guardar,
-      ms: tiempos.guardar_usuario_ms,
-      color: mezclaAcento(70),
-    });
-  }
-  if (esNumero(tiempos.llm_ms)) {
-    const pasadas = tiempos.pasadas_llm;
-    tramos.push({
-      id: "llm",
-      nombre: esNumero(pasadas) && pasadas >= 2 ? `${t.llm} · ${pasadas} ${t.pasadas}` : t.llm,
-      ms: tiempos.llm_ms,
-      color: "var(--color-accent)",
-    });
-  }
-  if (esNumero(tiempos.tools_ms) && tiempos.tools_ms > 0) {
-    tramos.push({
-      id: "herramientas",
-      nombre: t.herramientas,
-      ms: tiempos.tools_ms,
-      color: mezclaAcento(84),
-    });
-  }
-
-  const suma = tramos.reduce((total, tramo) => total + tramo.ms, 0);
-  if (esNumero(tiempos.total_ms) && tiempos.total_ms - suma > 0) {
-    tramos.push({
-      id: "otros",
-      nombre: t.otros,
-      ms: tiempos.total_ms - suma,
-      color: "color-mix(in oklab, var(--color-text-muted) 30%, var(--color-surface))",
-    });
-  }
-
-  return tramos;
 }
 
 /** «A», «B» o «A+B» según qué consulta encontró el fragmento. */
@@ -122,32 +57,27 @@ function Insignia({ texto }: { texto: string }) {
   );
 }
 
-function Ficha({
+function Cifra({
   valor,
-  sub,
   etiqueta,
-  pequeno,
+  grande,
 }: {
   valor: string;
-  sub?: string;
   etiqueta: string;
-  /** Para el modelo, que suele ocupar dos líneas. */
-  pequeno?: boolean;
+  /** El total va a 28 px; el primer token, a 20. */
+  grande?: boolean;
 }) {
   return (
-    <div className="flex min-w-0 flex-col rounded-[8px] bg-surface px-2.5 py-1.5">
+    <div className="inline-flex min-w-0 items-baseline gap-1.5">
       <span
         className={cn(
-          "font-medium break-words tabular-nums",
-          pequeno && "text-[0.8125rem] leading-tight",
+          "leading-[1.15] font-medium whitespace-nowrap tabular-nums",
+          grande ? "text-[28px]" : "text-[20px]",
         )}
       >
         {valor}
       </span>
-      {sub && (
-        <span className="text-[0.6875rem] leading-tight break-words text-text-muted">{sub}</span>
-      )}
-      <span className="label-mono mt-auto pt-0.5 text-[0.625rem]">{etiqueta}</span>
+      <span className="label-mono text-[0.625rem] whitespace-nowrap">{etiqueta}</span>
     </div>
   );
 }
@@ -206,9 +136,10 @@ function Fragmento({
 
 /**
  * Detalles técnicos del turno seleccionado en el chat, con el mismo diseño
- * que el panel propio del widget: cuatro fichas arriba y las pestañas Tiempos
- * y Búsqueda debajo. Pinta solo lo que traigan las métricas, porque las de
- * mensajes antiguos vienen incompletas.
+ * que el panel propio del widget: total y primer token arriba, con el modelo,
+ * los tokens y el coste debajo, y las pestañas Tiempos y Búsqueda. Pinta
+ * solo lo que traigan las métricas, porque las de mensajes antiguos vienen
+ * incompletas.
  *
  * La pestaña elegida la guarda quien lo monta: el componente se remonta con
  * cada turno y la elección tiene que sobrevivir.
@@ -244,27 +175,24 @@ export function InspectorTurno({
     minimumFractionDigits: 3,
     maximumFractionDigits: 3,
   });
+  // Sin style currency: «$» delante y el separador decimal del idioma, como
+  // el widget, que pinta $0,0050.
   const coste = new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: "USD",
-    maximumSignificantDigits: 3,
+    minimumFractionDigits: 4,
+    maximumFractionDigits: 4,
   });
   const ms = (valor: number) => `${entero.format(valor)} ms`;
   const duracion = (valor: number) =>
     valor < 1000 ? ms(valor) : `${segundos.format(valor / 1000)} s`;
 
-  const tiempos = metricas.tiempos;
-  const tramos = tiempos ? calcularTramos(tiempos, textos) : [];
-  const suma = tramos.reduce((total, tramo) => total + tramo.ms, 0);
-  // Sin total_ms (métricas antiguas), la suma de lo que haya.
-  const total = esNumero(tiempos?.total_ms) ? tiempos.total_ms : suma;
-  const escala = Math.max(total, suma);
-  const ttft = tiempos?.ttft_ms;
-  const posicionTtft =
-    esNumero(ttft) && escala > 0 ? Math.min(Math.max(ttft / escala, 0), 1) * 100 : null;
+  const t = textos.tiempos;
+  const cascada = calcularCascada(metricas.tiempos ?? {});
+  const { filas, total, escala, ttft } = cascada;
 
   const { entrada, salida } = metricas.tokens ?? {};
   const numero = (n: number | undefined) => (esNumero(n) ? entero.format(n) : "—");
+  const hayTokens = esNumero(entrada) || esNumero(salida);
+  const costeUsd = esNumero(metricas.coste_usd) ? metricas.coste_usd : null;
 
   const retrieval = metricas.retrieval;
   const consultas = (retrieval?.consultas ?? []).filter((consulta) => consulta.texto);
@@ -288,72 +216,74 @@ export function InspectorTurno({
     pestanas.current[destino]?.focus();
   };
 
+  // La línea del primer token es un solo elemento sobre toda la cascada. Las
+  // pistas empiezan en --t-et + --t-gap y miden lo que dejan las otras dos
+  // columnas, igual en todas las filas: el calc reproduce esa geometría.
+  const lineaTtft =
+    ttft !== null
+      ? `calc(var(--t-et) + var(--t-gap) + (100% - var(--t-et) - var(--t-ms) - 2 * var(--t-gap)) * ${Math.min(1, ttft / escala)})`
+      : null;
+
+  const reparto = (tipo: FilaCascada["tipo"], nombre: string, valor: number) => (
+    <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+      <span aria-hidden="true" className={cn("size-[9px] rounded-[2px]", colorBarra({ tipo }))} />
+      {nombre} {ms(valor)} · {porcentaje(valor, total)} %
+    </span>
+  );
+
   const panelTiempos =
-    tramos.length > 0 && escala > 0 ? (
-      <>
-        <div aria-hidden="true" className={cn("relative", posicionTtft !== null && "pb-5")}>
-          <div className="flex h-2.5 gap-px overflow-hidden rounded-[3px] bg-surface">
-            {tramos.map(
-              (tramo) =>
-                tramo.ms > 0 && (
-                  <span
-                    key={tramo.id}
-                    className="h-full"
+    filas.length > 0 ? (
+      <div className="text-[0.75rem]">
+        {/* Etiqueta | pista | ms. La columna de ms tiene ancho fijo para que
+            las pistas de todas las filas empiecen y acaben en el mismo x. */}
+        <div className="relative grid [--t-et:130px] [--t-gap:0.5rem] [--t-ms:4.5rem]">
+          {filas.map((fila) => {
+            const nombre = t[NOMBRE_FILA[fila.id]];
+            return (
+              <div
+                key={fila.id}
+                title={fila.id === "otros" ? t.otrosTitulo : `${nombre}: ${ms(fila.ms)}`}
+                className="grid min-h-5 grid-cols-[var(--t-et)_minmax(0,1fr)_var(--t-ms)] items-center gap-(--t-gap)"
+              >
+                <span className="overflow-hidden text-ellipsis whitespace-nowrap">{nombre}</span>
+                {/* La barra es la vista rápida; etiqueta y ms dicen lo mismo en texto. */}
+                <span aria-hidden="true" className="relative h-2.5">
+                  <i
+                    className={cn("absolute inset-y-0 min-w-[3px] rounded-[2px]", colorBarra(fila))}
                     style={{
-                      width: `${(tramo.ms / escala) * 100}%`,
-                      backgroundColor: tramo.color,
+                      left: `${Math.min(100, (fila.inicio / escala) * 100)}%`,
+                      width: `${Math.min(100, (fila.ms / escala) * 100)}%`,
                     }}
                   />
-                ),
-            )}
-          </div>
-          {posicionTtft !== null && (
-            <div className="absolute inset-y-0 w-0" style={{ left: `${posicionTtft}%` }}>
-              <span className="absolute -top-1 h-4.5 w-px bg-text" />
-              <span
-                className={cn(
-                  "absolute top-4 font-mono text-[0.6875rem] whitespace-nowrap text-text",
-                  posicionTtft < 25
-                    ? "left-0"
-                    : posicionTtft > 75
-                      ? "right-0"
-                      : "left-0 -translate-x-1/2",
-                )}
-              >
-                {textos.tiempos.primerToken}
-              </span>
-            </div>
+                </span>
+                <span className="text-right whitespace-nowrap text-text-muted tabular-nums">
+                  {ms(fila.ms)}
+                </span>
+              </div>
+            );
+          })}
+          {ttft !== null && lineaTtft !== null && (
+            <span
+              aria-hidden="true"
+              title={`${t.primerToken}: ${ms(ttft)}`}
+              className="pointer-events-none absolute inset-y-0 w-0 border-l border-dashed border-text opacity-70"
+              style={{ left: lineaTtft }}
+            />
           )}
         </div>
 
-        {/* Leyenda en dos columnas. El total no va aquí: está en las fichas. */}
-        <dl className="mt-3 grid grid-cols-2 gap-x-5 gap-y-1 text-[0.8125rem]">
-          {tramos.map((tramo) => (
-            <div key={tramo.id} className="flex min-w-0 items-center gap-2">
-              <dt className="flex min-w-0 flex-1 items-center gap-2 text-text-muted">
-                <span
-                  aria-hidden="true"
-                  className="size-2.5 shrink-0 rounded-[3px]"
-                  style={{ backgroundColor: tramo.color }}
-                />
-                <span className="min-w-0 break-words">{tramo.nombre}</span>
-              </dt>
-              <dd className="shrink-0 font-mono tabular-nums">{ms(tramo.ms)}</dd>
-            </div>
-          ))}
-          {esNumero(ttft) && (
-            <div className="flex min-w-0 items-center gap-2">
-              <dt className="flex min-w-0 flex-1 items-center gap-2 text-text-muted">
-                <span aria-hidden="true" className="flex w-2.5 shrink-0 justify-center">
-                  <span className="h-3 w-px bg-text" />
-                </span>
-                <span className="min-w-0 break-words">{textos.tiempos.primerToken}</span>
-              </dt>
-              <dd className="shrink-0 font-mono tabular-nums">{ms(ttft)}</dd>
-            </div>
-          )}
-        </dl>
-      </>
+        {cascada.conTools && (
+          <p className="mt-1.5 text-[0.6875rem] text-text-muted">
+            {cascada.pasadas !== null && `${cascada.pasadas} ${t.pasadas} · `}
+            tools {ms(cascada.toolsMs)}
+          </p>
+        )}
+
+        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-0.5 border-t border-border pt-1.5 text-text-muted tabular-nums">
+          {reparto("servidor", t.servidor, cascada.servidorMs)}
+          {cascada.hayLLM && reparto("llm", t.llm, cascada.llmMs)}
+        </div>
+      </div>
     ) : (
       <p className="text-small text-text-muted">{textos.sinDatos}</p>
     );
@@ -425,19 +355,36 @@ export function InspectorTurno({
 
   return (
     <div className="@container flex flex-col gap-2 p-3">
-      <div className="grid grid-cols-2 gap-1.5 text-small @min-[26rem]:grid-cols-4">
-        <Ficha
-          valor={metricas.modelo || "—"}
-          sub={metricas.proveedor}
-          etiqueta={textos.fichas.modelo}
-          pequeno
-        />
-        <Ficha valor={`${numero(entrada)} → ${numero(salida)}`} etiqueta={textos.fichas.tokens} />
-        <Ficha
-          valor={esNumero(metricas.coste_usd) ? coste.format(metricas.coste_usd) : "—"}
-          etiqueta={textos.fichas.coste}
-        />
-        <Ficha valor={total > 0 ? duracion(total) : "—"} etiqueta={textos.fichas.total} />
+      <div>
+        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-0.5">
+          <Cifra valor={total > 0 ? duracion(total) : "—"} etiqueta={t.total} grande />
+          {ttft !== null && <Cifra valor={duracion(ttft)} etiqueta={t.primerToken} />}
+        </div>
+        {/* Sin tokens ni coste (turno cortado antes del modelo) no hay línea.
+            Si no cabe, se parte entre spans: el separador va en el ::before
+            del siguiente para no quedarse suelto. Solo el modelo se recorta. */}
+        {(hayTokens || costeUsd !== null) && (
+          <div
+            title={
+              metricas.modelo
+                ? metricas.modelo + (metricas.proveedor ? ` (${metricas.proveedor})` : "")
+                : undefined
+            }
+            className="mt-1 flex flex-wrap font-mono text-[0.75rem] text-text-muted [&>span]:whitespace-nowrap [&>span+span]:before:mx-[0.6ch] [&>span+span]:before:content-['·']"
+          >
+            {metricas.modelo && (
+              <span className="max-w-full min-w-0 overflow-hidden text-ellipsis">
+                {metricas.modelo}
+              </span>
+            )}
+            {hayTokens && (
+              <span>
+                {numero(entrada)} → {numero(salida)} tok
+              </span>
+            )}
+            {costeUsd !== null && <span>${coste.format(costeUsd)}</span>}
+          </div>
+        )}
       </div>
 
       <div>
