@@ -4,11 +4,12 @@ import { Section } from "@/components/layout/Section";
 import { Badge } from "@/components/ui/Badge";
 import { IconoEnlaceExterno } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
-import { useContent } from "@/i18n/locale-context";
+import { useContent, useLocale } from "@/i18n/locale-context";
 import { cvDisponible } from "@/lib/cv";
 
 export function Contact() {
   const { contacto, hero, disponibilidad } = useContent();
+  const { locale } = useLocale();
 
   // El email se compone en ejecución: la dirección no aparece literal en el
   // HTML que se sirve, que es lo que rastrean los recolectores de spam.
@@ -25,7 +26,7 @@ export function Contact() {
       href: `mailto:${email}`,
       externo: false,
     },
-    ...(cvDisponible
+    ...(cvDisponible[locale]
       ? [
           {
             id: "cv",

@@ -230,11 +230,11 @@ export const es = {
     titulo: "Entiendo el problema antes de programarlo",
     parrafos: [
       "Antes de escribir código pasé años al otro lado del teléfono y del mostrador: soporte técnico, mesas de casino, tienda. Ahí se aprende algo que no enseña ningún curso: a escuchar un problema mal explicado, a mantener la calma cuando quien tienes delante no la tiene y a devolver una respuesta que se entienda a la primera.",
-      "Hoy estudio Desarrollo de Aplicaciones Multiplataforma, hago prácticas como desarrollador backend e integración de IA en YMRO Technologies y construyo proyectos propios que llevo hasta producción. Me interesa la parte que sostiene el producto: la arquitectura de datos, la orquestación de los servicios y el despliegue. Y me sigue interesando la conversación con quien lo va a usar.",
+      "Hoy estudio Desarrollo de Aplicaciones Multiplataforma, he hecho prácticas como desarrollador backend e integración de IA en YMRO Technologies y construyo proyectos propios que llevo hasta producción. Me interesa la parte que sostiene el producto: la arquitectura de datos, la orquestación de los servicios y el despliegue. Y me sigue interesando la conversación con quien lo va a usar.",
     ],
     datos: [
       { id: "ubicacion", clave: "Ubicación", valor: "Barcelona" },
-      { id: "enfoque", clave: "Enfoque", valor: "Backend · IA aplicada · DevOps" },
+      { id: "enfoque", clave: "Enfoque", valor: "Backend · IA aplicada" },
       {
         id: "idiomas",
         clave: "Idiomas",
@@ -265,21 +265,9 @@ export const es = {
         casoDeEstudio: "chatbot-rag",
       },
       {
-        id: "gymapp",
-        visible: true,
-        destacado: true,
-        titulo: "App de fitness y nutrición",
-        resumen:
-          "App móvil de registro de calorías y entrenamientos con arquitectura por capas: Clean Architecture y Riverpod en Flutter, backend en Supabase con Row Level Security y orquestación de IA prevista en n8n para estimar calorías a partir de la foto de un plato.",
-        rol: "Proyecto propio · arquitectura y backend",
-        estado: "En desarrollo",
-        stack: ["Flutter", "Dart", "Riverpod", "Clean Architecture", "Supabase", "RLS", "n8n"],
-        repo: "https://github.com/PRIMCODIN/gymApp",
-      },
-      {
         id: "appbancaria",
         visible: true,
-        destacado: false,
+        destacado: true,
         titulo: "Sistema bancario",
         resumen:
           "Dos apps Android nativas sobre una misma base de datos que modelan el aislamiento de privilegios de un banco real: panel de administración y app de cliente, con transferencias entre usuarios, historial y un chatbot financiero que responde en lenguaje natural sobre los datos propios.",
@@ -287,6 +275,18 @@ export const es = {
         estado: "Proyecto personal",
         stack: ["Kotlin", "Jetpack Compose", "Supabase", "RLS", "Ktor", "n8n", "Docker"],
         repo: "https://github.com/PRIMCODIN/appBancaria",
+      },
+      {
+        id: "gymapp",
+        visible: true,
+        destacado: false,
+        titulo: "App de fitness y nutrición",
+        resumen:
+          "App móvil de registro de calorías y entrenamientos con arquitectura por capas: Clean Architecture y Riverpod en Flutter, backend en Supabase con Row Level Security y orquestación de IA prevista en n8n para estimar calorías a partir de la foto de un plato.",
+        rol: "Proyecto propio · arquitectura y backend",
+        estado: "En desarrollo",
+        stack: ["Flutter", "Dart", "Riverpod", "Clean Architecture", "Supabase", "RLS", "n8n"],
+        repo: "https://github.com/PRIMCODIN/gymApp",
       },
       {
         id: "flagquiz",
@@ -334,11 +334,6 @@ export const es = {
     lecturas: { "C#": "C sharp" },
     grupos: [
       {
-        id: "lenguajes",
-        titulo: "Lenguajes",
-        items: ["Python", "Dart", "Kotlin", "TypeScript", "JavaScript", "C#", "SQL", "HTML/CSS"],
-      },
-      {
         id: "backend",
         titulo: "Backend e infraestructura",
         items: [
@@ -356,6 +351,7 @@ export const es = {
           "Cloudflare",
           "OAuth",
           "Row Level Security",
+          "pytest",
         ],
       },
       {
@@ -374,6 +370,11 @@ export const es = {
         ],
       },
       {
+        id: "lenguajes",
+        titulo: "Lenguajes",
+        items: ["Python", "SQL", "TypeScript", "JavaScript", "Kotlin", "Dart", "C#", "HTML/CSS"],
+      },
+      {
         id: "movil",
         titulo: "Móvil",
         items: ["Flutter", "Riverpod", "Clean Architecture", "Kotlin", "Jetpack Compose"],
@@ -386,7 +387,7 @@ export const es = {
       {
         id: "herramientas",
         titulo: "Herramientas",
-        items: ["Git y GitHub", "Claude Code", "Vercel", "Google Cloud Console"],
+        items: ["Git y GitHub", "Claude Code", "Vercel"],
       },
     ],
   },
@@ -416,7 +417,7 @@ export const es = {
         empresa: "YMRO Technologies",
         modalidad: "Jornada parcial · Híbrido",
         inicio: "marzo 2026",
-        fin: null,
+        fin: "septiembre 2026",
         ubicacion: "Barcelona",
         logros: [
           "Diseñé y monté los flujos en n8n y Dify que conectaban la app Flutter con los servicios de IA, definiendo el contrato de datos de extremo a extremo.",

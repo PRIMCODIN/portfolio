@@ -16,3 +16,6 @@ dist-ssr
 # Paso 4: informe y capturas locales
 informe-paso4.md
 capturas-paso4/
+
+# PDFs locales (CV de trabajo), fuera del repo
+docs/*.pdf

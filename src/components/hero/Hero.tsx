@@ -3,13 +3,14 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { IconoEnlaceExterno, IconoFlecha } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/Reveal";
-import { useContent } from "@/i18n/locale-context";
+import { useContent, useLocale } from "@/i18n/locale-context";
 import { chatDisponible } from "@/lib/chatWidget";
 import { cvDisponible } from "@/lib/cv";
 import { DotField } from "./DotField";
 
 export function Hero() {
   const { hero, disponibilidad, ui } = useContent();
+  const { locale } = useLocale();
 
   return (
     <section id="inicio" className="relative overflow-hidden">
@@ -53,7 +54,7 @@ export function Hero() {
                   {!chatDisponible && <IconoFlecha />}
                 </Button>
 
-                {cvDisponible && (
+                {cvDisponible[locale] && (
                   <Button href={hero.cvHref} variante="secundario" descargar>
                     {hero.descargarCv}
                   </Button>

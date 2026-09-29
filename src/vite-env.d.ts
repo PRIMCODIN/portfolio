@@ -12,8 +12,8 @@ interface ImportMetaEnv {
   readonly VITE_CHAT_TENANT_KEY?: string;
 }
 
-/** true si public/cv-victor-prim-romero.pdf existía al compilar (vite.config.ts). */
-declare const __CV_DISPONIBLE__: boolean;
+/** Por idioma, true si su PDF del CV existía en public/ al compilar (vite.config.ts). */
+declare const __CV_DISPONIBLE__: { es: boolean; en: boolean };
 
 interface ImportMeta {
   readonly env: ImportMetaEnv;

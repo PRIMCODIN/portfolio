@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { IconoCerrar, IconoMenu } from "@/components/ui/icons";
 import { LocaleSwitch } from "@/components/ui/LocaleSwitch";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { useContent } from "@/i18n/locale-context";
+import { useContent, useLocale } from "@/i18n/locale-context";
 import { chatDisponible } from "@/lib/chatWidget";
 import { cvDisponible } from "@/lib/cv";
 import { Container } from "./Container";
@@ -16,6 +16,7 @@ import { Container } from "./Container";
  */
 export function Header() {
   const { nav, hero, ui } = useContent();
+  const { locale } = useLocale();
   const items = nav.items.filter((item) => !item.requiereChat || chatDisponible);
   const { pathname } = useLocation();
   // Fuera de la portada las anclas tienen que volver a ella primero.
@@ -67,7 +68,7 @@ export function Header() {
             </div>
             <ThemeToggle />
             {/* Solo desde lg: en md, con la navegación completa, no cabe. */}
-            {cvDisponible && (
+            {cvDisponible[locale] && (
               <div className="hidden lg:block">
                 <Button href={hero.cvHref} variante="secundario" descargar className="px-4 py-2">
                   {hero.descargarCv}
@@ -111,7 +112,7 @@ export function Header() {
               <div className="flex flex-wrap items-center justify-between gap-3 py-4">
                 <LocaleSwitch />
                 <div className="flex flex-wrap items-center gap-2">
-                  {cvDisponible && (
+                  {cvDisponible[locale] && (
                     <Button
                       href={hero.cvHref}
                       variante="secundario"

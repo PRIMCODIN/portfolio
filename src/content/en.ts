@@ -52,7 +52,7 @@ export const en = {
     hablarConAgente: "Talk to my AI agent",
     hablarConAgenteSubtexto:
       "Ask it about my experience. Turn on technical mode to see how it works under the hood.",
-    cvHref: "/cv-victor-prim-romero.pdf",
+    cvHref: "/cv-victor-prim-romero-en.pdf",
     github: { href: "https://github.com/PRIMCODIN", label: "GitHub" },
     linkedin: { href: "https://www.linkedin.com/in/victor-prim-romero", label: "LinkedIn" },
   },
@@ -229,11 +229,11 @@ export const en = {
     titulo: "I understand the problem before I code it",
     parrafos: [
       "Before I wrote code I spent years on the other side of the phone and the counter: technical support, casino tables, retail. That teaches you something no course does: how to listen to a badly explained problem, how to stay calm when the person in front of you is not, and how to give an answer that lands the first time.",
-      "Today I study Multiplatform Application Development, am doing an internship as a backend and AI integration developer at YMRO Technologies, and build my own projects all the way to production. What interests me is the part that holds the product up: data architecture, service orchestration and deployment. And I am still interested in the conversation with whoever is going to use it.",
+      "Today I study Multiplatform Application Development, did an internship as a backend and AI integration developer at YMRO Technologies, and build my own projects all the way to production. What interests me is the part that holds the product up: data architecture, service orchestration and deployment. And I am still interested in the conversation with whoever is going to use it.",
     ],
     datos: [
       { id: "ubicacion", clave: "Location", valor: "Barcelona" },
-      { id: "enfoque", clave: "Focus", valor: "Backend · Applied AI · DevOps" },
+      { id: "enfoque", clave: "Focus", valor: "Backend · Applied AI" },
       {
         id: "idiomas",
         clave: "Languages",
@@ -268,21 +268,9 @@ export const en = {
         casoDeEstudio: "chatbot-rag",
       },
       {
-        id: "gymapp",
-        visible: true,
-        destacado: true,
-        titulo: "Fitness and nutrition app",
-        resumen:
-          "Mobile app for tracking calories and workouts with a layered architecture: Clean Architecture and Riverpod in Flutter, a Supabase backend with Row Level Security, and AI orchestration planned in n8n to estimate calories from a photo of a meal.",
-        rol: "Personal project · architecture and backend",
-        estado: "In development",
-        stack: ["Flutter", "Dart", "Riverpod", "Clean Architecture", "Supabase", "RLS", "n8n"],
-        repo: "https://github.com/PRIMCODIN/gymApp",
-      },
-      {
         id: "appbancaria",
         visible: true,
-        destacado: false,
+        destacado: true,
         titulo: "Banking system",
         resumen:
           "Two native Android apps over a single database, modelling the privilege isolation of a real bank: an admin panel and a client app, with transfers between users, history, and a financial chatbot that answers questions about your own data in plain language.",
@@ -290,6 +278,18 @@ export const en = {
         estado: "Personal project",
         stack: ["Kotlin", "Jetpack Compose", "Supabase", "RLS", "Ktor", "n8n", "Docker"],
         repo: "https://github.com/PRIMCODIN/appBancaria",
+      },
+      {
+        id: "gymapp",
+        visible: true,
+        destacado: false,
+        titulo: "Fitness and nutrition app",
+        resumen:
+          "Mobile app for tracking calories and workouts with a layered architecture: Clean Architecture and Riverpod in Flutter, a Supabase backend with Row Level Security, and AI orchestration planned in n8n to estimate calories from a photo of a meal.",
+        rol: "Personal project · architecture and backend",
+        estado: "In development",
+        stack: ["Flutter", "Dart", "Riverpod", "Clean Architecture", "Supabase", "RLS", "n8n"],
+        repo: "https://github.com/PRIMCODIN/gymApp",
       },
       {
         id: "flagquiz",
@@ -337,11 +337,6 @@ export const en = {
     lecturas: { "C#": "C sharp" },
     grupos: [
       {
-        id: "lenguajes",
-        titulo: "Languages",
-        items: ["Python", "Dart", "Kotlin", "TypeScript", "JavaScript", "C#", "SQL", "HTML/CSS"],
-      },
-      {
         id: "backend",
         titulo: "Backend and infrastructure",
         items: [
@@ -359,6 +354,7 @@ export const en = {
           "Cloudflare",
           "OAuth",
           "Row Level Security",
+          "pytest",
         ],
       },
       {
@@ -377,6 +373,11 @@ export const en = {
         ],
       },
       {
+        id: "lenguajes",
+        titulo: "Languages",
+        items: ["Python", "SQL", "TypeScript", "JavaScript", "Kotlin", "Dart", "C#", "HTML/CSS"],
+      },
+      {
         id: "movil",
         titulo: "Mobile",
         items: ["Flutter", "Riverpod", "Clean Architecture", "Kotlin", "Jetpack Compose"],
@@ -389,7 +390,7 @@ export const en = {
       {
         id: "herramientas",
         titulo: "Tools",
-        items: ["Git and GitHub", "Claude Code", "Vercel", "Google Cloud Console"],
+        items: ["Git and GitHub", "Claude Code", "Vercel"],
       },
     ],
   },
@@ -419,7 +420,7 @@ export const en = {
         empresa: "YMRO Technologies",
         modalidad: "Part-time · Hybrid",
         inicio: "March 2026",
-        fin: null,
+        fin: "September 2026",
         ubicacion: "Barcelona",
         logros: [
           "Designed and built the n8n and Dify flows connecting the Flutter app to the AI services, defining the data contract end to end.",
