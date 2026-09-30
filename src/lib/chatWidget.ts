@@ -90,7 +90,7 @@ interface ApiWidget {
 
 declare global {
   interface Window {
-    avalonWidget?: ApiWidget;
+    atril?: ApiWidget;
   }
 
   interface WindowEventMap {
@@ -150,7 +150,7 @@ function obtenerHost(): HTMLDivElement {
 
 /**
  * Inyecta el script la primera vez y devuelve siempre la misma promesa. Se
- * resuelve cuando el widget publica window.avalonWidget y se rechaza si el
+ * resuelve cuando el widget publica window.atril y se rechaza si el
  * script no carga o si la API no aparece en 10 segundos.
  */
 export function cargarChat(locale: Locale): Promise<void> {
@@ -171,11 +171,11 @@ export function cargarChat(locale: Locale): Promise<void> {
       rechazar(new Error("el widget no ha publicado su API"));
     }, ESPERA_MAXIMA_MS);
 
-    // window.avalonWidget se publica al ejecutarse el script, pero si el widget
+    // window.atril se publica al ejecutarse el script, pero si el widget
     // sale antes por su cuenta (configuración inválida, montaje fallido) no
     // llega a existir: por eso se espera a él y no al evento load.
     const listo = () => {
-      if (!window.avalonWidget) return false;
+      if (!window.atril) return false;
       window.clearTimeout(limite);
       window.clearInterval(intervalo);
       resolver();
@@ -283,13 +283,13 @@ export function elegirPestana(pestana: PestanaInspector): void {
 /** Lo mismo que pulsar el interruptor del widget. El store se entera por
  *  chat:modo-tecnico, como con el interruptor. */
 export function activarModoTecnico(): void {
-  window.avalonWidget?.setModoTecnico?.(true);
+  window.atril?.setModoTecnico?.(true);
 }
 
 /** El modo técnico según el widget. null si no lo tiene el tenant, si aún no
  *  hay configuración o si el widget es anterior a getModoTecnico. */
 function leerModoTecnico(): boolean | null {
-  const widget = window.avalonWidget;
+  const widget = window.atril;
   if (typeof widget?.setModoTecnico !== "function") return null;
   if (typeof widget.getModoTecnico !== "function") return null;
   return widget.getModoTecnico() ?? null;
@@ -341,11 +341,11 @@ function activarInspector(activo: boolean): void {
     // en el mismo momento. El de chat:modo-tecnico ya está puesto.
     window.addEventListener("chat:turno", alCambiarTurno);
     actualizarInspector({ conectado: true });
-    window.avalonWidget?.activarInspectorExterno?.(true);
+    window.atril?.activarInspectorExterno?.(true);
   } else {
     // modoTecnico no se toca: por debajo de lg lo sigue necesitando el CTA.
     window.removeEventListener("chat:turno", alCambiarTurno);
-    window.avalonWidget?.activarInspectorExterno?.(false);
+    window.atril?.activarInspectorExterno?.(false);
     actualizarInspector({ conectado: false, metricas: null });
   }
 }
@@ -356,7 +356,7 @@ function alCruzarLg(evento: MediaQueryListEvent): void {
 
 /** Idempotente: StrictMode puede acoplar dos veces. */
 function conectarInspector(): void {
-  if (consultaLg || !window.avalonWidget?.activarInspectorExterno) return;
+  if (consultaLg || !window.atril?.activarInspectorExterno) return;
   consultaLg = window.matchMedia(CONSULTA_LG);
   consultaLg.addEventListener("change", alCruzarLg);
   activarInspector(consultaLg.matches);
@@ -372,5 +372,5 @@ function desconectarInspector(): void {
 
 /** Todavía no tiene efecto en el widget; la conexión queda hecha. */
 export function cambiarIdiomaChat(locale: Locale): void {
-  window.avalonWidget?.setLang?.(locale);
+  window.atril?.setLang?.(locale);
 }

@@ -146,7 +146,7 @@ export function AgentSection() {
    *  campo de texto. focus() usa preventScroll, así que no corta el scroll. */
   const probarChat = () => {
     seccion.current?.scrollIntoView({ behavior: comportamientoScroll(), block: "start" });
-    window.avalonWidget?.focus?.();
+    window.atril?.focus?.();
   };
 
   /** CTA del modo técnico. Desde lg la columna pasa sola al inspector; por
