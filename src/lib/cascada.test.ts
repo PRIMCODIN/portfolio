@@ -5,7 +5,7 @@ import { calcularCascada, porcentaje, type Tiempos } from "./cascada.ts";
 
 /**
  * Paridad con cascadaDe de widget/widget.js. Las entradas son los `tiempos`
- * de SINTETICOS en scripts/verificar_modo_tecnico.py (avalon-agent) y los
+ * de SINTETICOS en scripts/verificar_modo_tecnico.py (atril) y los
  * valores esperados, los que dio su paso i contra el widget.
  */
 

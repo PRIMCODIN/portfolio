@@ -3,7 +3,7 @@ import type { MetricasTurno } from "@/lib/chatWidget";
 /**
  * Filas del waterfall de tiempos y repartos del pie, sin React ni textos.
  *
- * Replica `cascadaDe` de widget/widget.js (avalon-agent): mismo orden, mismas
+ * Replica `cascadaDe` de widget/widget.js (atril): mismo orden, mismas
  * reglas y mismos números. Un cambio allí hay que traerlo aquí, y el test de
  * paridad (cascada.test.ts) usa los turnos sintéticos de
  * scripts/verificar_modo_tecnico.py para que no se separen.
